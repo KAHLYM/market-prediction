@@ -1,4 +1,7 @@
 import praw
+import warnings
+
+from typing import List
 
 class RedditWrapper:
 
@@ -13,9 +16,28 @@ class RedditWrapper:
 
         print('PRAW is ' + ('' if self.reddit.read_only else 'not ') + 'running in read-only mode')
 
-    def submissions(self, subreddit: str, limit: int, text_based: bool = True) -> int:
-        complete: int = 0
+        self.limit = 100
+        
+    @property
+    def limit(self) -> int:
+        return self._limit
 
+    @limit.setter
+    def limit(self, value: int):
+        if value < 0:
+            raise AttributeError('invalid value, limit should not be negative')
+        elif value > 1000:
+            warnings.warn('Reddit API listing limited to 1000 items')
+
+        self._limit = value
+
+    @limit.deleter
+    def limit(self):
+        raise AttributeError('do not delete, limit can be set to 0')
+
+    def submissions(self, subreddit: str, limit: int = None, text_based: bool = True) -> List[str]:
+        self.limit = limit if limit else self.limit
+        
         # Reddit limited to 100 items per request
         # PRAW will break request into multiple API calls of 100 items seperated by 2 second delay
         for submission in self.reddit.subreddit(subreddit).new(limit=limit):
@@ -25,9 +47,8 @@ class RedditWrapper:
                 continue
             
             self._submissions.append(submission.selftext)
-            complete += 1
         
-        return complete
+        return self._submissions
 
     def write(self, outfile: str):
         with open(outfile, 'wb') as f:
