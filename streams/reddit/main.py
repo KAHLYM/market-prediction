@@ -1,35 +1,39 @@
 import praw
-import secret
 
-reddit = praw.Reddit(
-    client_id=secret.client_id,
-    client_secret=secret.client_secret,
-    user_agent=secret.user_agent
-)
+class RedditWrapper:
 
-print('PRAW is ' + ('' if reddit.read_only else 'not ') + 'running in read-only mode')
+    _submissions = []
 
-submissions = []
-submissions_skipped = 0
-submissions_limit = 10
+    def __init__(self, client_id: str, client_secret: str, user_agent: str):
+        self.reddit = praw.Reddit(
+            client_id=client_id,
+            client_secret=client_secret,
+            user_agent=user_agent
+        )
 
-# Reddit limited to 100 items per request
-# PRAW will break request into multiple API calls of 100 items seperated by 2 second delay
-for index, submission in enumerate(reddit.subreddit('all').hot(limit=submissions_limit)):
-    submissions.append(submission.selftext)
+        print('PRAW is ' + ('' if self.reddit.read_only else 'not ') + 'running in read-only mode')
 
-# Write to .txt file where each line represents a submission
-with open('outfile.txt', 'wb') as f:
-    for submission in submissions:
-        submission = submission.replace('\n', '') + '\n'
+    def submissions(self, subreddit: str, limit: int, text_based: bool = True) -> int:
+        complete: int = 0
 
-        # Skip submissions that contains no text i.e. image-based/link-based submissions
-        if submission is '\n':
-            submissions_skipped += 1
-            continue
+        # Reddit limited to 100 items per request
+        # PRAW will break request into multiple API calls of 100 items seperated by 2 second delay
+        for submission in self.reddit.subreddit(subreddit).new(limit=limit):
+
+            # Omit non-text-based submissions i.e. image-based/link-based submissions
+            if text_based and not submission.selftext:
+                continue
+            
+            self._submissions.append(submission.selftext)
+            complete += 1
         
-        # Encode with utf-8 to ensure unicode support i.e. emojis
-        f.write(submission.encode('utf-8'))
+        return complete
 
-print(f'{"Submissions skipped":<20}{submissions_skipped:>4}')
-print(f'{"Submissions limit":<20}{submissions_limit:>4}')
+    def write(self, outfile: str):
+        with open(outfile, 'wb') as f:
+            for submission in self._submissions:
+                # Each line represents a submission
+                submission = submission.replace('\n', ' ') + '\n'
+
+                # Encode with utf-8 to ensure unicode support i.e. emojis
+                f.write(submission.encode('utf-8'))
