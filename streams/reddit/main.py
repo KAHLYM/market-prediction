@@ -40,7 +40,7 @@ class RedditWrapper:
         
         # Reddit limited to 100 items per request
         # PRAW will break request into multiple API calls of 100 items seperated by 2 second delay
-        for submission in self.reddit.subreddit(subreddit).new(limit=limit):
+        for submission in self.reddit.subreddit(subreddit).new(limit=self.limit):
 
             # Omit non-text-based submissions i.e. image-based/link-based submissions
             if text_based and not submission.selftext:
