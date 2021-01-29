@@ -12,7 +12,7 @@ class Processor:
         self.valid_word_tags: List[str] = valid_word_tags
         self.tag : str = tag
         
-        self.documents: List[str] = []
+        self.documents: List[(str, str)] = []
         self.tokenized_data: List[List[str]] = []
 
     @property
@@ -37,7 +37,7 @@ class Processor:
         for d in self.data:
             # Tag documents
             if self.tag:
-                self.documents.append(d, self.tag)
+                self.documents.append((d, self.tag))
 
             # Tag words
             unvalidated_words: List[Any] = word_tokenize(d)
@@ -49,4 +49,4 @@ class Processor:
                 if p[1][0] in self.valid_word_tags:
                     words.append(p[0].lower())
 
-            self.tokenized_data.append(words)
+            self.tokenized_data.extend(words)
