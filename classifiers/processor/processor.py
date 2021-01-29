@@ -6,10 +6,14 @@ from nltk.tokenize import word_tokenize
 
 from typing import Any, List
 
-class PreProcessor:
-    def __init__(self, data: List[str], valid_word_tags: List[str]):
+class Processor:
+    def __init__(self, data: List[str], valid_word_tags: List[str], tag: str = None):
         self.data: List[str] = data
         self.valid_word_tags: List[str] = valid_word_tags
+        self.tag : str = tag
+        
+        self.documents: List[str] = []
+        self.tokenized_data: List[List[str]] = []
 
     @property
     def valid_word_tags(self) -> List[str]:
@@ -29,13 +33,14 @@ class PreProcessor:
     def valid_word_tags(self):
         raise AttributeError('do not delete, valid_word_tags can be set emptied')
 
-    def run(self) -> List[str]:
-        # Tokenize
-        tokenized_data: List[List[str]] = []
+    def run(self) -> None:
         for d in self.data:
-            unvalidated_words: List[Any] = word_tokenize(d)
+            # Tag documents
+            if self.tag:
+                self.documents.append(d, self.tag)
 
             # Tag words
+            unvalidated_words: List[Any] = word_tokenize(d)
             pos: Any = pos_tag(unvalidated_words)
 
             # Filter in lowercase words that are associated with valid tags
@@ -44,6 +49,4 @@ class PreProcessor:
                 if p[1][0] in self.valid_word_tags:
                     words.append(p[0].lower())
 
-            tokenized_data.append(words)
-
-        return tokenized_data
+            self.tokenized_data.append(words)
