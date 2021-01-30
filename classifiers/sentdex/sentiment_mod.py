@@ -40,7 +40,7 @@ def find_features(document):
 
 # NaiveBayesClassifier
 open_file = open('pickled_algos/classifiers/NaiveBayes_classifier5k.pickle', 'rb')
-classifier = pickle.load(open_file)
+NaiveBayes_classifier  = pickle.load(open_file)
 open_file.close()
 
 # MultinomialNB
@@ -68,7 +68,7 @@ open_file = open('pickled_algos/classifiers/SGDC_classifier5k.pickle', 'rb')
 SGDC_classifier = pickle.load(open_file)
 open_file.close()
 
-voted_classifier = VoteClassifier(classifier,
+voted_classifier = VoteClassifier(NaiveBayes_classifier,
                                   LinearSVC_classifier,
                                   MNB_classifier,
                                   BernoulliNB_classifier,
@@ -76,4 +76,4 @@ voted_classifier = VoteClassifier(classifier,
 
 def sentiment(text):
     features = find_features(text)
-    return voted_classifier.classify(features),voted_classifier.confidence(features)
+    return voted_classifier.classify(features), voted_classifier.confidence(features)
