@@ -1,10 +1,7 @@
 import pickle
 import random
 
-from statistics import mode
-
 import nltk
-from nltk.classify import ClassifierI
 from nltk.classify.scikitlearn import SklearnClassifier
 from nltk.tokenize import word_tokenize
 
