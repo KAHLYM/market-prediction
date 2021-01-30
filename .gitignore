@@ -1,4 +1,6 @@
 # Python
-__pycache__ 
+__pycache__
+
+classifiers/sentdex/pickled_algos
 
 secret.py
