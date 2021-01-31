@@ -1,6 +1,7 @@
 # Python
 __pycache__
 
+*.pickle
 classifiers/sentdex/pickled_algos
 
 secret.py
