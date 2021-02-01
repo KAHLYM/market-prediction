@@ -1,0 +1,4 @@
+ntlk
+pandas
+pickle
+praw
