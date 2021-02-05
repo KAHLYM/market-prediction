@@ -5,6 +5,10 @@ from statistics import mode
 from nltk.classify import ClassifierI
 from nltk.tokenize import word_tokenize
 
+from pathlib import Path
+
+PARENT_PATH = Path(__file__).parent
+
 class VoteClassifier(ClassifierI):
     def __init__(self, *classifiers):
         self._classifiers = classifiers
@@ -26,7 +30,7 @@ class VoteClassifier(ClassifierI):
         return confidence
 
 # Word features
-word_features5k_f = open('pickled_algos/data/word_features5k.pickle', 'rb')
+word_features5k_f = open(PARENT_PATH / 'pickled_algos/data/word_features5k.pickle', 'rb')
 word_features = pickle.load(word_features5k_f)
 word_features5k_f.close()
 
@@ -38,32 +42,32 @@ def find_features(document):
     return features
 
 # NaiveBayesClassifier
-open_file = open('pickled_algos/classifiers/NaiveBayes_classifier5k.pickle', 'rb')
+open_file = open(PARENT_PATH / 'pickled_algos/classifiers/NaiveBayes_classifier5k.pickle', 'rb')
 NaiveBayes_classifier  = pickle.load(open_file)
 open_file.close()
 
 # MultinomialNB
-open_file = open('pickled_algos/classifiers/MNB_classifier5k.pickle', 'rb')
+open_file = open(PARENT_PATH / 'pickled_algos/classifiers/MNB_classifier5k.pickle', 'rb')
 MNB_classifier = pickle.load(open_file)
 open_file.close()
 
 # BernoulliNB
-open_file = open('pickled_algos/classifiers/BernoulliNB_classifier5k.pickle', 'rb')
+open_file = open(PARENT_PATH / 'pickled_algos/classifiers/BernoulliNB_classifier5k.pickle', 'rb')
 BernoulliNB_classifier = pickle.load(open_file)
 open_file.close()
 
 # LogisticRegression
-open_file = open('pickled_algos/classifiers/LogisticRegression_classifier5k.pickle', 'rb')
+open_file = open(PARENT_PATH / 'pickled_algos/classifiers/LogisticRegression_classifier5k.pickle', 'rb')
 LogisticRegression_classifier = pickle.load(open_file)
 open_file.close()
 
 # LinearSVC
-open_file = open('pickled_algos/classifiers/LinearSVC_classifier5k.pickle', 'rb')
+open_file = open(PARENT_PATH / 'pickled_algos/classifiers/LinearSVC_classifier5k.pickle', 'rb')
 LinearSVC_classifier = pickle.load(open_file)
 open_file.close()
 
 # SGDClassifier
-open_file = open('pickled_algos/classifiers/SGDC_classifier5k.pickle', 'rb')
+open_file = open(PARENT_PATH / 'pickled_algos/classifiers/SGDC_classifier5k.pickle', 'rb')
 SGDC_classifier = pickle.load(open_file)
 open_file.close()
 

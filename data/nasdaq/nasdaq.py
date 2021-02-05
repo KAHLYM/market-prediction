@@ -53,10 +53,10 @@ def format_security_name(security_name: str) -> str:
 
     return security_name
 
-# Generate Symbol-SecurityName list
-ticker_security_names = []
+# Generate Symbol-SecurityName dictionary
+ticker_security_names = {}
 for row in nasdaqlisted.itertuples():
-    ticker_security_names.append((row[1], format_security_name(row[2])))
+    ticker_security_names[row[1]] =  format_security_name(row[2])
 
 # Pickle Symbol-SecurityName list
 save_ticker_security_names = open('nasdaq.pickle','wb')
