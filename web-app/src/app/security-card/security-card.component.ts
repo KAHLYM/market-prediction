@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-security-card',
@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./security-card.component.scss'],
 })
 export class SecurityCardComponent implements OnInit {
+
+  @Input() description: string = '';
+  @Input() imgSrc: string = ''
+  @Input() name: string = '';
+  @Input() ticker: string = '';
 
   constructor() { }
 
