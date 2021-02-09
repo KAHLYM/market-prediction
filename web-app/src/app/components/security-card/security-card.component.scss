@@ -1,0 +1,39 @@
+.card {
+    border-radius: .5rem;
+    box-shadow: rgba(99, 99, 99, .2) 0px 2px 8px 0px;
+    padding: 1rem;
+    overflow: auto;
+    width: 250px;
+    margin: 8px;
+}
+
+.header {
+    display: flex;
+    height: 2.4rem;
+    line-height: 1.2rem;
+    overflow: hidden;
+}
+
+.header-left {
+    float: left;
+}
+
+.header-left img {
+    height: 2.4rem;
+    object-fit: scale-down;
+}
+
+.header-right {
+    flex-grow: 1;
+    padding: 0 0 0 1rem;
+    vertical-align: middle;
+}
+
+.upper {
+    font-size: 1rem;
+}
+
+.lower {
+    color: rgba(0, 0, 0, .8);
+    font-size: .8rem;
+}
