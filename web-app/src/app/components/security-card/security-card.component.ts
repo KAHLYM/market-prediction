@@ -19,8 +19,8 @@ export class SecurityCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  parseFloat(sentiment: string): number {
-    return parseFloat(sentiment);
+  parseFloat(value: string): number {
+    return parseFloat(value);
   }
 
 }
