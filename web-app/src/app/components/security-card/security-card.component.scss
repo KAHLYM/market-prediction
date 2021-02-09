@@ -37,3 +37,38 @@
     color: rgba(0, 0, 0, .8);
     font-size: .8rem;
 }
+
+.summary {
+    display: flex;
+}
+
+.sentiment, .movement{
+    font-size: .8rem;
+    font-weight: 700;
+    padding: 5px;
+    text-align: right;
+    width: 50%;
+}
+
+.sentiment {
+    margin: 10px 2.5px 0px 0px;
+}
+
+.movement {
+    margin: 10px 0px 0px 2.5px;
+}
+
+.sentiment[sentiment=positive], .movement[movement=positive] {
+    background: #cce2d8;
+    color: #005a30;
+}
+
+.sentiment[sentiment=negative], .movement[movement=negative] {
+    color: #942514;
+    background: #f6d7d2;
+}
+
+.sentiment[sentiment=neutral], .movement[movement=neutral] {
+    background: #ebe9e7;
+    color: #383f43;
+}
