@@ -1,0 +1,33 @@
+$screen-min-small: 576px;
+@mixin small {
+    @media (min-width: #{$screen-min-small}) {
+        @content;
+    }
+ }
+ 
+$screen-min-medium: 768px;
+@mixin medium {
+    @media (min-width: #{$screen-min-medium}) {
+        @content;
+    }
+ }
+ 
+$screen-min-large: 992px;
+@mixin large {
+    @media (min-width: #{$screen-min-large}) {
+        @content;
+    }
+ }
+ 
+$screen-min-extra-large: 1200px;
+@mixin extra-large {
+    @media (min-width: #{$screen-min-extra-large}) {
+        @content;
+    }
+ }
+
+ @mixin custom($screen) {
+    @media (min-width: $screen+'px') {
+        @content;
+    }
+ }
