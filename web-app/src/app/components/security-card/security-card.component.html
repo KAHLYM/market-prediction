@@ -12,13 +12,14 @@
         </div>
     </div>
     <div class="summary">
-        <div class="sentiment" attr.sentiment="{{(parseFloat(sentiment) > 0) ? 'positive' : (parseFloat(sentiment) < 0) ? 'negative' : 'neutral'}}">
-            <img/>
-            <span>{{sentiment}}</span>
+        <div class="sentiment" attr.sentiment="{{(parseFloat(this.sentiment) > 0) ? 'positive' : (parseFloat(this.sentiment) < 0) ? 'negative' : 'neutral'}}">
+            <img src="{{(parseFloat(this.sentiment) > 0) ? '/assets/arrow-up-green.png' : (parseFloat(this.sentiment) < 0) ? '/assets/arrow-up-red.png' : '/assets/arrow-up-grey.png'}}"/>
+            <span>{{parseFloat(this.sentiment).toFixed(2)}}</span>
         </div>
-        <div class="movement" attr.movement="{{(parseFloat(movement) > 0) ? 'positive' : (parseFloat(movement) < 0) ? 'negative' : 'neutral'}}">
-            <img/>
-            <span>{{movement}}%</span>
+        <div class="value" attr.value="{{(parseFloat(this.valueOpen) > parseFloat(this.valueClose)) ? 'positive' : (parseFloat(this.valueOpen) < parseFloat(this.valueClose)) ? 'negative' : 'neutral'}}">
+            <img src="{{(parseFloat(this.valueOpen) > parseFloat(this.valueClose)) ? '/assets/arrow-up-green.png' : (parseFloat(this.valueOpen) < parseFloat(this.valueClose)) ? '/assets/arrow-up-red.png' : '/assets/arrow-up-grey.png'}}"/>
+            <span>{{(parseFloat(this.valueOpen) - parseFloat(this.valueClose)).toFixed(2)}}</span>
+            <span> ({{(parseFloat(this.valueOpen) / parseFloat(this.valueClose)).toFixed(2)}})%</span>
         </div>
     </div>
 </div>

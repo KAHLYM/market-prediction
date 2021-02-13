@@ -12,7 +12,8 @@ export class SecurityCardComponent implements OnInit {
   @Input() name: string = '';
   @Input() sentiment: string = '';
   @Input() ticker: string = '';
-  @Input() movement: string = '';
+  @Input() valueClose: string = '';
+  @Input() valueOpen: string = '';
 
   constructor() { }
 

@@ -42,11 +42,11 @@
     display: flex;
 }
 
-.sentiment, .movement{
+.sentiment, .value{
     font-size: .8rem;
     font-weight: 700;
     padding: 5px;
-    text-align: right;
+    text-align: center;
     width: 50%;
 }
 
@@ -54,21 +54,36 @@
     margin: 10px 2.5px 0px 0px;
 }
 
-.movement {
+.value {
     margin: 10px 0px 0px 2.5px;
 }
 
-.sentiment[sentiment=positive], .movement[movement=positive] {
+.sentiment img, .value img {
+    height: 0.8rem;
+    margin-right: 0.4rem;
+    margin-bottom: 0.2rem;
+    vertical-align: middle;
+}
+
+.sentiment[sentiment=negative] img, .value[value=negative] img {
+    transform: rotate(180deg);
+}
+
+.value span:nth-of-type(2) {
+    font-weight: normal;
+}
+
+.sentiment[sentiment=positive], .value[value=positive] {
     background: #cce2d8;
     color: #005a30;
 }
 
-.sentiment[sentiment=negative], .movement[movement=negative] {
+.sentiment[sentiment=negative], .value[value=negative] {
     color: #942514;
     background: #f6d7d2;
 }
 
-.sentiment[sentiment=neutral], .movement[movement=neutral] {
+.sentiment[sentiment=neutral], .value[value=neutral] {
     background: #ebe9e7;
     color: #383f43;
 }
