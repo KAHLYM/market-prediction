@@ -1,0 +1,8 @@
+<div class='search-outer'>
+    <div class='search-inner' *ngIf="open">
+        <button class='back-button' (click)='onBack()'><mat-icon>arrow_back</mat-icon></button>
+        <input #searchInput type='text' placeholder='Search by name or ticker e.g. "Apple" or "AAPL"' [(ngModel)]='searchValue'>
+        <button class='clear-button' (click)='onClear()'><mat-icon>clear</mat-icon></button>
+    </div>
+    <button class='search-button' *ngIf="!open" (click)='onSearch()'><mat-icon>search</mat-icon></button>
+</div>

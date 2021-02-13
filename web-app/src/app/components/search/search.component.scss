@@ -1,0 +1,32 @@
+.search-outer {
+    display: flex;
+}
+
+.search-inner {
+    display: flex;
+    width: 100%;
+}
+
+.search-inner input {
+    flex-grow: 1;
+}
+
+button, input {
+    background-color: transparent;
+    border: none;
+}
+
+input:focus, button:focus {
+    outline: none;
+}
+
+.search-button {
+    margin-left: auto;
+}
+
+.mat-icon {
+    font-size: 1rem;
+    height: 1rem;
+    width: 1rem;
+    line-height: 1.2rem;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-search',
@@ -7,9 +7,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('searchInput', { static: false }) searchInput: any;
+
+  open: boolean = false;
+  searchValue: string = '';
+
+  constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+  }
+
+  setOpen(open: boolean): void {
+    this.open = open;
+    this.changeDetectorRef.detectChanges();
+  }
+
+  onBack(): void {
+    this.setOpen(false);
+  }
+
+  onClear(): void {
+    this.searchValue = '';
+    this.searchInput.nativeElement.focus();
+  }
+  
+  onSearch(): void {
+    this.setOpen(true);
+    this.changeDetectorRef.detectChanges();
+    this.onClear();
   }
 
 }
