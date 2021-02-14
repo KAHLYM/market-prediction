@@ -44,10 +44,13 @@ export class SearchComponent implements OnInit {
 
   onKeyUp(): void {
     this.results = [];
-    this.searchService.search(this.searchValue).forEach(item => {
-      var result: Result = { currency: '$', description: '', name: item[1], ticker: item[0] };
-      this.results.push(result);
-    });
+    // Only search if if more that three chracters to improve performance
+    if (this.searchValue.length >= 3) {
+      this.searchService.search(this.searchValue).forEach(item => {
+        var result: Result = { currency: '$', description: '', name: item[1], ticker: item[0] };
+        this.results.push(result);
+      });
+    }
   }
   
   onSearch(): void {
