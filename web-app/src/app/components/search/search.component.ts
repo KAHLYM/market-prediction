@@ -1,4 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { SearchService } from 'src/app/services/search.service';
+
+export interface Result {
+  currency: string;
+  description: string;
+  name: string;
+  ticker: string;
+}
 
 @Component({
   selector: 'app-search',
@@ -11,8 +19,11 @@ export class SearchComponent implements OnInit {
 
   open: boolean = false;
   searchValue: string = '';
+  results: Result[] = [];
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private searchService: SearchService) { }
 
   ngOnInit(): void {
   }
@@ -29,6 +40,14 @@ export class SearchComponent implements OnInit {
   onClear(): void {
     this.searchValue = '';
     this.searchInput.nativeElement.focus();
+  }
+
+  onKeyUp(): void {
+    this.results = [];
+    this.searchService.search(this.searchValue).forEach(item => {
+      var result: Result = { currency: '$', description: '', name: item[1], ticker: item[0] };
+      this.results.push(result);
+    });
   }
   
   onSearch(): void {
