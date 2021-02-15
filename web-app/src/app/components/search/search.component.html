@@ -1,11 +1,18 @@
 <div class='search'>
     <div class='search-header'>
         <div class='search-bar' *ngIf='open'>
-            <button class='back-button' (click)='onBack()'><mat-icon>arrow_back</mat-icon></button>
-            <input #searchInput type='text' placeholder='Search by name or ticker e.g. "Apple" or "AAPL"' [(ngModel)]='searchValue' (keyup)='onKeyUp()'>
-            <button class='clear-button' (click)='onClear()'><mat-icon>clear</mat-icon></button>
+            <button class='back-button' (click)='onBack()'>
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <input #searchInput type='text' placeholder='Search by name or ticker e.g. "Apple" or "AAPL"'
+                [(ngModel)]='searchValue' (keyup)='onKeyUp()'>
+            <button class='clear-button' (click)='onClear()'>
+                <mat-icon>clear</mat-icon>
+            </button>
         </div>
-        <button class='search-button' *ngIf='!open' (click)='onSearch()'><mat-icon>search</mat-icon></button>
+        <button class='search-button' *ngIf='!open' (click)='onSearch()'>
+            <mat-icon>search</mat-icon>
+        </button>
     </div>
     <div class='search-results'>
         <div class='result' *ngFor='let result of results'>
@@ -14,7 +21,7 @@
             </div>
             <div class='result-right'>
                 <span class='upper'>{{result.name}}</span>
-                <br/>
+                <br />
                 <span class='lower'>{{result.currency}}</span>
                 <span class='lower'>{{result.ticker}}</span>
                 <span class='lower'> &#183; </span>
