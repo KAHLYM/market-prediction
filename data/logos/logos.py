@@ -1,14 +1,22 @@
 import logging
+import json
 import os
-import pathlib
+from pathlib import Path
 import time
+from typing import List
 import urllib
 
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-TICKER_LIST = []
-OUTPUT_DIRECTORY = os.path.join(str(pathlib.Path(__file__).parent.absolute()), 'output')
+def get_sp500(path: str) -> List:
+    with open(path) as f:
+        return json.load(f)
+
+TICKER_LIST = get_sp500('../s&p500/s&p500.json')
+OUTPUT_DIRECTORY = os.path.join(str(Path(__file__).parent.absolute()), 'output')
+
+Path(OUTPUT_DIRECTORY).mkdir(parents=True, exist_ok=True)
 
 # Logging
 logging_level = logging.DEBUG
@@ -48,7 +56,7 @@ for ticker in TICKER_LIST:
     for attempt in range(1, max_attempt + 1):
         try:
             # Retrieve Google search query
-            url = f'https://www.google.com/search?q={ ticker }+finance'
+            url = f'https://www.google.com/search?q={ ticker }+stock'
             driver.get(url)
             logger.debug(f'Waiting { page_wait_ticker } second for page load ...')
             time.sleep(page_wait_ticker)
@@ -90,7 +98,7 @@ for ticker in TICKER_LIST:
 
         except Exception as e:
             # Check if final attempt
-            if attempt == max_attempt + 1:
+            if attempt == max_attempt:
                 logger.error(f"Failed { ticker }")
                 logger.error(e)
                 complete.append(ticker)
