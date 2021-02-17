@@ -86,10 +86,6 @@ for ticker in TICKER_LIST:
             # Extract image source
             logo_src = driver.find_element_by_xpath('/html/body/div[7]/div[2]/div[9]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div/div/a/g-img/img').get_attribute('src')
 
-            # Check that Google associates search query with ticker
-            # market_summary = driver.find_element_by_xpath('/html/body/div[7]/div[2]/div[9]/div[2]/div/div[2]/div[2]/div/div/div[1]/div/div/div/g-card-section/div/g-card-section/div[1]/div[1]/div[1]/a').get_attribute('innerHTML')
-            # if (market_summary == 'Market Summary'):
-
             # Download image source
             logger.debug(f'Downloading { ticker } image source ...')
             urllib.request.urlretrieve(logo_src, logo_path)
