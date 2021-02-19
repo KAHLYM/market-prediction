@@ -8,6 +8,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { SecurityCardComponent } from './components/security-card/security-card.component';
 import { SearchComponent } from './components/search/search.component';
 import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './components/home/home.component';
+import { DiscoverComponent } from './components/discover/discover.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,8 @@ import { FormsModule } from '@angular/forms';
     HeaderComponent,
     SecurityCardComponent,
     SearchComponent,
+    HomeComponent,
+    DiscoverComponent,
   ],
   imports: [
     BrowserModule,
