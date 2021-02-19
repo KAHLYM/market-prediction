@@ -1,0 +1,11 @@
+.navigation {
+    background-color: #121212;
+    display: flex;
+}
+
+.navigation-link, .navigation:visited {
+    color: white;
+    text-decoration: none;
+    padding: 2rem;
+    font-size: 1rem;
+}

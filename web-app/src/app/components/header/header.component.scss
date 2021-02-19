@@ -1,24 +1,9 @@
 .header {
-    background-color: red;
+    color: #FFFFFF;
+    background-color: #121212;
     display: flex;
     flex-direction: column;
     height: calc(100vh - 2rem);
     margin-bottom: 0px;
     padding: 1rem;
-}
-
-.header div {
-    padding: 1rem;
-}
-
-.navigation {
-    background-color: green;
-    font-size: 2rem;
-    font-weight: 900;
-}
-
-.header-container {
-    background-color: blue;
-    height: 100%;
-    overflow: hidden;
 }
