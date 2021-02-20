@@ -1,3 +1,5 @@
+@import '../../../theme.scss';
+
 .discover {
     display: flex;
     flex-direction: column;
@@ -74,6 +76,6 @@ input:focus, button:focus {
 }
 
 .lower {
-    color: rgba(0, 0, 0, .8);
+    color: rgba($color-on-background, .8);
     font-size: .8rem;
 }
