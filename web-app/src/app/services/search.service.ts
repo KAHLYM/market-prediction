@@ -15,8 +15,13 @@ export class SearchService {
   search(searchValue: string) : [string, string][] {
     var matches: [string, string][] = [];
     
+    var searchValueLower: string = searchValue.toLowerCase();
+
     for (var key in data) {
-      if (key.includes(searchValue) || data[key].includes(searchValue)) {
+      var keyLower: string = key.toLowerCase();
+      var valueLower: string = data[key].toLowerCase();
+
+      if (keyLower.includes(searchValueLower) || valueLower.includes(searchValueLower)) {
         matches.push([key, data[key]]);
       }
     }
