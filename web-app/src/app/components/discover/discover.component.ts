@@ -52,6 +52,7 @@ export class DiscoverComponent implements OnInit {
   onResultClick(result: Result): void {
     this.searchFocused = false;
     this.searchValue = '';
+    this.results = []
     this.company = result;
   }
   
