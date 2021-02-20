@@ -1,0 +1,13 @@
+@import '../../../theme.scss';
+
+.navigation {
+    background-color: $color-background;
+    display: flex;
+}
+
+.navigation-link, .navigation:visited {
+    color: $color-on-background;
+    text-decoration: none;
+    padding: 2rem;
+    font-size: 1rem;
+}
