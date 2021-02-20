@@ -28,15 +28,6 @@ export class DiscoverComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setOpen(open: boolean): void {
-    this.open = open;
-    this.changeDetectorRef.detectChanges();
-  }
-
-  onBack(): void {
-    this.setOpen(false);
-  }
-
   onClear(): void {
     this.searchValue = '';
     this.searchInput.nativeElement.focus();
@@ -53,10 +44,4 @@ export class DiscoverComponent implements OnInit {
     }
   }
   
-  onSearch(): void {
-    this.setOpen(true);
-    this.changeDetectorRef.detectChanges();
-    this.onClear();
-  }
-
 }

@@ -6,19 +6,18 @@
     overflow: hidden;
 }
 
-.discover-header {
-    display: flex;
-    flex-direction: column;
-    height: 2rem;
-}
-
 .discover-bar {
     display: flex;
-    width: 100%;
+    height: 2.4rem;
+    background-color: rgba($color-primary, .2);
+    border-radius: 1.2rem;
+    width: calc(100% - 5.4rem);
+    padding: 0 1rem 0 4.4rem;
 }
 
 .discover-bar input {
     flex: 1;
+    font-size: 1rem;
 }
 
 button, input {
@@ -58,10 +57,16 @@ input:focus, button:focus {
 
 .result-left {
     float: left;
+    height: 2.4rem;
+    width: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center
 }
 
 .result-left img {
-    height: 2.4rem;
+    height: 2rem;
+    width: 2rem;
     object-fit: scale-down;
 }
 
