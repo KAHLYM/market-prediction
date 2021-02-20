@@ -1,15 +1,15 @@
 <div class='discover'>
     <div class='discover-bar'>
         <input #searchInput type='text' placeholder='Search by name or ticker e.g. "Apple" or "AAPL"'
-            [(ngModel)]='searchValue' (keyup)='onKeyUp()'>
-        <button class='clear-button' (click)='onClear()'>
+            [(ngModel)]='searchValue' (keyup)='onSearchKeyUp()' (focus)='onSearchFocus()'>
+        <button class='clear-button' (click)='onSearchClear()'>
             <mat-icon>clear</mat-icon>
         </button>
     </div>
-    <div class='discover-results'>
-        <div class='result' *ngFor='let result of results'>
+    <div class='discover-results' *ngIf='searchFocused'>
+        <div class='result' *ngFor='let result of results' (click)='onResultClick(result)'>
             <div class='result-left'>
-                <img src='assets/logos/{{result.ticker}}.jpg'/>
+                <img src='assets/logos/{{result.ticker}}.jpg' />
             </div>
             <div class='result-right'>
                 <span class='upper'>{{result.name}}</span>
@@ -21,5 +21,26 @@
             </div>
         </div>
     </div>
-    <!-- <div class='company' *ngIf='company'></div> -->
+    <div class='company' *ngIf='!searchFocused'>
+        <div class='company-header'>
+            <div class='company-image'>
+                <img src='assets/logos/{{company.ticker}}.jpg' />
+            </div>
+            <div>
+                <span class='upper'>{{company.name}}</span>
+            </div>
+            <div>
+                <span class='lower'>{{company.currency}}</span>
+                <span class='lower'>{{company.ticker}}</span>
+                <span class='lower'> &#183; </span>
+                <span class='lower'>{{company.description}}</span>
+            </div>
+        </div>
+        <div class='company-sentiment graph'>
+            Company Sentiment Placeholder
+        </div>
+        <div class='company-volume graph'>
+            Company Volume Placeholder
+        </div>
+    </div>
 </div>

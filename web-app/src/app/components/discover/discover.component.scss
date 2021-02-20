@@ -65,6 +65,7 @@ button:focus, input:focus {
     line-height: 1.2rem;
     overflow: hidden;
     padding: 1rem;
+    cursor: pointer;
 }
 
 .result-left {
@@ -95,4 +96,40 @@ button:focus, input:focus {
 .lower {
     color: rgba($color-on-background, .8);
     font-size: .8rem;
+}
+
+.company {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1rem 2rem 1rem;
+}
+
+.company > div {
+    margin-bottom: 1rem;
+}
+
+.company-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.company-image {
+    height: 2.4rem;
+    width: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: .5rem;
+}
+
+.company-image img {
+    height: 2rem;
+    width: 2rem;
+    object-fit: scale-down;
+}
+
+.graph {
+    height: 5rem;
+    border: 1px solid black;
 }

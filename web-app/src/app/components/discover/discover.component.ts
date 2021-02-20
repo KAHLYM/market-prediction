@@ -19,21 +19,26 @@ export class DiscoverComponent implements OnInit {
 
   open: boolean = false;
   searchValue: string = '';
+  searchFocused: boolean = true;
   results: Result[] = [];
+  company: Result = {currency: '', description: '', name: '', ticker: ''};
 
   constructor(
-    private changeDetectorRef: ChangeDetectorRef,
     private searchService: SearchService) { }
 
   ngOnInit(): void {
   }
 
-  onClear(): void {
+  onSearchClear(): void {
     this.searchValue = '';
     this.searchInput.nativeElement.focus();
   }
 
-  onKeyUp(): void {
+  onSearchFocus(): void {
+    this.searchFocused = true;
+  }
+
+  onSearchKeyUp(): void {
     this.results = [];
     // Only search if if more that three chracters to improve performance
     if (this.searchValue.length >= 3) {
@@ -42,6 +47,12 @@ export class DiscoverComponent implements OnInit {
         this.results.push(result);
       });
     }
+  }
+
+  onResultClick(result: Result): void {
+    this.searchFocused = false;
+    this.searchValue = '';
+    this.company = result;
   }
   
 }
