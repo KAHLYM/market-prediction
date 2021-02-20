@@ -20,12 +20,16 @@
     font-size: 1rem;
 }
 
+.clear-button:hover {
+    cursor: pointer;
+}
+
 button, input {
     background-color: transparent;
     border: none;
 }
 
-input:focus, button:focus {
+button:focus, input:focus {
     outline: none;
 }
 
