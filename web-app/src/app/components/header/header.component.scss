@@ -60,9 +60,17 @@
 .header > div:nth-child(2) {
     background-color: $color-background;
     margin-top: 1rem;
+    display: flex;
+    justify-content: center;
 
     @include for-size(desktop-up) {
         min-width: 40%;
         margin-top: 0rem;
     }
+}
+
+.header > div:nth-child(2) img {
+    object-fit: scale-down;
+    width: 
+    80%;
 }
