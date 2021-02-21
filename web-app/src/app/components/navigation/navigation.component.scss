@@ -16,8 +16,24 @@
 .navigation.open {
   position: absolute;
   width: 100%;
+  height: 100%;
 }
-  
+
+.navigation-bar {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.navigation-bar-seperator {
+  flex-grow: 1;
+}
+
+.navigation-bar > div > img {
+  margin: 1rem;
+  height: 1.4rem;
+}
+
 .navigation-menu {
   width: 1.4rem;
   height: 1rem;
@@ -94,6 +110,6 @@
 .navigation-link, .navigation-link:visited {
   color: $color-on-background;
   text-decoration: none;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem 1rem;
   font-size: 1rem;
 }
