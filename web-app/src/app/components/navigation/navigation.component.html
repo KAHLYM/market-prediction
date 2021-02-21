@@ -1,8 +1,13 @@
 <div class="navigation" [ngClass]="open ? 'open' : 'closed'">
-    <!-- TODO: Add logo -->
-    <div class="navigation-menu" (click)="onMenuClick()">
-        <span></span>
-        <span></span>
+    <div class="navigation-bar">
+        <div>
+            <img src="assets/icon.png">
+        </div>
+        <div class="navigation-bar-seperator"></div>
+        <div class="navigation-menu" (click)="onMenuClick()">
+            <span></span>
+            <span></span>
+        </div>
     </div>
     <div class="navigation-wrapper" *ngIf="open">
         <a class="navigation-link" [routerLink]="['/']" (click)="onLinkClick()">Home</a>
