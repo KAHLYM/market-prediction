@@ -31,6 +31,7 @@ export class DiscoverComponent implements OnInit {
 
   onSearchClear(): void {
     this.searchValue = '';
+    this.results = [];
     this.searchInput.nativeElement.focus();
   }
 
