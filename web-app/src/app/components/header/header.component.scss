@@ -32,9 +32,14 @@
 }
 
 .header > div:nth-child(1) > span:nth-child(2) {
-    margin-top: 1.75rem;
-    font-size: 1.75rem;
+    margin-top: 1.25rem;
+    font-size: 1.25rem;
     font-weight: 300;
+
+    @include for-size(desktop-up) {
+        margin-top: 1.75rem;
+        font-size: 1.75rem;
+    }
 }
 
 .header > div:nth-child(1) > button {
