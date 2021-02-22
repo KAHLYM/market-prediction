@@ -45,8 +45,9 @@
     border: none;
     font-size: 1.25rem;
     font-weight: 300;
-    background-color: $color-primary;
-    color: $color-on-primary
+    background-color: $color-background;
+    color: $color-on-background;
+    border: 1px solid $color-on-background;
 }
 
 .header > div:nth-child(1) > button:focus {
