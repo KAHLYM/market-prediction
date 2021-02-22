@@ -6,7 +6,7 @@
     background-color: $color-background;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 2rem;
 
     @include for-size(desktop-up) {
         flex-direction: row;

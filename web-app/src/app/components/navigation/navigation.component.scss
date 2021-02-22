@@ -1,21 +1,16 @@
 @import '../../../theme.scss';
 
-* {
-  margin: 0;
-  padding: 0; 
-}
-
 .navigation {
-    background-color: $color-background;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin-bottom: 1rem;
+  background-color: $color-background;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 2rem 2rem 2rem 2rem;
 }
 
 .navigation.open {
   position: absolute;
-  width: 100%;
+  width: calc(100% - 4rem);
   height: 100%;
 }
 
@@ -30,7 +25,6 @@
 }
 
 .navigation-bar > div > img {
-  margin: 1rem;
   height: 1.4rem;
 }
 
@@ -38,7 +32,6 @@
   width: 1.4rem;
   height: 1rem;
   position: relative;
-  margin: 1rem;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
   -o-transform: rotate(0deg);
@@ -93,11 +86,11 @@
 }
 
 .navigation.open .navigation-menu span:nth-child(2) {
+  top: 1rem;
   -webkit-transform: rotate(45deg);
   -moz-transform: rotate(45deg);
   -o-transform: rotate(45deg);
   transform: rotate(45deg);
-  top: 1rem;
 }
 
 .navigation-wrapper {
@@ -110,6 +103,6 @@
 .navigation-link, .navigation-link:visited {
   color: $color-on-background;
   text-decoration: none;
-  padding: 2rem 2rem 2rem 1rem;
+  padding: 2rem 0rem 2rem 0rem;
   font-size: 1rem;
 }

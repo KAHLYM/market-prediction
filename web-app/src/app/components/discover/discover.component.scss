@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    padding: 0rem 2rem;
 }
 
 .discover-bar {
@@ -12,14 +13,12 @@
     height: 2.4rem;
     background-color: $color-background;
     border-radius: 1.2rem;
-    margin: 0 .5rem 0 .5rem;
-    width: calc(100% - 2.5rem);
+    width: calc(100% - 1.5rem - 2px);
     padding: 0 .5rem 0 1rem;
     border: 1px solid $color-on-background;
 
     @include for-size(desktop-up) {
-        margin: 0 0 0 0;
-        width: calc(100% - 6.4rem);
+        width: calc(100% - 5.4rem - 2px);
         padding: 0 1rem 0 4.4rem;
     }
 }
@@ -108,7 +107,7 @@ button:focus, input:focus {
 .company {
     display: flex;
     flex-direction: column;
-    padding: 2rem 1rem 2rem 1rem;
+    padding: 2rem 0rem;
 }
 
 .company > div {
