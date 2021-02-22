@@ -12,14 +12,15 @@
     display: flex;
     height: 2.4rem;
     background-color: $color-background;
-    border-radius: 1.2rem;
-    width: calc(100% - 1.5rem - 2px);
-    padding: 0 .5rem 0 1rem;
-    border: 1px solid $color-on-background;
+    border-top: 1px solid $color-on-background;
+    border-right: none;
+    border-bottom: 1px solid $color-on-background;
+    border-left: none;
+    width: calc(100%);
 
     @include for-size(desktop-up) {
-        width: calc(100% - 5.4rem - 2px);
-        padding: 0 1rem 0 4.4rem;
+        width: calc(100% - 4.4rem);
+        padding: 0 0 0 4.4rem;
     }
 }
 
