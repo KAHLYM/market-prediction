@@ -5,21 +5,22 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    padding: 0rem 2rem;
 }
 
 .discover-bar {
     display: flex;
     height: 2.4rem;
-    background-color: rgba($color-primary, .2);
-    border-radius: 1.2rem;
-    margin: 0 .5rem 0 .5rem;
-    width: calc(100% - 2.5rem);
-    padding: 0 .5rem 0 1rem;
+    background-color: $color-background;
+    border-top: 1px solid $color-on-background;
+    border-right: none;
+    border-bottom: 1px solid $color-on-background;
+    border-left: none;
+    width: calc(100%);
 
     @include for-size(desktop-up) {
-        margin: 0 0 0 0;
-        width: calc(100% - 5.4rem);
-        padding: 0 1rem 0 4.4rem;
+        width: calc(100% - 4.4rem);
+        padding: 0 0 0 4.4rem;
     }
 }
 
@@ -28,12 +29,17 @@
     font-size: 1rem;
 }
 
+.discover-bar input::placeholder {
+    color: rgba($color-on-background, 0.8);
+}
+
 .clear-button:hover {
     cursor: pointer;
 }
 
 button, input {
     background-color: transparent;
+    color: $color-on-background;
     border: none;
 }
 
@@ -101,7 +107,7 @@ button:focus, input:focus {
 .company {
     display: flex;
     flex-direction: column;
-    padding: 2rem 1rem 2rem 1rem;
+    padding: 2rem 0rem;
 }
 
 .company > div {
