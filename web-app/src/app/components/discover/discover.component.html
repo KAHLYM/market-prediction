@@ -14,10 +14,7 @@
             <div class='result-right'>
                 <span class='upper'>{{result.name}}</span>
                 <br />
-                <span class='lower'>{{result.currency}}</span>
-                <span class='lower'>{{result.ticker}}</span>
-                <span class='lower'> &#183; </span>
-                <span class='lower'>{{result.description}}</span>
+                <span class='lower'>{{result.currency}}{{result.ticker}} &#183; {{result.description}}</span>
             </div>
         </div>
     </div>
@@ -30,10 +27,7 @@
                 <span class='upper'>{{company.name}}</span>
             </div>
             <div>
-                <span class='lower'>{{company.currency}}</span>
-                <span class='lower'>{{company.ticker}}</span>
-                <span class='lower'> &#183; </span>
-                <span class='lower'>{{company.description}}</span>
+                <span class='lower'>{{company.currency}}{{company.ticker}} &#183; {{company.description}}</span>
             </div>
         </div>
         <div class='company-sentiment graph'>
