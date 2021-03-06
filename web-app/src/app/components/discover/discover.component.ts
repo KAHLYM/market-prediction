@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SearchService } from 'src/app/services/search.service';
 
 export interface Result {
@@ -41,7 +41,7 @@ export class DiscoverComponent implements OnInit {
 
   onSearchKeyUp(): void {
     this.results = [];
-    // Only search if if more that three chracters to improve performance
+    // Only search if at least three chracters to improve performance
     if (this.searchValue.length >= 3) {
       this.searchService.search(this.searchValue).forEach(item => {
         var result: Result = { currency: '$', description: '', name: item[1], ticker: item[0] };
