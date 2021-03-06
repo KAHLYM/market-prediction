@@ -24,3 +24,5 @@ jobs:
     - name: Test
       working-directory: ./web-app
       run: npm test
+      env:
+        CI: true
