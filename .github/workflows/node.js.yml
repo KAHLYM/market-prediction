@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Angular Tests
 
 on:
   push:
@@ -20,4 +20,5 @@ jobs:
         npm run build --if-present
     - name: Test
       working-directory: ./web-app
-      run: npm test
+      run: |
+        npm test

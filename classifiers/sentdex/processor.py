@@ -6,12 +6,13 @@ from nltk.tokenize import word_tokenize
 
 from typing import Any, List
 
+
 class Processor:
     def __init__(self, data: List[str], valid_word_tags: List[str], tag: str = None):
         self.data: List[str] = data
         self.valid_word_tags: List[str] = valid_word_tags
-        self.tag : str = tag
-        
+        self.tag: str = tag
+
         self.documents: List[(str, str)] = []
         self.tokenized_data: List[List[str]] = []
 
@@ -22,7 +23,7 @@ class Processor:
     @valid_word_tags.setter
     def valid_word_tags(self, value: List[str]):
         if not value:
-            warnings.warn('valid_word_tags will contain not tags')
+            warnings.warn("valid_word_tags will contain not tags")
         # TODO: Raise AttributeError for invalid tags
         # elif (tag not in upenn_tagset() for tag in value):
         #     raise AttributeError(f'invalid value, valid_word_tags contains an invalid tag')
@@ -31,7 +32,7 @@ class Processor:
 
     @valid_word_tags.deleter
     def valid_word_tags(self):
-        raise AttributeError('do not delete, valid_word_tags can be set emptied')
+        raise AttributeError("do not delete, valid_word_tags can be set emptied")
 
     def run(self) -> None:
         for d in self.data:
