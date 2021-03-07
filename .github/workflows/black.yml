@@ -22,5 +22,5 @@ jobs:
         pip install black
     - name: Analyse code with black
       run: |
-        python -m black --check . --eclude=web-app
+        python -m black --check . --exclude=web-app
     
