@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "market-prediction-3fd2a"
+  },
+  "targets": {
+    "market-prediction-3fd2a": {
+      "hosting": {
+        "web-app": [
+          "market-prediction-3fd2a"
+        ]
+      }
+    }
+  }
+}
