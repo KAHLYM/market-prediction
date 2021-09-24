@@ -19,3 +19,9 @@ When a pull request is raised against `main` the following automation executes:
 * Linting with [Black](https://github.com/psf/black)
   
 This is true for pushes to pull requests against `main` too.
+
+## Pull Requests
+
+Pull Requests require Administrator approval. [KAHLYM](https://github.com/KAHLYM) is currently the only Administrator.
+
+This is to restrict malicious code being run through Firebase automation which could incur financial costs.
