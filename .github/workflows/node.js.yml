@@ -21,4 +21,4 @@ jobs:
     - name: Test
       working-directory: ./web-app
       run: |
-        npm test
+        ng test --sourceMap=false --browsers=ChromeHeadless --watch=false
