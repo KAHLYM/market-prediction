@@ -18,7 +18,7 @@ When a pull request is raised against `main` the following automation executes:
 * Black Formatter
 * Linting with [Black](https://github.com/psf/black)
   
-This is true for pushes to pull requests against `main` too.
+This is true for pushes and pull requests against `main` too.
 
 ## Pull Requests
 
