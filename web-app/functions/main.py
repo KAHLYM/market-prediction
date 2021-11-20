@@ -12,7 +12,7 @@ def get_reddit_submissions(event, context):
 
     # Get PRAW client_secret from Google Cloud Secret Manager
     sm = secretmanager.SecretManagerServiceClient()
-    response = sm.access_secret_version(request={"name": "projects/63698589299/secrets/PRAW/versions/latest"})
+    response = sm.access_secret_version(request={"name": "projects/724762929986/secrets/PRAW/versions/latest"})
     client_secret = response.payload.data.decode("UTF-8")
 
     # Setup PRAW
