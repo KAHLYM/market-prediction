@@ -54,4 +54,4 @@ def get_reddit_submissions(event, context):
 
             except Exception as e:
                 # Swallow all exceptions and log
-                logging.warning(f"An acveption occured: { e }")
+                logging.warning(f"An exception occured: { e }")
