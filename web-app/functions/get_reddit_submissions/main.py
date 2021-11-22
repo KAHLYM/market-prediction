@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 
+import json
 import logging
 import sys
 from datetime import datetime, timedelta
 
+import numpy as np
 import praw
+from classifiers.sentdex import sentiment_mod as sm
 from google.cloud import firestore, secretmanager
 
 
@@ -16,6 +19,15 @@ def is_submission_valid(submission) -> bool:
         valid = False
 
     return valid
+
+
+def upload_document(collection_path: str, document_id: str, data: dict, merge: bool = True) -> None:
+    try:
+        # Write document
+        firestore.Client().collection(collection_path).document(document_id).set(data, merge=merge)
+    except Exception as e:
+        # Swallow all exceptions and log
+        logging.warning(f"An exception occured: { e }")
 
 
 def get_reddit_submissions(event, context):
@@ -34,6 +46,8 @@ def get_reddit_submissions(event, context):
 
     utc_expirary = datetime.utcnow() - timedelta(hours=24)
 
+    submissions = []
+
     # Fetch all subsmissions for given subreddit within 24
     for subreddit in ["stocks"]:
         # Reddit API listing limited to 1000 items
@@ -46,21 +60,33 @@ def get_reddit_submissions(event, context):
             # Submissions are sorted by new so break when first post exceeds expirary
             if submission.created_utc < utc_expirary.timestamp():
                 break
+            
+            submissions.append(submission)
 
-            try:
-                # Write document
-                firestore.Client().collection("source:reddit").document(
-                    submission.id
-                ).set(
-                    {
-                        "created_utc": int(submission.created_utc),
-                        "subreddit": submission.subreddit.display_name,
-                        "title": submission.title,
-                        "selftext": submission.selftext,
-                    },
-                    merge=True,
-                )
+            # TODO Upload document to Firebase Storage
+            upload_document("source:reddit", submission.id, {
+                "created_utc": int(submission.created_utc),
+                "subreddit": submission.subreddit.display_name,
+                "title": submission.title,
+                "selftext": submission.selftext,
+            })
 
-            except Exception as e:
-                # Swallow all exceptions and log
-                logging.warning(f"An exception occured: { e }")
+    # TODO Upload s&p500.json to Google Cloud Platform
+    sp500 = json.loads("s&p500.json")[0]
+
+    sentiments = {}
+    for submission in submissions:
+        # TODO Upload sentiment_mod to Google Cloud Platform
+        classification, confidence = sm.sentiment(submission)
+        for ticker in any(ticker in submission for ticker in sp500):
+            sentiments[ticker].append([classification, confidence])
+
+    # Calculate averages
+    for ticker, sentiment in sentiments:
+        sentiment_mean = np.mean(sentiment, axis=0)
+
+        upload_document(ticker, datetime.today().strftime('%Y-%m-%d'), {
+            "classification": 0 if sentiment_mean[0] < .5 else 1,
+            "confidence": sentiment_mean[1],
+            "entires": len(sentiment),
+        }, merge=False)
