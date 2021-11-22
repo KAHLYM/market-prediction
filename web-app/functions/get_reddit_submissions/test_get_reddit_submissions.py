@@ -8,9 +8,7 @@ from praw.models.reddit.submission import Submission
 
 
 class TestGetRedditSubmissions(unittest.TestCase):
-    def test_example(self):
-        assert True
-
+    
     @dataclass(init=True, repr=True, eq=True)
     class test:
         returnValue: Any = None
