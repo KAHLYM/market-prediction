@@ -8,6 +8,16 @@ import praw
 from google.cloud import firestore, secretmanager
 
 
+def is_submission_valid(submission) -> bool:
+    valid: bool = True
+
+    # Omit non-text-based submissions i.e. image-based/link-based submissions
+    if not submission.is_self:
+        valid = False
+
+    return valid
+
+
 def get_reddit_submissions(event, context):
 
     # Get PRAW client_secret from Google Cloud Secret Manager
@@ -30,8 +40,7 @@ def get_reddit_submissions(event, context):
         # PRAW will break request into multiple API calls of 100 items seperated by 2 second delay
         for submission in reddit.subreddit(subreddit).new(limit=None):
 
-            # Omit non-text-based submissions i.e. image-based/link-based submissions
-            if not submission.is_self:
+            if not is_submission_valid(submission):
                 continue
 
             # Submissions are sorted by new so break when first post exceeds expirary
