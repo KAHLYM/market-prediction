@@ -71,7 +71,7 @@ def get_reddit_submissions(event, context):
                 "selftext": submission.selftext,
             })
 
-    # TODO Upload s&p500.json to Google Cloud Platform
+    # TODO Automate upload of s&p500.json to Google Cloud Platform
     sp500 = json.loads("s&p500.json")[0]
 
     sentiments = {}
