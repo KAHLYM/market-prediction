@@ -33,6 +33,7 @@ def upload_document_to_database(collection_path: str, document_id: str, data: di
 
 def upload_document_to_storage(blob_name: str, data: str, content_type: str = "text/plain") -> None:
     try:
+        # Write document
         bucket: Bucket = storage.Client.get_bucket("gs://market-prediction-5209e.appspot.com")
         bucket.blob(blob_name).upload_from_string(data, content_type)
     except Exception as e:
@@ -43,8 +44,8 @@ def upload_document_to_storage(blob_name: str, data: str, content_type: str = "t
 def get_reddit_submissions(event, context):
 
     # Get PRAW client_secret from Google Cloud Secret Manager
-    sm = secretmanager.SecretManagerServiceClient()
-    response = sm.access_secret_version(request={"name": "projects/724762929986/secrets/PRAW/versions/latest"})
+    smsc = secretmanager.SecretManagerServiceClient()
+    response = smsc.access_secret_version(request={"name": "projects/724762929986/secrets/PRAW/versions/latest"})
     client_secret = response.payload.data.decode("UTF-8")
 
     # Setup PRAW
