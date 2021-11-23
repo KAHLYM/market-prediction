@@ -74,12 +74,12 @@ def get_reddit_submissions(event, context):
             
             submissions.append(submission)
             
-            upload_document_to_storage(f"{submission.id}.json", json.dumps({
-                "created_utc": int(submission.created_utc),
-                "subreddit": submission.subreddit.display_name,
-                "title": submission.title,
-                "selftext": submission.selftext,
-            }))
+            # upload_document_to_storage(f"{submission.id}.json", json.dumps({
+            #     "created_utc": int(submission.created_utc),
+            #     "subreddit": submission.subreddit.display_name,
+            #     "title": submission.title,
+            #     "selftext": submission.selftext,
+            # }))
 
     # TODO Automate upload of s&p500.json to Google Cloud Platform
     sp500 = json.loads("s&p500.json")[0]
