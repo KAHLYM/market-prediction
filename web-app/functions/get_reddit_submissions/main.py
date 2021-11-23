@@ -4,11 +4,12 @@ import json
 import logging
 import sys
 from datetime import datetime, timedelta
+from google.cloud.storage.bucket import Bucket
 
 import numpy as np
 import praw
 from classifiers.sentdex import sentiment_mod as sm
-from google.cloud import firestore, secretmanager
+from google.cloud import firestore, secretmanager, storage
 
 
 def is_submission_valid(submission) -> bool:
@@ -21,10 +22,19 @@ def is_submission_valid(submission) -> bool:
     return valid
 
 
-def upload_document(collection_path: str, document_id: str, data: dict, merge: bool = True) -> None:
+def upload_document_to_database(collection_path: str, document_id: str, data: dict, merge: bool = True) -> None:
     try:
         # Write document
         firestore.Client().collection(collection_path).document(document_id).set(data, merge=merge)
+    except Exception as e:
+        # Swallow all exceptions and log
+        logging.warning(f"An exception occured: { e }")
+
+
+def upload_document_to_storage(blob_name: str, data: str, content_type: str = "text/plain") -> None:
+    try:
+        bucket: Bucket = storage.Client.get_bucket("gs://market-prediction-5209e.appspot.com")
+        bucket.blob(blob_name).upload_from_string(data, content_type)
     except Exception as e:
         # Swallow all exceptions and log
         logging.warning(f"An exception occured: { e }")
@@ -62,14 +72,13 @@ def get_reddit_submissions(event, context):
                 break
             
             submissions.append(submission)
-
-            # TODO Upload document to Firebase Storage
-            upload_document("source:reddit", submission.id, {
+            
+            upload_document_to_storage(f"{submission.id}.json", json.dumps({
                 "created_utc": int(submission.created_utc),
                 "subreddit": submission.subreddit.display_name,
                 "title": submission.title,
                 "selftext": submission.selftext,
-            })
+            }))
 
     # TODO Automate upload of s&p500.json to Google Cloud Platform
     sp500 = json.loads("s&p500.json")[0]
@@ -85,7 +94,7 @@ def get_reddit_submissions(event, context):
     for ticker, sentiment in sentiments:
         sentiment_mean = np.mean(sentiment, axis=0)
 
-        upload_document(ticker, datetime.today().strftime('%Y-%m-%d'), {
+        upload_document_to_database(ticker, datetime.today().strftime('%Y-%m-%d'), {
             "classification": 0 if sentiment_mean[0] < .5 else 1,
             "confidence": sentiment_mean[1],
             "entires": len(sentiment),
