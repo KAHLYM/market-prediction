@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
+from collections import defaultdict
 import json
 import logging
 import sys
 from datetime import datetime, timedelta
-from google.cloud.storage.bucket import Bucket
 
 import numpy as np
 import praw
-from classifiers.sentdex import sentiment_mod as sm
+from classifiers import sentiment_mod as sm
 from google.cloud import firestore, secretmanager, storage
+from google.cloud.storage.bucket import Bucket
 
 
 def is_submission_valid(submission) -> bool:
@@ -40,8 +41,7 @@ def upload_document_to_storage(blob_name: str, data: str, content_type: str = "t
         # Swallow all exceptions and log
         logging.warning(f"An exception occured: { e }")
 
-
-def get_reddit_submissions(event, context):
+def get_submissions() -> list:
 
     # Get PRAW client_secret from Google Cloud Secret Manager
     smsc = secretmanager.SecretManagerServiceClient()
@@ -55,9 +55,9 @@ def get_reddit_submissions(event, context):
         user_agent=f"{sys.platform}:marketprediction:v0.2 (by u/KAHLYM)",
     )
 
-    utc_expirary = datetime.utcnow() - timedelta(hours=24)
-
     submissions = []
+
+    utc_expirary = datetime.utcnow() - timedelta(hours=24)
 
     # Fetch all subsmissions for given subreddit within 24
     for subreddit in ["stocks"]:
@@ -72,7 +72,7 @@ def get_reddit_submissions(event, context):
             if submission.created_utc < utc_expirary.timestamp():
                 break
             
-            submissions.append(submission)
+            submissions.append(submission.selftext)
             
             # upload_document_to_storage(f"{submission.id}.json", json.dumps({
             #     "created_utc": int(submission.created_utc),
@@ -80,17 +80,33 @@ def get_reddit_submissions(event, context):
             #     "title": submission.title,
             #     "selftext": submission.selftext,
             # }))
+    
+    return submissions
 
+
+def analyse(submissions: list) -> list:
     # TODO Automate upload of s&p500.json to Google Cloud Platform
-    sp500 = json.loads("s&p500.json")[0]
+    with open("s&p500.json", 'r') as j:
+        sp500 = json.loads(j.read())
 
-    sentiments = {}
+    sentiments = defaultdict(list)
     for submission in submissions:
         # TODO Upload sentiment_mod to Google Cloud Platform
         classification, confidence = sm.sentiment(submission)
-        for ticker in any(ticker in submission for ticker in sp500):
+        # TODO Implement function to get ticker in submission
+        # i.e something more appropriate than split()
+        for ticker in [ticker for ticker in sp500 if ticker in submission.split()]:
             sentiments[ticker].append([classification, confidence])
 
+    return sentiments
+
+
+def get_reddit_submissions(event, context):
+
+    submissions = get_submissions()
+
+    sentiments = analyse(submissions)
+    
     # Calculate averages
     for ticker, sentiment in sentiments:
         sentiment_mean = np.mean(sentiment, axis=0)

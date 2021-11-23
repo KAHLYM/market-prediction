@@ -2,7 +2,7 @@ from typing import Any
 import unittest
 from dataclasses import dataclass, field
 
-from main import is_submission_valid
+from main import analyse, is_submission_valid
 from praw import Reddit
 from praw.models.reddit.submission import Submission
 
@@ -26,6 +26,21 @@ class TestGetRedditSubmissions(unittest.TestCase):
                 submission: Submission = Submission(Reddit, _data={'id': 'test_id', "is_self": test.parameters[0]})
                 
                 assert is_submission_valid(submission) is test.returnValue
+
+    def test_analyse(self):
+        submissions: list = [
+            "AAPL amazing",
+            "AAPL okay",
+            "FB bad"
+        ]
+
+        sentiments = analyse(submissions)
+
+        self.assertEqual(len(sentiments), 2)
+        self.assertIn("AAPL", sentiments)
+        self.assertEqual(len(sentiments["AAPL"]), 2)
+        self.assertIn("FB", sentiments)
+        self.assertEqual(len(sentiments["FB"]), 1)
 
 if __name__ == '__main__':
     unittest.main()
