@@ -112,7 +112,7 @@ def get_reddit_submissions(event, context):
         sentiment_mean = np.mean(sentiment, axis=0)
 
         upload_document_to_database(ticker, datetime.today().strftime('%Y-%m-%d'), {
-            "classification": 0 if sentiment_mean[0] < .5 else 1,
+            "classification": sentiment_mean[0],
             "confidence": sentiment_mean[1],
             "entires": len(sentiment),
         }, merge=False)
