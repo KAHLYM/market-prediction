@@ -3,12 +3,13 @@
 from collections import defaultdict
 import json
 import logging
+from pathlib import Path
 import sys
 from datetime import datetime, timedelta
 
 import numpy as np
 import praw
-from classifiers import sentiment_mod as sm
+from .classifiers import sentiment_mod as sm
 from google.cloud import firestore, secretmanager, storage
 from google.cloud.storage.bucket import Bucket
 
@@ -86,7 +87,7 @@ def get_submissions() -> list:
 
 def analyse(submissions: list) -> list:
     # TODO Automate upload of s&p500.json to Google Cloud Platform
-    with open("s&p500.json", 'r') as j:
+    with open(Path(__file__).parent / "s&p500.json", 'r') as j:
         sp500 = json.loads(j.read())
 
     sentiments = defaultdict(list)
