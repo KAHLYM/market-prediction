@@ -74,13 +74,6 @@ def get_submissions() -> list:
                 break
             
             submissions.append(submission.selftext)
-            
-            # upload_document_to_storage(f"{submission.id}.json", json.dumps({
-            #     "created_utc": int(submission.created_utc),
-            #     "subreddit": submission.subreddit.display_name,
-            #     "title": submission.title,
-            #     "selftext": submission.selftext,
-            # }))
     
     return submissions
 
