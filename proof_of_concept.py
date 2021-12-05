@@ -25,4 +25,4 @@ open_file.close()
 for submission in rw.submissions("stocks", limit=1000, text_based=False):
     if (TICKER in submission) or (nasdaq[TICKER] in submission):
         classification, confidence = sm.sentiment(submission)
-        print(f'{"positive" if confidence > 0 else "negative"} @ {confidence:.2f}')
+        print(f'{"positive" if classification == "pos" else "negative"} @ {confidence:.2f}')
