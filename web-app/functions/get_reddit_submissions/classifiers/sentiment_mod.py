@@ -13,13 +13,13 @@ def get_mode(values):
         return mode(values)
     except StatisticsError:
         print(f"no unique mode found")
-        return sorted(values)[len(values)//2 - 1]
+        return sorted(values)[len(values) // 2 - 1]
 
 
 class VoteClassifier(ClassifierI):
     def __init__(self, *classifiers):
         self._classifiers = classifiers
-    
+
     def classify(self, features):
         votes = []
         for classifier in self._classifiers:

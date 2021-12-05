@@ -15,11 +15,11 @@ from google.cloud import firestore, secretmanager
 import nltk
 
 
-def is_gcp_instance() ->  bool:
+def is_gcp_instance() -> bool:
     for env in os.environ:
         if "X_GOOGLE" in env:
             return True
-     
+
     return False
 
 
@@ -33,10 +33,14 @@ def is_submission_valid(submission) -> bool:
     return valid
 
 
-def upload_document_to_database(collection_path: str, document_id: str, data: dict, merge: bool = True) -> None:
+def upload_document_to_database(
+    collection_path: str, document_id: str, data: dict, merge: bool = True
+) -> None:
     try:
         # Write document
-        firestore.Client().collection(collection_path).document(document_id).set(data, merge=merge)
+        firestore.Client().collection(collection_path).document(document_id).set(
+            data, merge=merge
+        )
     except Exception as e:
         # Swallow all exceptions and log
         logging.warning(f"An exception occured: { e }")
@@ -46,7 +50,9 @@ def get_submissions() -> list:
 
     # Get PRAW client_secret from Google Cloud Secret Manager
     smsc = secretmanager.SecretManagerServiceClient()
-    response = smsc.access_secret_version(request={"name": "projects/724762929986/secrets/PRAW/versions/latest"})
+    response = smsc.access_secret_version(
+        request={"name": "projects/724762929986/secrets/PRAW/versions/latest"}
+    )
     client_secret = response.payload.data.decode("UTF-8")
 
     # Setup PRAW
@@ -74,13 +80,13 @@ def get_submissions() -> list:
                 break
 
             submissions.append(submission.selftext)
-    
+
     return submissions
 
 
 def analyse(submissions: list) -> list:
     # TODO Automate upload of s&p500.json to Google Cloud Platform
-    with open(Path(__file__).parent / "s&p500.json", 'r') as j:
+    with open(Path(__file__).parent / "s&p500.json", "r") as j:
         sp500 = json.loads(j.read())
 
     sentiments = defaultdict(list)
@@ -98,8 +104,8 @@ def analyse(submissions: list) -> list:
 def get_reddit_submissions(event, context):
 
     if is_gcp_instance():
-        nltk.download('punkt')
-    
+        nltk.download("punkt")
+
     submissions = get_submissions()
 
     sentiments = analyse(submissions)
@@ -109,8 +115,13 @@ def get_reddit_submissions(event, context):
         sentiment32 = np.array(sentiment, dtype=np.float32)
         sentiment_mean = np.mean(sentiment32, axis=0, dtype=float)
 
-        upload_document_to_database(ticker, datetime.today().strftime('%Y-%m-%d'), {
-            "classification": round(sentiment_mean[0].item(), 2),
-            "confidence": round(sentiment_mean[1].item(), 2),
-            "entires": len(sentiment),
-        }, merge=False)
+        upload_document_to_database(
+            ticker,
+            datetime.today().strftime("%Y-%m-%d"),
+            {
+                "classification": round(sentiment_mean[0].item(), 2),
+                "confidence": round(sentiment_mean[1].item(), 2),
+                "entires": len(sentiment),
+            },
+            merge=False,
+        )
