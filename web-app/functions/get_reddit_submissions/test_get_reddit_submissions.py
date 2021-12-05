@@ -8,7 +8,6 @@ from praw.models.reddit.submission import Submission
 
 
 class TestGetRedditSubmissions(unittest.TestCase):
-    
     @dataclass(init=True, repr=True, eq=True)
     class parameterizedTest:
         returnValue: Any = None
@@ -17,22 +16,21 @@ class TestGetRedditSubmissions(unittest.TestCase):
     tests: dict = {
         "is_submission_valid": [
             parameterizedTest(True, [True]),
-            parameterizedTest(False, [False])],
+            parameterizedTest(False, [False]),
+        ],
     }
 
     def test_is_submission_valid(self):
         with self.subTest(params=[True, False]):
             for test in self.tests["is_submission_valid"]:
-                submission: Submission = Submission(Reddit, _data={'id': 'test_id', "is_self": test.parameters[0]})
-                
+                submission: Submission = Submission(
+                    Reddit, _data={"id": "test_id", "is_self": test.parameters[0]}
+                )
+
                 assert is_submission_valid(submission) is test.returnValue
 
     def test_analyse(self):
-        submissions: list = [
-            "AAPL amazing",
-            "AAPL okay",
-            "FB bad"
-        ]
+        submissions: list = ["AAPL amazing", "AAPL okay", "FB bad"]
 
         sentiments = analyse(submissions)
 
@@ -42,5 +40,6 @@ class TestGetRedditSubmissions(unittest.TestCase):
         self.assertIn("FB", sentiments)
         self.assertEqual(len(sentiments["FB"]), 1)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

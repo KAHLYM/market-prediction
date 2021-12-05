@@ -1,13 +1,19 @@
 import pickle
-
-from statistics import mode
+from pathlib import Path
+from statistics import StatisticsError, mode
 
 from nltk.classify import ClassifierI
 from nltk.tokenize import word_tokenize
 
-from pathlib import Path
-
 PARENT_PATH = Path(__file__).parent
+
+
+def get_mode(values):
+    try:
+        return mode(values)
+    except StatisticsError:
+        print(f"no unique mode found")
+        return sorted(values)[len(values) // 2 - 1]
 
 
 class VoteClassifier(ClassifierI):
@@ -19,14 +25,14 @@ class VoteClassifier(ClassifierI):
         for classifier in self._classifiers:
             vote = classifier.classify(features)
             votes.append(vote)
-        return mode(votes)
+        return get_mode(votes)
 
     def confidence(self, features):
         votes = []
         for classifier in self._classifiers:
             vote = classifier.classify(features)
             votes.append(vote)
-        choice_votes = votes.count(mode(votes))
+        choice_votes = votes.count(get_mode(votes))
         confidence = choice_votes / len(votes)
         return confidence
 
