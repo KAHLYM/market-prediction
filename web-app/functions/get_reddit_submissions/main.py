@@ -96,7 +96,7 @@ def analyse(submissions: list) -> list:
         # TODO Implement function to get ticker in submission
         # i.e something more appropriate than split()
         for ticker in [ticker for ticker in sp500 if ticker in submission.split()]:
-            sentiments[ticker].append([1 if classification == "pos" else 0, confidence])
+            sentiments[ticker].append((1 if classification == "pos" else -1) * confidence)
 
     return sentiments
 
@@ -112,16 +112,15 @@ def get_reddit_submissions(event, context):
 
     # Calculate averages
     for ticker, sentiment in sentiments.items():
-        sentiment32 = np.array(sentiment, dtype=np.float32)
-        sentiment_mean = np.mean(sentiment32, axis=0, dtype=float)
+        sentiment32 = np.array(sentiment, dtype=np.float64)
+        sentiment_mean = np.mean(sentiment32, axis=0)
 
         upload_document_to_database(
             ticker,
             datetime.today().strftime("%Y-%m-%d"),
             {
-                "classification": round(sentiment_mean[0].item(), 2),
-                "confidence": round(sentiment_mean[1].item(), 2),
-                "entires": len(sentiment),
+                "score": round(sentiment_mean.item(), 2),
+                "count": len(sentiment),
             },
             merge=False,
         )
