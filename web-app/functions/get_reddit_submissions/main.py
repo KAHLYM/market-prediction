@@ -95,7 +95,7 @@ def analyse(submissions: list) -> list:
         classification, confidence = sm.sentiment(submission)
         # TODO Implement function to get ticker in submission
         # i.e something more appropriate than split()
-        for ticker in [ticker for ticker in sp500 if ticker in submission.split()]:
+        for ticker in [ticker for ticker in sp500 if f"${ticker}" in submission.split()]:
             sentiments[ticker].append(
                 (1 if classification == "pos" else -1) * confidence
             )
