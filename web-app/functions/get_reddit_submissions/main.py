@@ -84,7 +84,7 @@ def get_submissions() -> list:
     return submissions
 
 
-def analyse(submissions: list) -> list:
+def analyse_tickers(submissions: list) -> list:
     # TODO Automate upload of s&p500.json to Google Cloud Platform
     with open(Path(__file__).parent / "s&p500.json", "r") as j:
         sp500 = json.loads(j.read())
@@ -110,7 +110,7 @@ def get_reddit_submissions(event, context):
 
     submissions = get_submissions()
 
-    sentiments = analyse(submissions)
+    sentiments = analyse_tickers(submissions)
 
     # Calculate averages
     for ticker, sentiment in sentiments.items():
@@ -118,7 +118,7 @@ def get_reddit_submissions(event, context):
         sentiment_mean = np.mean(sentiment32, axis=0)
 
         upload_document_to_database(
-            "stocks",
+            "tickers",
             ticker,
             {
                 datetime.today().strftime("%Y-%m-%d"):
@@ -129,3 +129,24 @@ def get_reddit_submissions(event, context):
             },
             merge=True,
         )
+
+    sentiments = []
+    for submission in submissions:
+        classification, confidence = sm.sentiment(submission)
+        sentiments.append(1 if classification == "pos" else -1) * confidence)
+
+    sentiment32 = np.array(sentiment, dtype=np.float64)
+    sentiment_mean = np.mean(sentiment32, axis=0)
+
+    upload_document_to_database(
+        "subreddits",
+        "stocks",
+        {
+            datetime.today().strftime("%Y-%m-%d"):
+            {
+                "score": round(sentiment_mean.item(), 2),
+                "count": len(sentiment),
+            }
+        },
+        merge=True,
+    )
