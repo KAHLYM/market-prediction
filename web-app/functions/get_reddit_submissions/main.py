@@ -14,6 +14,7 @@ from classifiers import sentiment_mod as sm
 from google.cloud import firestore, secretmanager
 import nltk
 
+SUBREDDIT: str = "stocks"
 
 def is_gcp_instance() -> bool:
     for env in os.environ:
@@ -46,7 +47,7 @@ def upload_document_to_database(
         logging.warning(f"An exception occured: { e }")
 
 
-def get_submissions() -> list:
+def get_submissions(subreddit: str) -> list:
 
     # Get PRAW client_secret from Google Cloud Secret Manager
     smsc = secretmanager.SecretManagerServiceClient()
@@ -67,50 +68,42 @@ def get_submissions() -> list:
     utc_expirary = datetime.utcnow() - timedelta(hours=24)
 
     # Fetch all subsmissions for given subreddit within 24
-    for subreddit in ["stocks"]:
-        # Reddit API listing limited to 1000 items
-        # PRAW will break request into multiple API calls of 100 items seperated by 2 second delay
-        for submission in reddit.subreddit(subreddit).new(limit=None):
+    # Reddit API listing limited to 1000 items
+    # PRAW will break request into multiple API calls of 100 items seperated by 2 second delay
+    for submission in reddit.subreddit(subreddit).new(limit=None):
 
-            if not is_submission_valid(submission):
-                continue
+        if not is_submission_valid(submission):
+            continue
 
-            # Submissions are sorted by new so break when first post exceeds expirary
-            if submission.created_utc < utc_expirary.timestamp():
-                break
+        # Submissions are sorted by new so break when first post exceeds expirary
+        if submission.created_utc < utc_expirary.timestamp():
+            break
 
-            submissions.append(submission.selftext)
+        submissions.append(submission.selftext)
 
     return submissions
 
 
-def analyse_tickers(submissions: list) -> list:
+def analyse(submissions: list) -> None:
     # TODO Automate upload of s&p500.json to Google Cloud Platform
     with open(Path(__file__).parent / "s&p500.json", "r") as j:
         sp500 = json.loads(j.read())
 
     sentiments = defaultdict(list)
+    sentiments_all: list
+
     for submission in submissions:
         # TODO Upload sentiment_mod to Google Cloud Platform
         classification, confidence = sm.sentiment(submission)
+
         # TODO Implement function to get ticker in submission
         # i.e something more appropriate than split()
         for ticker in [ticker for ticker in sp500 if f"${ticker}" in submission.split()]:
             sentiments[ticker].append(
                 (1 if classification == "pos" else -1) * confidence
             )
-
-    return sentiments
-
-
-def get_reddit_submissions(event, context):
-
-    if is_gcp_instance():
-        nltk.download("punkt")
-
-    submissions = get_submissions()
-
-    sentiments = analyse_tickers(submissions)
+        
+        sentiments_all.append((1 if classification == "pos" else -1) * confidence)
 
     # Calculate averages
     for ticker, sentiment in sentiments.items():
@@ -129,18 +122,14 @@ def get_reddit_submissions(event, context):
             },
             merge=True,
         )
-
-    sentiments = []
-    for submission in submissions:
-        classification, confidence = sm.sentiment(submission)
-        sentiments.append(1 if classification == "pos" else -1) * confidence)
-
+    
+    # subreddit
     sentiment32 = np.array(sentiment, dtype=np.float64)
     sentiment_mean = np.mean(sentiment32, axis=0)
 
     upload_document_to_database(
         "subreddits",
-        "stocks",
+        SUBREDDIT,
         {
             datetime.today().strftime("%Y-%m-%d"):
             {
@@ -150,3 +139,11 @@ def get_reddit_submissions(event, context):
         },
         merge=True,
     )
+
+
+def get_reddit_submissions(event, context):
+
+    if is_gcp_instance():
+        nltk.download("punkt")
+
+    analyse(get_submissions(SUBREDDIT))
