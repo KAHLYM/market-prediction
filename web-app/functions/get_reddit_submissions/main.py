@@ -118,11 +118,14 @@ def get_reddit_submissions(event, context):
         sentiment_mean = np.mean(sentiment32, axis=0)
 
         upload_document_to_database(
+            "stocks",
             ticker,
-            datetime.today().strftime("%Y-%m-%d"),
             {
-                "score": round(sentiment_mean.item(), 2),
-                "count": len(sentiment),
+                datetime.today().strftime("%Y-%m-%d"):
+                {
+                    "score": round(sentiment_mean.item(), 2),
+                    "count": len(sentiment),
+                }
             },
-            merge=False,
+            merge=True,
         )
