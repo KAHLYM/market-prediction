@@ -90,7 +90,7 @@ def analyse(submissions: list) -> None:
         sp500 = json.loads(j.read())
 
     sentiments = defaultdict(list)
-    sentiments_all: list
+    sentiments_all: list = []
 
     for submission in submissions:
         # TODO Upload sentiment_mod to Google Cloud Platform
@@ -124,8 +124,8 @@ def analyse(submissions: list) -> None:
         )
     
     # subreddit
-    sentiment32 = np.array(sentiment, dtype=np.float64)
-    sentiment_mean = np.mean(sentiment32, axis=0)
+    sentiment32 = np.array(sentiments_all, dtype=np.float64)
+    sentiment_mean = np.mean(sentiments_all, axis=0)
 
     upload_document_to_database(
         "subreddits",
@@ -134,7 +134,7 @@ def analyse(submissions: list) -> None:
             datetime.today().strftime("%Y-%m-%d"):
             {
                 "score": round(sentiment_mean.item(), 2),
-                "count": len(sentiment),
+                "count": len(sentiments_all),
             }
         },
         merge=True,
