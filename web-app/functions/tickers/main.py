@@ -1,13 +1,19 @@
+import json
+
 import pandas as pd
+from google.cloud import storage
+
 
 class Index:
-    def __init__(self, source: str, columns: list):
+    def __init__(self, name: str, source: str, columns: list):
+        self.name = name
         self.source = source
         self.columns = columns
 
         self.data = {}
 
         self.extract_from_table()
+        self.upload_to_storage()
 
     def format_security_name(self, security_name: str) -> str:
         # Remove text that specifies share type
@@ -47,8 +53,12 @@ class Index:
         for row in df.itertuples():
             self.data[row[1]] = self.format_security_name(row[2])
 
+    def upload_to_storage(self) -> None:
+        storage_client = storage.Client()
+        bucket = storage_client.bucket("market-prediction-5209e.appspot.com")
+        blob = bucket.blob(self.name)
+        blob.upload_from_string(json.dumps(self.data))
+
 
 def tickers(event, context):
-    IndexSP500: Index = Index("https://en.wikipedia.org/wiki/List_of_S%26P_500_companies", ["Symbol", "Security"])
-
-    # TODO #74 Upload data to GCP
+    IndexSP500: Index = Index("sp500", "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies", ["Symbol", "Security"])
