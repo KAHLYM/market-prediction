@@ -16,6 +16,7 @@ import nltk
 
 SUBREDDIT: str = "stocks"
 
+
 def is_gcp_instance() -> bool:
     for env in os.environ:
         if "X_GOOGLE" in env:
@@ -98,11 +99,13 @@ def analyse(submissions: list) -> None:
 
         # TODO Implement function to get ticker in submission
         # i.e something more appropriate than split()
-        for ticker in [ticker for ticker in sp500 if f"${ticker}" in submission.split()]:
+        for ticker in [
+            ticker for ticker in sp500 if f"${ticker}" in submission.split()
+        ]:
             sentiments[ticker].append(
                 (1 if classification == "pos" else -1) * confidence
             )
-        
+
         sentiments_all.append((1 if classification == "pos" else -1) * confidence)
 
     # Calculate averages
@@ -114,15 +117,14 @@ def analyse(submissions: list) -> None:
             "tickers",
             ticker,
             {
-                datetime.today().strftime("%Y-%m-%d"):
-                {
+                datetime.today().strftime("%Y-%m-%d"): {
                     "score": round(sentiment_mean.item(), 2),
                     "count": len(sentiment),
                 }
             },
             merge=True,
         )
-    
+
     # subreddit
     sentiment32 = np.array(sentiments_all, dtype=np.float64)
     sentiment_mean = np.mean(sentiments_all, axis=0)
@@ -131,8 +133,7 @@ def analyse(submissions: list) -> None:
         "subreddits",
         SUBREDDIT,
         {
-            datetime.today().strftime("%Y-%m-%d"):
-            {
+            datetime.today().strftime("%Y-%m-%d"): {
                 "score": round(sentiment_mean.item(), 2),
                 "count": len(sentiments_all),
             }
