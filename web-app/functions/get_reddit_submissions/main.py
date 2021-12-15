@@ -145,6 +145,9 @@ def analyse(submissions: list) -> None:
 def get_reddit_submissions(event, context):
 
     if is_gcp_instance():
-        nltk.download("punkt")
+        root = os.path.dirname(os.path.abspath(__file__))
+        download_dir = os.path.join(root, "nltk_data")
+        os.chdir(download_dir)
+        nltk.data.path.append(download_dir)
 
     analyse(get_submissions(SUBREDDIT))
