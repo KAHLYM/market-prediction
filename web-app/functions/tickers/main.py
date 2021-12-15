@@ -5,8 +5,8 @@ from google.cloud import storage
 
 
 class Index:
-    def __init__(self, name: str, source: str, columns: list):
-        self.name = name
+    def __init__(self, filename: str, source: str, columns: list):
+        self.filename = filename
         self.source = source
         self.columns = columns
 
@@ -56,9 +56,9 @@ class Index:
     def upload_to_storage(self) -> None:
         storage_client = storage.Client()
         bucket = storage_client.bucket("market-prediction-5209e.appspot.com")
-        blob = bucket.blob(self.name)
+        blob = bucket.blob(self.filename)
         blob.upload_from_string(json.dumps(self.data))
 
 
 def tickers(event, context):
-    IndexSP500: Index = Index("sp500", "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies", ["Symbol", "Security"])
+    IndexSP500: Index = Index("sp500.json", "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies", ["Symbol", "Security"])
