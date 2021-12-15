@@ -87,7 +87,7 @@ def get_submissions(subreddit: str) -> list:
 
 def analyse(submissions: list) -> None:
     storage_client = storage.Client()
-    bucket = storage_client.bucket('market-prediction-5209e.appspot.com')
+    bucket = storage_client.bucket("market-prediction-5209e.appspot.com")
     blob = bucket.blob("sp500.json")
     data = blob.download_as_string().decode("utf-8")
     sp500 = json.loads(data)
