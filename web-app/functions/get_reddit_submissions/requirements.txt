@@ -1,5 +1,6 @@
 google-cloud-firestore
 google-cloud-secret-manager
+google-cloud-storage
 nltk==3.6.5
 numpy==1.21.4
 praw==7.5.0
