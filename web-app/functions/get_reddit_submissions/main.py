@@ -8,11 +8,11 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 from pathlib import Path
 
+import nltk
 import numpy as np
 import praw
 from classifiers import sentiment_mod as sm
-from google.cloud import firestore, secretmanager
-import nltk
+from google.cloud import firestore, secretmanager, storage
 
 SUBREDDIT: str = "stocks"
 
@@ -86,9 +86,11 @@ def get_submissions(subreddit: str) -> list:
 
 
 def analyse(submissions: list) -> None:
-    # TODO Automate upload of s&p500.json to Google Cloud Platform
-    with open(Path(__file__).parent / "s&p500.json", "r") as j:
-        sp500 = json.loads(j.read())
+    storage_client = storage.Client()
+    bucket = storage_client.bucket("market-prediction-5209e.appspot.com")
+    blob = bucket.blob("sp500.json")
+    data = blob.download_as_string().decode("utf-8")
+    sp500 = json.loads(data)
 
     sentiments = defaultdict(list)
     sentiments_all: list = []
