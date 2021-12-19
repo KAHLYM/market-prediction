@@ -61,4 +61,8 @@ class Index:
 
 
 def tickers(event, context):
-    IndexSP500: Index = Index("sp500.json", "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies", ["Symbol", "Security"])
+    IndexSP500: Index = Index(
+        "sp500.json",
+        "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
+        ["Symbol", "Security"],
+    )
