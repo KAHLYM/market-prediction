@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "market-prediction-5209e": {
+      "hosting": {
+        "web-app": [
+          "market-prediction-5209e"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "market-prediction-5209e"
+  }
+}
