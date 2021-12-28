@@ -10,12 +10,15 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
-import { DummyComponent } from './components/dummy/dummy.component'
+import { DummyComponent } from './components/dummy/dummy.component';
+import { DummySearchComponent } from './components/dummy-search/dummy-search.component'
+import { SearchService } from './services/search.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DummyComponent
+    DummyComponent,
+    DummySearchComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,7 @@ import { DummyComponent } from './components/dummy/dummy.component'
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage())
   ],
-  providers: [SentimentService],
+  providers: [SearchService, SentimentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
