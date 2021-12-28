@@ -4,15 +4,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { SentimentService } from './services/sentiment.service';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
+import { DummyComponent } from './components/dummy/dummy.component'
 
 @NgModule({
   declarations: [
     AppComponent,
+    DummyComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +25,7 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage())
   ],
-  providers: [],
+  providers: [SentimentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
 export interface FirestoreSentiment {
     count: number;
-    date: Date;
+    date: number;
     score: number;
 }
