@@ -123,6 +123,16 @@
               "devServerTarget": "web-app:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "web-app:build:production",
+            "firebaseProject": "market-prediction-5209e",
+            "firebaseHostingSite": "market-prediction-5209e"
+          }
         }
       }
     }
