@@ -1,4 +1,12 @@
 {
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build --prod",
+    "test": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
+  },
   "dependencies": {
     "@angular/animations": "^13.1.1",
     "@angular/common": "^13.1.1",
