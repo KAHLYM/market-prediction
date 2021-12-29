@@ -4,7 +4,7 @@
     <tr>
         <th>results</th>
     </tr>
-    <tr *ngFor="let result of results">
+    <tr *ngFor="let result of results | slice:0:5">
         <td>{{result}}</td>
     </tr>
 </table>
