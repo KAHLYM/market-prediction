@@ -30,6 +30,7 @@ jobs:
           node-version: 17
 
       - name: Install Node.js dependencies
+        working-directory: ./web-app
         run: npm ci
 
       - name: Run linters
