@@ -1,23 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SearchService } from 'src/app/services/search.service';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {SearchService} from 'src/app/services/search.service';
 
-import { DummySearchComponent } from './dummy-search.component';
+import {DummySearchComponent} from './dummy-search.component';
 
 describe('DummySearchComponent', () => {
   let component: DummySearchComponent;
   let fixture: ComponentFixture<DummySearchComponent>;
 
   beforeEach(async () => {
-    let mockSearchService: jasmine.SpyObj<SearchService> = jasmine.createSpyObj("SearchService", ["query"]);
+    const mockSearchService: jasmine.SpyObj<SearchService> = jasmine.createSpyObj('SearchService', ['query']);
     mockSearchService.query.and.returnValue([]);
 
     await TestBed.configureTestingModule({
-      declarations: [ DummySearchComponent ],
+      declarations: [DummySearchComponent],
       providers: [
-        { provide: SearchService, useValue: mockSearchService },
-      ]
+        {provide: SearchService, useValue: mockSearchService},
+      ],
     })
-    .compileComponents();
+        .compileComponents();
   });
 
   beforeEach(() => {

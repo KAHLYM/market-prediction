@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { SearchService } from 'src/app/services/search.service';
+import {Component, OnInit} from '@angular/core';
+import {SearchService} from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-dummy-search',
   templateUrl: './dummy-search.component.html',
-  styleUrls: ['./dummy-search.component.scss']
+  styleUrls: ['./dummy-search.component.scss'],
 })
 export class DummySearchComponent implements OnInit {
-
   results: string[] = [];
 
-  constructor(private searchService: SearchService) { 
+  constructor(private searchService: SearchService) {
     this.searchService = searchService;
   }
 
@@ -21,5 +20,4 @@ export class DummySearchComponent implements OnInit {
     this.results = this.searchService.query((<HTMLInputElement>event.target).value);
     console.log(this.results);
   }
-
 }

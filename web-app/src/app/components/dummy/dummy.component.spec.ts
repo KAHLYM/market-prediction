@@ -1,23 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SentimentService } from 'src/app/services/sentiment.service';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {SentimentService} from 'src/app/services/sentiment.service';
 
-import { DummyComponent } from './dummy.component';
+import {DummyComponent} from './dummy.component';
 
 describe('DummyComponent', () => {
   let component: DummyComponent;
   let fixture: ComponentFixture<DummyComponent>;
 
   beforeEach(async () => {
-    let mockSentimentService: jasmine.SpyObj<SentimentService> = jasmine.createSpyObj("SentimentService", ["getSubredditSentiments"]);
+    const mockSentimentService: jasmine.SpyObj<SentimentService> = jasmine.createSpyObj('SentimentService', ['getSubredditSentiments']);
     mockSentimentService.getSubredditSentiments.and.returnValue(Promise.resolve([]));
 
     await TestBed.configureTestingModule({
-      declarations: [ DummyComponent ],
+      declarations: [DummyComponent],
       providers: [
-        { provide: SentimentService, useValue: mockSentimentService },
-      ]
+        {provide: SentimentService, useValue: mockSentimentService},
+      ],
     })
-    .compileComponents();
+        .compileComponents();
   });
 
   beforeEach(() => {
