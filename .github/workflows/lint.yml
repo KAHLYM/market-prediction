@@ -30,7 +30,6 @@ jobs:
           node-version: 17
 
       - name: Install Node.js dependencies
-        working-directory: ./web-app
         run: npm ci
 
       - name: Run linters
@@ -38,8 +37,9 @@ jobs:
         with:
           auto_fix: true
           black: true
-          black_dir: ./functions
+          black_dir: ./web-app/functions
           eslint: true
+          eslint_dir: ./web-app
           git_name: "Market Prediction Lint Action"
           git_email: "wrightci01s@gmail.com"
           github_token: ${{ secrets.GITHUB_TOKEN }}
