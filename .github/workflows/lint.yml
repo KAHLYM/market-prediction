@@ -30,12 +30,12 @@ jobs:
 
       - name: Run linters
         uses: wearerequired/lint-action@v1
+        working-directory: ./web-app
         with:
           auto_fix: true
           black: true
-          black_dir: ./web-app/functions
+          black_dir: ./functions
           eslint: true
-          eslint_dir: ./web-app
           git_name: "Market Prediction Lint Action"
           git_email: "wrightci01s@gmail.com"
           github_token: ${{ secrets.GITHUB_TOKEN }}
