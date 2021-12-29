@@ -24,6 +24,11 @@ jobs:
       - name: Install Python dependencies
         run: pip install black
       
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 17
+
       - name: Install Node.js dependencies
         working-directory: ./web-app
         run: npm ci
