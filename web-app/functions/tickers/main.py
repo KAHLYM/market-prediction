@@ -1,7 +1,7 @@
 import json
 
 import pandas as pd
-from google.cloud import storage
+from google.cloud import firestore, storage
 
 
 class Index:
@@ -14,6 +14,7 @@ class Index:
 
         self.extract_from_table()
         self.upload_to_storage()
+        self.upload_to_firestore()
 
     def format_security_name(self, security_name: str) -> str:
         # Remove text that specifies share type
@@ -58,6 +59,11 @@ class Index:
         bucket = storage_client.bucket("market-prediction-5209e.appspot.com")
         blob = bucket.blob(self.filename)
         blob.upload_from_string(json.dumps(self.data))
+
+    def upload_to_firestore(self) -> None:
+        firestore.Client().collection(u"search").document(u"search").set(
+            {key: u"ticker" for key in self.data}, merge=True
+        )
 
 
 def tickers(event, context):
