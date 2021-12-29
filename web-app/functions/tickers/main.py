@@ -60,12 +60,9 @@ class Index:
         blob = bucket.blob(self.filename)
         blob.upload_from_string(json.dumps(self.data))
 
-
     def upload_to_firestore(self) -> None:
-        firestore.Client().collection(u'search').document(u"search").set(
-            {
-                key: u"ticker" for key in self.data
-            }, merge=True
+        firestore.Client().collection(u"search").document(u"search").set(
+            {key: u"ticker" for key in self.data}, merge=True
         )
 
 
