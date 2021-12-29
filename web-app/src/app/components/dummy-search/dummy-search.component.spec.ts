@@ -9,7 +9,7 @@ describe('DummySearchComponent', () => {
 
   beforeEach(async () => {
     let mockSearchService: jasmine.SpyObj<SearchService> = jasmine.createSpyObj("SearchService", ["query"]);
-    mockSearchService.query.and.returnValue(true);
+    mockSearchService.query.and.returnValue([]);
 
     await TestBed.configureTestingModule({
       declarations: [ DummySearchComponent ],

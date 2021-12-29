@@ -1,1 +1,10 @@
 <input (keyup)="onKey($event)">
+
+<table *ngIf="results.length > 0">
+    <tr>
+        <th>results</th>
+    </tr>
+    <tr *ngFor="let result of results">
+        <td>{{result}}</td>
+    </tr>
+</table>

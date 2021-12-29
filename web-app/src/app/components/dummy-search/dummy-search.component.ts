@@ -8,7 +8,7 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class DummySearchComponent implements OnInit {
 
-  exists: boolean = false;
+  results: string[] = [];
 
   constructor(private searchService: SearchService) { 
     this.searchService = searchService;
@@ -18,8 +18,8 @@ export class DummySearchComponent implements OnInit {
   }
 
   onKey(event: KeyboardEvent): void {
-    this.exists = this.searchService.query((<HTMLInputElement>event.target).value);
-    console.log(this.exists);
+    this.results = this.searchService.query((<HTMLInputElement>event.target).value);
+    console.log(this.results);
   }
 
 }
