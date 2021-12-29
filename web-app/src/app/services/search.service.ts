@@ -29,7 +29,6 @@ export class SearchService {
     const rankings: { [key: string]: number } = {};
     for (const key in this.search) {
       if (Object.prototype.hasOwnProperty.call(this.search, key)) {
-
         let rank: number = 0;
 
         for (let index = 0; index < query.length; index++) {
