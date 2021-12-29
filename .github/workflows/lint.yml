@@ -26,7 +26,8 @@ jobs:
       
       - name: Install Node.js dependencies
         run: |
-          npm install eslint
+          npm -g install eslint-cli
+          npm install eslint --save-dev
           eslint --init
 
       - name: Run linters
