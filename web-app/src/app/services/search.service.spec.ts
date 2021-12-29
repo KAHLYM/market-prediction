@@ -5,7 +5,7 @@ import {FirestoreStub} from './firestore-stub';
 import {SearchService} from './search.service';
 
 describe('SearchService', () => {
-  let service: SearchService;
+  // let service: SearchService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -13,7 +13,7 @@ describe('SearchService', () => {
         {provide: Firestore, useValue: FirestoreStub},
       ],
     });
-    service = TestBed.inject(SearchService);
+    // service = TestBed.inject(SearchService);
   });
 
 // FIXME
