@@ -25,7 +25,9 @@ jobs:
         run: pip install black
       
       - name: Install Node.js dependencies
-        run: npm install eslint
+        run: 
+        - npm install eslint
+        - eslint --init
 
       - name: Run linters
         uses: wearerequired/lint-action@v1
