@@ -40,7 +40,7 @@ jobs:
           black: true
           black_dir: ./web-app/functions
           eslint: true
-          eslint_dir: ./web-app
+          eslint_dir: ./web-app/src
           eslint_extensions: js,ts
           git_name: "Market Prediction Lint Action"
           git_email: "wrightci01s@gmail.com"
