@@ -16,11 +16,13 @@ export class SentimentService {
         .then((snapshot) => {
           const data = snapshot.data();
           for (const item in data) {
-            sentiments.push({
-              count: data[item]['count'],
-              date: Date.parse(item),
-              score: data[item]['score'],
-            });
+            if (Object.prototype.hasOwnProperty.call(data, item)) {
+              sentiments.push({
+                count: data[item]['count'],
+                date: Date.parse(item),
+                score: data[item]['score'],
+              });
+            }
           }
         })
         .catch((err) => {

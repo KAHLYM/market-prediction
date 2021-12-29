@@ -15,7 +15,9 @@ export class SearchService {
         .then((snapshot) => {
           const data = snapshot.data();
           for (const item in data) {
-            this.search[item] = data[item];
+            if (Object.prototype.hasOwnProperty.call(data, item)) {
+              this.search[item] = data[item];
+            }
           }
         })
         .catch((err) => {
@@ -26,24 +28,27 @@ export class SearchService {
   query(query: string): string[] {
     const rankings: { [key: string]: number } = {};
     for (const key in this.search) {
-      let rank: number = 0;
+      if (Object.prototype.hasOwnProperty.call(this.search, key)) {
 
-      for (let index = 0; index < query.length; index++) {
-        if (key.includes(query.substring(0, index))) {
-          rank = index;
+        let rank: number = 0;
+
+        for (let index = 0; index < query.length; index++) {
+          if (key.includes(query.substring(0, index))) {
+            rank = index;
+          }
         }
-      }
 
-      if (key.startsWith(key)) {
-        rank++;
-      }
+        if (key.startsWith(key)) {
+          rank++;
+        }
 
-      if (key == query) {
-        rank++;
-      }
+        if (key == query) {
+          rank++;
+        }
 
-      if (rank > this.threshold) {
-        rankings[key] = rank;
+        if (rank > this.threshold) {
+          rankings[key] = rank;
+        }
       }
     }
 
