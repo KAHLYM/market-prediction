@@ -13,7 +13,6 @@ import {provideStorage, getStorage} from '@angular/fire/storage';
 import {DummyComponent} from './components/dummy/dummy.component';
 import {DummySearchComponent} from './components/dummy-search/dummy-search.component';
 import {SearchService} from './services/search.service';
-import { MainComponent } from './components/main/main.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 
@@ -22,7 +21,6 @@ import { HeaderComponent } from './components/header/header.component';
     AppComponent,
     DummyComponent,
     DummySearchComponent,
-    MainComponent,
     FooterComponent,
     HeaderComponent,
   ],
