@@ -14,6 +14,7 @@ import {DummySearchComponent} from './components/dummy-search/dummy-search.compo
 import {SearchService} from './services/search.service';
 import {FooterComponent} from './components/footer/footer.component';
 import {HeaderComponent} from './components/header/header.component';
+import { SearchComponent } from './components/search/search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 
@@ -24,6 +25,7 @@ import { AngularMaterialModule } from './angular-material.module';
     DummySearchComponent,
     FooterComponent,
     HeaderComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
