@@ -1,20 +1,54 @@
 .SearchContainer {
-    font-size: 14px;
+    font-size: 16px;
     width: auto;
     border: 1px solid #dfe1e5;
     border-radius: 22px;
     max-width: 640px;
-    height: 44px;
+    min-height: 44px;
     display: flex;
+    flex-direction: column;
     margin: auto;
+}
+
+.SearchContainer .material-icons {
+    font-size: 20px !important;
+    padding-top: 4px !important;
 }
 
 .SearchContainer:hover,
 .SearchContainer:focus-within {
-    // border-bottom-left-radius: 0;
-    // border-bottom-right-radius: 0;
     box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
-    border-color: rgba(223,225,229,0);
+}
+
+.SearchContainer div {
+    display: flex;
+    flex-direction: row;
+    border: none;
+}
+
+.SearchInputContainer {
+    min-height: 44px;
+}
+
+.SearchResultContainer {
+    flex-direction: column !important;
+    padding-bottom: 15px;
+}
+
+.SearchResultBreak {
+    border-top: 1px solid #dfe1e5 !important;
+    margin: 0 20px 0 14px;
+    padding-bottom: 4px;
+}
+
+.SearchResult {
+    min-height: 36px;
+    align-items: center;
+}
+
+.SearchResult:hover {
+    background: #eee;
+    cursor: default;
 }
 
 .SearchContainer input,
@@ -22,16 +56,18 @@
     border: none;
     outline: none;
     flex: 1;
-    font-size: 18px;
+    font-size: 16px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    margin-left: -3px; // TODO: Investigate why this is need to algin with .SearchResult
 }
 
-.SearchIcon {
+.SearchIcon, .SearchResultIcon {
     display: flex;
     align-items: center;
     padding: 0px 14px;
     color: grey;
 }
 
-.SearchIcon:hover {
+.SearchIconHasFunction:hover {
     cursor: pointer;
 }

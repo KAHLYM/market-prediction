@@ -21,11 +21,14 @@ export class SearchComponent implements OnInit {
 
   onKey(event: KeyboardEvent): void {
     this.results = this.searchService.query((<HTMLInputElement>event.target).value);
-    console.log(this.results);
   }
 
   onClear(event: MouseEvent): void {
     this.searchElement.nativeElement.value = "";
     this.searchElement.nativeElement.focus();
+  }
+
+  onResult(event: MouseEvent, result: string): void {
+    console.log("onResult ", result);
   }
 }

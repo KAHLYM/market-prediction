@@ -1,11 +1,22 @@
 <div class="element h1_w12 lh1_w8 th1_w6 ph1_w4 mh1_w3">
     <div class="SearchContainer">
-        <div class="SearchIcon">
-            <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
+        <div class="SearchInputContainer">
+            <div class="SearchIcon">
+                <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
+            </div>
+            <input #SearchInput (keyup)="onKey($event)">
+            <div class="SearchIcon SearchIconHasFunction" (click)="onClear($event)">
+                <mat-icon aria-hidden="false" aria-label="Clear">clear</mat-icon>
+            </div>
         </div>
-        <input #SearchInput (keyup)="onKey($event)">
-        <div class="SearchIcon" (click)="onClear($event)">
-            <mat-icon aria-hidden="false" aria-label="Clear">clear</mat-icon>
+        <div class="SearchResultContainer" *ngIf="results.length > 0">
+            <div class="SearchResultBreak"></div>
+            <div class="SearchResult" *ngFor="let result of results | slice:0:5" (click)="onResult($event, result)">
+                <div class="SearchResultIcon">
+                    <mat-icon aria-hidden="false" aria-label="ticker">show_chart</mat-icon>
+                </div>
+                <div>{{result}}</div>
+            </div>
         </div>
     </div>
 </div>
