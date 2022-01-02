@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
@@ -15,6 +14,8 @@ import {DummySearchComponent} from './components/dummy-search/dummy-search.compo
 import {SearchService} from './services/search.service';
 import {FooterComponent} from './components/footer/footer.component';
 import {HeaderComponent} from './components/header/header.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from './angular-material.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,8 @@ import {HeaderComponent} from './components/header/header.component';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
+    AngularMaterialModule,
+    BrowserAnimationsModule,
   ],
   providers: [SearchService, SentimentService],
   bootstrap: [AppComponent],
