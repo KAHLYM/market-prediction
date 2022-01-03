@@ -11,7 +11,7 @@
         </div>
         <div class="SearchResultContainer" *ngIf="results.length > 0 && showResults">
             <div class="SearchResultBreak"></div>
-            <div class="SearchResult" *ngFor="let result of results | slice:0:5" (click)="onResult($event, result)">
+            <div class="SearchResult" *ngFor="let result of results | slice:0:5" (mousedown)="onResult($event, result)">
                 <div class="SearchResultIcon">
                     <mat-icon aria-hidden="false" aria-label="ticker">show_chart</mat-icon>
                 </div>
