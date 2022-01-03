@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {DummySearchComponent} from './components/dummy-search/dummy-search.component';
+import {SearchComponent} from './components/search/search.component';
 
 const routes: Routes = [
-  {path: '', component: DummySearchComponent},
+  {path: '', component: SearchComponent},
 ];
 
 @NgModule({

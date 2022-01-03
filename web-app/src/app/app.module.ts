@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
@@ -11,18 +10,20 @@ import {provideAuth, getAuth} from '@angular/fire/auth';
 import {provideFirestore, getFirestore} from '@angular/fire/firestore';
 import {provideStorage, getStorage} from '@angular/fire/storage';
 import {DummyComponent} from './components/dummy/dummy.component';
-import {DummySearchComponent} from './components/dummy-search/dummy-search.component';
 import {SearchService} from './services/search.service';
 import {FooterComponent} from './components/footer/footer.component';
 import {HeaderComponent} from './components/header/header.component';
+import {SearchComponent} from './components/search/search.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AngularMaterialModule} from './angular-material.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     DummyComponent,
-    DummySearchComponent,
     FooterComponent,
     HeaderComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +32,8 @@ import {HeaderComponent} from './components/header/header.component';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
+    AngularMaterialModule,
+    BrowserAnimationsModule,
   ],
   providers: [SearchService, SentimentService],
   bootstrap: [AppComponent],
