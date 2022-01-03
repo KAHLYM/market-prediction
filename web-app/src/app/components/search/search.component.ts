@@ -41,6 +41,7 @@ export class SearchComponent implements OnInit {
   onClear(event: MouseEvent): void {
     this.searchElement.nativeElement.value = "";
     this.searchElement.nativeElement.focus();
+    this.results.length = 0;
   }
 
   onResult(event: MouseEvent, result: string): void {
