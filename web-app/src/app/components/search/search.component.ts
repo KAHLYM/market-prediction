@@ -1,14 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Auth, getAuth, signInAnonymously } from '@angular/fire/auth';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Auth, getAuth, signInAnonymously} from '@angular/fire/auth';
 import {SearchService} from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
-
   @ViewChild('SearchInput') searchElement!: ElementRef;
 
   results: string[] = [];
@@ -19,16 +18,16 @@ export class SearchComponent implements OnInit {
 
     // TODO: Move to be global
     signInAnonymously(getAuth())
-    .then(() => {
-      console.log("Signed in anonymously");
-      // Signed in..
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log("Failed to sign in anonymously with error code ", errorCode, "and message ", errorMessage);
-      // ...
-    });
+        .then(() => {
+          console.log('Signed in anonymously');
+          // Signed in..
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log('Failed to sign in anonymously with error code ', errorCode, 'and message ', errorMessage);
+          // ...
+        });
   }
 
   ngOnInit(): void {
@@ -39,14 +38,14 @@ export class SearchComponent implements OnInit {
   }
 
   onClear(event: MouseEvent): void {
-    this.searchElement.nativeElement.value = "";
+    this.searchElement.nativeElement.value = '';
     this.searchElement.nativeElement.focus();
     this.results.length = 0;
   }
 
   onResult(event: MouseEvent, result: string): void {
     this.searchElement.nativeElement.value = result;
-    console.log("onResult ", result);
+    console.log('onResult ', result);
   }
 
   onFocus(event: MouseEvent) : void {
