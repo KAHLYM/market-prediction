@@ -45,6 +45,7 @@ export class SearchComponent implements OnInit {
   }
 
   onResult(event: MouseEvent, result: string): void {
+    this.searchElement.nativeElement.value = result;
     console.log("onResult ", result);
   }
 
