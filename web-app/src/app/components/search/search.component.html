@@ -4,7 +4,7 @@
             <div class="SearchIcon">
                 <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
             </div>
-            <input #SearchInput (keyup)="onKey($event)">
+            <input #SearchInput (keyup)="onKey($event)" placeholder="Search for stock tickers">
             <div class="SearchIcon SearchIconHasFunction" (click)="onClear($event)">
                 <mat-icon aria-hidden="false" aria-label="Clear">clear</mat-icon>
             </div>
