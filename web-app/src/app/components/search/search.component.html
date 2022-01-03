@@ -1,15 +1,15 @@
 <div class="element h1_w12 lh1_w8 th1_w6 ph1_w4 mh1_w3">
-    <div class="SearchContainer">
+    <div class="SearchContainer" (focusout)="onFocusOut($event)">
         <div class="SearchInputContainer">
             <div class="SearchIcon">
                 <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
             </div>
-            <input #SearchInput (keyup)="onKey($event)" placeholder="Search for stock tickers">
+            <input #SearchInput (keyup)="onKey($event)" (click)="onFocus($event)" placeholder="Search for stock tickers">
             <div class="SearchIcon SearchIconHasFunction" (click)="onClear($event)">
                 <mat-icon aria-hidden="false" aria-label="Clear">clear</mat-icon>
             </div>
         </div>
-        <div class="SearchResultContainer" *ngIf="results.length > 0">
+        <div class="SearchResultContainer" *ngIf="results.length > 0 && showResults">
             <div class="SearchResultBreak"></div>
             <div class="SearchResult" *ngFor="let result of results | slice:0:5" (click)="onResult($event, result)">
                 <div class="SearchResultIcon">

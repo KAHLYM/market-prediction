@@ -12,6 +12,7 @@ export class SearchComponent implements OnInit {
   @ViewChild('SearchInput') searchElement!: ElementRef;
 
   results: string[] = [];
+  showResults: boolean = true;
 
   constructor(private searchService: SearchService, auth: Auth) {
     this.searchService = searchService;
@@ -35,7 +36,6 @@ export class SearchComponent implements OnInit {
 
   onKey(event: KeyboardEvent): void {
     this.results = this.searchService.query((<HTMLInputElement>event.target).value);
-    console.log("onKey ", this.results);
   }
 
   onClear(event: MouseEvent): void {
@@ -45,5 +45,13 @@ export class SearchComponent implements OnInit {
 
   onResult(event: MouseEvent, result: string): void {
     console.log("onResult ", result);
+  }
+
+  onFocus(event: MouseEvent) : void {
+    this.showResults = true;
+  }
+
+  onFocusOut(event: FocusEvent): void {
+    this.showResults = false;
   }
 }
