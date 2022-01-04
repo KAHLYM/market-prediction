@@ -20,14 +20,16 @@ export class SentimentService {
     await getDoc(doc(this.firestore, 'tickers', subreddit))
     .then((snapshot) => {
       const data = snapshot.data();
+      let sentimentsFormatted: FirestoreSentiment[] = []; 
         for (const item in data) {
         if (Object.prototype.hasOwnProperty.call(data, item)) {
-          this.sentiments.push({
+          sentimentsFormatted.push({
             count: data[item]['count'],
             date: Date.parse(item),
             score: data[item]['score'],
           });
         }
+        this.sentiments = sentimentsFormatted;
       }
       return true;
     })
