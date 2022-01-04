@@ -10,24 +10,30 @@ export class SentimentService {
     this.firestore = firestore;
   }
 
-  async getSubredditSentiments(subreddit: string): Promise<FirestoreSentiment[]> {
-    const sentiments: FirestoreSentiment[] = [];
-    getDoc(doc(this.firestore, 'subreddits', subreddit))
-        .then((snapshot) => {
-          const data = snapshot.data();
-          for (const item in data) {
-            if (Object.prototype.hasOwnProperty.call(data, item)) {
-              sentiments.push({
-                count: data[item]['count'],
-                date: Date.parse(item),
-                score: data[item]['score'],
-              });
-            }
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    return await Promise.resolve(sentiments);
+  sentiments: FirestoreSentiment[] = [];
+
+  getSentiments(): FirestoreSentiment[] {
+    return this.sentiments;
+  }
+
+  async queryTicker(subreddit: string): Promise<boolean> {
+    await getDoc(doc(this.firestore, 'tickers', subreddit))
+    .then((snapshot) => {
+      const data = snapshot.data();
+        for (const item in data) {
+        if (Object.prototype.hasOwnProperty.call(data, item)) {
+          this.sentiments.push({
+            count: data[item]['count'],
+            date: Date.parse(item),
+            score: data[item]['score'],
+          });
+        }
+      }
+      return true;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+    return false;
   }
 }
