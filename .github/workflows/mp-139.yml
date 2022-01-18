@@ -12,4 +12,4 @@ jobs:
     - name: Get changed files
       run: |
         git checkout 
-        git diff --name-only origin/main ${GITHUB_REF##*/}
+        git diff --name-only origin/main origin/${GITHUB_REF##*/}
