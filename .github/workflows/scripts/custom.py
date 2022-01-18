@@ -9,7 +9,7 @@ print(f"cwd:  {getcwd()}")
 FILEPATH = argv[1]
 FILETYPE = path.splitext(FILEPATH)[1]
 
-with open("/.github/workflows/scripts/custom.json", "r") as f:
+with open(path.join(getcwd(), "/.github/workflows/scripts/custom.json"), "r") as f:
     rules = load(f)
 
 if FILETYPE not in rules:
