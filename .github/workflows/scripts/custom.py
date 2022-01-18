@@ -8,7 +8,7 @@ FILETYPE = path.splitext(FILEPATH)[1]
 rules = {
     ".py": [
         {
-            "level": "warning",
+            "severity": "warning",
             "regex": "import",
             "title": "test warning",
             "message": "oh hi there buddy"
@@ -16,23 +16,18 @@ rules = {
     ]
 }
 
-print(f"FILEPATH: {FILEPATH}")
-print(f"FILETYPE: {FILETYPE}")
-
 if FILETYPE not in rules:
     print(f"No rules associated with this filetype")
     exit()
 
-print(f"::warning file=README.md,line=1,endLine=2,col=1,endCol=2,title=TestTitle::TestMessage")
-
 with open(FILEPATH, "r") as f:
     for index, line in enumerate(f):
         for rule in rules[FILETYPE]:
-            LEVEL   = rule["level"]
-            REGEX   = rule["regex"]
-            TITLE   = rule["title"]
-            MESSAGE = rule["message"]
+            SEVERITY = rule["level"]
+            REGEX    = rule["regex"]
+            TITLE    = rule["title"]
+            MESSAGE  = rule["message"]
 
             regex = compile(REGEX)
             if regex.search(line):
-                print(f"::{LEVEL} file={FILEPATH},line={index},title={TITLE}::{MESSAGE}")
+                print(f"::{SEVERITY} file={FILEPATH},line={index},title={TITLE}::{MESSAGE}")

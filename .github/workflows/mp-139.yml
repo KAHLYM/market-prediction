@@ -1,6 +1,10 @@
 name: mp-139
 
-on: [push]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
@@ -20,7 +24,6 @@ jobs:
 
     - name: Get changed files
       run: |
-        echo "::error file=README.md,line=1,endLine=2,col=1,endCol=2,title=TestTitle::TestMessage"
         files=`git diff --name-only origin/main origin/${GITHUB_REF##*/}`
         for file in $files; do
           python ./.github/workflows/scripts/custom.py ${file}
