@@ -20,6 +20,7 @@ jobs:
 
     - name: Get changed files
       run: |
+        ::warning file=README.md,line=1,endLine=2,col=1,endCol=2,title=TestTitle::TestMessage
         files=`git diff --name-only origin/main origin/${GITHUB_REF##*/}`
         for file in $files; do
           python ./.github/workflows/scripts/custom.py ${file}
