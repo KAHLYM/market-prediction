@@ -3,6 +3,8 @@ from os import path
 from sys import argv
 from re import compile
 
+print(f"{path.dirname(path.realpath(__file__))}")
+
 FILEPATH = argv[1]
 FILETYPE = path.splitext(FILEPATH)[1]
 
