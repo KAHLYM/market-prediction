@@ -16,6 +16,9 @@ rules = {
     ]
 }
 
+print(f"FILEPATH: {FILEPATH}")
+print(f"FILETYPE: {FILETYPE}")
+
 if FILETYPE not in rules:
     print(f"No rules associated with this filetype")
     exit()
