@@ -23,13 +23,16 @@ if FILETYPE not in rules:
     print(f"No rules associated with this filetype")
     exit()
 
-LEVEL   = rules[FILETYPE]["level"]
-REGEX   = rules[FILETYPE]["regex"]
-TITLE   = rules[FILETYPE]["title"]
-MESSAGE = rules[FILETYPE]["message"]
 
-regex = compile(REGEX)
+
 with open(FILEPATH, "r") as f:
     for index, line in enumerate(f):
-        if regex.search(line):
-            print(f"::{LEVEL} file={FILEPATH},line={index},title={TITLE}::{MESSAGE}")
+        for rule in rules[FILETYPE]:
+            LEVEL   = rule["level"]
+            REGEX   = rule["regex"]
+            TITLE   = rule["title"]
+            MESSAGE = rule["message"]
+
+            regex = compile(REGEX)
+            if regex.search(line):
+                print(f"::{LEVEL} file={FILEPATH},line={index},title={TITLE}::{MESSAGE}")
