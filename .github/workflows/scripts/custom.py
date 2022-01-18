@@ -1,3 +1,24 @@
-import sys
-print(f"Running against file: {sys.argv[1]}")
-print(f"::warning file={sys.argv[1]},line=1,col=1,endColumn=2::Test warning against {sys.argv[1]}")
+from json import load
+from os import path
+from sys import argv
+from re import compile
+
+FILEPATH = argv[1]
+FILETYPE = path.splitext(FILEPATH)[1]
+
+rules = load(".\.github\workflows\scripts\custom.json")
+
+if FILETYPE not in rules:
+    print(f"No rules associated with this filetype")
+    exit()
+
+LEVEL   = rules[FILETYPE]["level"]
+REGEX   = rules[FILETYPE]["regex"]
+TITLE   = rules[FILETYPE]["title"]
+MESSAGE = rules[FILETYPE]["message"]
+
+regex = compile(REGEX)
+with open(FILEPATH, "r") as f:
+    for index, line in enumerate(f):
+        if regex.search(line):
+            print(f"::{LEVEL} file={FILEPATH},line={index},title={TITLE}::{MESSAGE}")

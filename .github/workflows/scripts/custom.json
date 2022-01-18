@@ -1,0 +1,10 @@
+{
+    "py": [
+        {
+            "level": "warning",
+            "regex": "import",
+            "title": "test warning",
+            "message": "oh hi there buddy"
+        }
+    ]
+}
