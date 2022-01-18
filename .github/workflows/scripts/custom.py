@@ -23,7 +23,7 @@ if FILETYPE not in rules:
     print(f"No rules associated with this filetype")
     exit()
 
-
+print(f"::warning file=README.md,line=1,title=TestTitle::TestMessage")
 
 with open(FILEPATH, "r") as f:
     for index, line in enumerate(f):
