@@ -15,6 +15,6 @@ jobs:
       run: |
         files=`git diff --name-only origin/main origin/${GITHUB_REF##*/}`
         for file in $files; do
-          echo ${file}
+          echo "::warning file=${file},line=1,col=1,endColumn=2::Test warning"
         done
         
