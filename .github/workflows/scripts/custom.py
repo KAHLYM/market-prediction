@@ -1,4 +1,4 @@
-from json import load
+from json import loads
 from os import path
 from sys import argv
 from re import compile
@@ -6,7 +6,7 @@ from re import compile
 FILEPATH = argv[1]
 FILETYPE = path.splitext(FILEPATH)[1]
 
-rules = load(".\.github\workflows\scripts\custom.json")
+rules = loads(".\.github\workflows\scripts\custom.json")
 
 if FILETYPE not in rules:
     print(f"No rules associated with this filetype")
