@@ -12,9 +12,12 @@ jobs:
       with:
         fetch-depth: 0
     - name: Get changed files
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
       run: |
         files=`git diff --name-only origin/main origin/${GITHUB_REF##*/}`
         for file in $files; do
-          python.py custom/custom.py ${file}
+          python custom/custom.py ${file}
         done
         
