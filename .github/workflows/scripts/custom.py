@@ -1,16 +1,20 @@
-from json import load
-from os import path, getcwd
+from os import path
 from sys import argv
 from re import compile
-
-print(f"path: {path.dirname(path.realpath(__file__))}")
-print(f"cwd:  {getcwd()}")
 
 FILEPATH = argv[1]
 FILETYPE = path.splitext(FILEPATH)[1]
 
-with open(".\custom.json", "r") as f:
-    rules = load(f)
+rules = {
+    "py": [
+        {
+            "level": "warning",
+            "regex": "import",
+            "title": "test warning",
+            "message": "oh hi there buddy"
+        }
+    ]
+}
 
 if FILETYPE not in rules:
     print(f"No rules associated with this filetype")
