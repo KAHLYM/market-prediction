@@ -6,7 +6,7 @@ FILEPATH = argv[1]
 FILETYPE = path.splitext(FILEPATH)[1]
 
 rules = {
-    "py": [
+    ".py": [
         {
             "level": "warning",
             "regex": "import",
