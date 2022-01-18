@@ -1,9 +1,10 @@
 from json import load
-from os import path
+from os import path, getcwd
 from sys import argv
 from re import compile
 
-print(f"{path.dirname(path.realpath(__file__))}")
+print(f"path: {path.dirname(path.realpath(__file__))}")
+print(f"cwd:  {getcwd()}")
 
 FILEPATH = argv[1]
 FILETYPE = path.splitext(FILEPATH)[1]
