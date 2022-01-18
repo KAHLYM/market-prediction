@@ -8,7 +8,7 @@ FILETYPE = path.splitext(FILEPATH)[1]
 rules = {
     ".py": [
         {
-            "severity": "warning",
+            "severity": "error",
             "regex": "import",
             "title": "test warning",
             "message": "oh hi there buddy"
