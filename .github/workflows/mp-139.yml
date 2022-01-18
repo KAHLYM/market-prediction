@@ -1,0 +1,14 @@
+name: mp-139
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get changed files
+      run: |
+        echo git diff --name-only main ${GITHUB_REF##*/}
