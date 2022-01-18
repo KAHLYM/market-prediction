@@ -24,9 +24,7 @@ jobs:
 
     - name: Get changed files
       run: |
-        echo "head_ref: ${{ github.head_ref }}"
-        echo "custom: ${GITHUB_HEAD_REF-${GITHUB_REF##*/}}"
-        files=`git diff --name-only origin/main origin/${GITHUB_REF##*/}`
+        files=`git diff --name-only origin/main origin/${GITHUB_HEAD_REF-${GITHUB_REF##*/}}`
         for file in $files; do
           python ./.github/workflows/scripts/custom.py ${file}
         done
