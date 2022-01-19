@@ -1,6 +1,6 @@
 from os import path
-from sys import argv
 from re import compile
+from sys import argv
 
 FILEPATH = argv[1]
 FILETYPE = path.splitext(FILEPATH)[1]
@@ -8,20 +8,19 @@ FILETYPE = path.splitext(FILEPATH)[1]
 rules = {
     ".py": [
         {
-            "severity": "error",
+            "message": "TestMessage",
             "regex": "import",
-            "title": "test warning",
-            "message": "oh hi there buddy"
+            "severity": "warning",
+            "title": "TestTitle",
         }
     ]
 }
 
 if FILETYPE not in rules:
-    print(f"No rules associated with this filetype")
     exit()
 
 with open(FILEPATH, "r") as f:
-    for index, line in enumerate(f):
+    for index, line in enumerate(f, 1):
         for rule in rules[FILETYPE]:
             SEVERITY = rule["severity"]
             REGEX    = rule["regex"]
