@@ -23,7 +23,6 @@ with open(FILEPATH, "r") as f:
         for rule in rules[FILETYPE]:
             SEVERITY = rule["severity"]
             REGEX    = rule["regex"]
-            TITLE    = rule["title"]
             MESSAGE  = rule["message"]
 
             regex = compile(REGEX)
