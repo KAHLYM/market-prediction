@@ -6,12 +6,11 @@ FILEPATH = argv[1]
 FILETYPE = path.splitext(FILEPATH)[1]
 
 rules = {
-    ".py": [
+    ".scss": [
         {
-            "message": "TestMessage",
-            "regex": "import",
+            "message": "Prefer global SCSS variable font-size",
+            "regex": "font-size: [^$].*",
             "severity": "warning",
-            "title": "TestTitle",
         }
     ]
 }
@@ -29,4 +28,4 @@ with open(FILEPATH, "r") as f:
 
             regex = compile(REGEX)
             if regex.search(line):
-                print(f"::{SEVERITY} file={FILEPATH},line={index},title={TITLE}::{MESSAGE}")
+                print(f"::{SEVERITY} file={FILEPATH},line={index},title={FILEPATH}#{index}::{MESSAGE}")
