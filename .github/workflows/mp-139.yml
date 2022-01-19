@@ -1,4 +1,4 @@
-name: mp-139
+name: Regex Annotations
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  RegexAnnotations:
 
     runs-on: ubuntu-latest
 
