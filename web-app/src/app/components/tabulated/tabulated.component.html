@@ -7,8 +7,8 @@
         </tr>
         <tr *ngFor="let sentiment of sentiments">
             <td>{{sentiment.date | date: 'LLL dd, y'}}</td>
-            <td>{{sentiment.count}}</td>
-            <td>{{sentiment.score}}</td>
+            <td>{{sentiment.count | number: '1.2'}}</td>
+            <td>{{sentiment.score | number: '1.2'}}</td>
         </tr>
     </table>
 </div>
