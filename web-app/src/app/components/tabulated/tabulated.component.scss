@@ -1,3 +1,38 @@
 table {
     font-size: 16px;
+    line-height: 24px;
+    border-collapse: collapse;
+}
+
+tr {
+    border-bottom: 1px solid #e8eaed;
+}
+
+th {
+    font-weight: 500;
+    color: #202124;
+}
+
+th:first-child {
+    text-align: left;
+}
+
+th:not(:first-child) {
+    text-align: right;
+    padding-left: 16px;
+}
+
+td:first-child {
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #5f6368;
+    text-align: left;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+}
+
+td:not(:first-child) {
+    color: #202124;
+    font-weight: 500;
+    text-align: right;
 }
