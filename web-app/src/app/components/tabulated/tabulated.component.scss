@@ -2,6 +2,10 @@ table {
     font-size: 16px;
     line-height: 24px;
     border-collapse: collapse;
+    display: flex;
+    max-width: 640px;
+    flex-direction: column;
+    margin: auto;
 }
 
 tr {
@@ -15,11 +19,13 @@ th {
 
 th:first-child {
     text-align: left;
+    width: calc(640px - 100px * 2);
 }
 
 th:not(:first-child) {
     text-align: right;
     padding-left: 16px;
+    width: 100px;
 }
 
 td:first-child {
@@ -29,10 +35,12 @@ td:first-child {
     text-align: left;
     font-family: 'Roboto Mono', monospace;
     font-size: 14px;
+    width: calc(640px - 100px * 2);
 }
 
 td:not(:first-child) {
     color: #202124;
     font-weight: 500;
     text-align: right;
+    width: 100px;
 }
