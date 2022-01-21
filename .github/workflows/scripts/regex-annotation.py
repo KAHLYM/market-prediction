@@ -33,7 +33,7 @@ if FILETYPE not in rules:
 
 with open(FILEPATH, "r") as f:
     for index, line in enumerate(f, 1):
-        for rule_name, rule in rules[FILETYPE]:
+        for rule_name, rule in rules[FILETYPE].items():
             SEVERITY = rule["severity"]
             REGEX    = rule["regex"]
             MESSAGE  = rule["message"]
