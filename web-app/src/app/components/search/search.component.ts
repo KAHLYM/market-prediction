@@ -1,6 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Auth, getAuth, signInAnonymously} from '@angular/fire/auth';
+import {Router} from '@angular/router';
 import {SearchService} from 'src/app/services/search.service';
+import {SentimentService} from 'src/app/services/sentiment.service';
 
 @Component({
   selector: 'app-search',
@@ -13,9 +15,7 @@ export class SearchComponent implements OnInit {
   results: string[] = [];
   showResults: boolean = true;
 
-  constructor(private searchService: SearchService, auth: Auth) {
-    this.searchService = searchService;
-
+  constructor(private searchService: SearchService, private sentimentService: SentimentService, private router: Router, auth: Auth) {
     // TODO: Move to be global
     signInAnonymously(getAuth())
         .then(() => {
@@ -45,7 +45,9 @@ export class SearchComponent implements OnInit {
 
   onResult(event: MouseEvent, result: string): void {
     this.searchElement.nativeElement.value = result;
-    console.log('onResult ', result);
+    this.sentimentService.queryTicker(result).then(() => {
+      this.router.navigate(['tabulated']);
+    });
   }
 
   onFocus(event: MouseEvent) : void {

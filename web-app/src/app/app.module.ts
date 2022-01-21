@@ -9,21 +9,21 @@ import {environment} from '../environments/environment';
 import {provideAuth, getAuth} from '@angular/fire/auth';
 import {provideFirestore, getFirestore} from '@angular/fire/firestore';
 import {provideStorage, getStorage} from '@angular/fire/storage';
-import {DummyComponent} from './components/dummy/dummy.component';
 import {SearchService} from './services/search.service';
 import {FooterComponent} from './components/footer/footer.component';
 import {HeaderComponent} from './components/header/header.component';
 import {SearchComponent} from './components/search/search.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularMaterialModule} from './angular-material.module';
+import {TabulatedComponent} from './components/tabulated/tabulated.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DummyComponent,
     FooterComponent,
     HeaderComponent,
     SearchComponent,
+    TabulatedComponent,
   ],
   imports: [
     BrowserModule,

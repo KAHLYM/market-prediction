@@ -26,5 +26,5 @@ jobs:
       run: |
         files=`git diff --name-only origin/main origin/${GITHUB_HEAD_REF-${GITHUB_REF##*/}}`
         for file in $files; do
-          python ./.github/workflows/scripts/custom.py ${file}
+          python ./.github/workflows/scripts/regex-annotation.py ${file}
         done

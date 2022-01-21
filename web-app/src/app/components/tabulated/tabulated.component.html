@@ -1,0 +1,14 @@
+<div class="element h4_w12 lh4_w8 th4_w6 ph4_w4 mh4_w3">
+    <table *ngIf="sentiments.length > 0">
+        <tr>
+            <th>Date</th>
+            <th>Count</th>
+            <th>Score</th>
+        </tr>
+        <tr *ngFor="let sentiment of sentiments">
+            <td>{{sentiment.date | date: 'LLL dd, y'}}</td>
+            <td>{{sentiment.count | number: '1.2'}}</td>
+            <td>{{sentiment.score | number: '1.2'}}</td>
+        </tr>
+    </table>
+</div>
