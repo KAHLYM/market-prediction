@@ -6,23 +6,23 @@ FILEPATH = argv[1]
 FILETYPE = path.splitext(FILEPATH)[1]
 
 rules = {
-    ".scss": [
-        {
-            "message": "Prefer global SCSS variable font-family",
+    ".scss": {
+        "font-family": {
+            "message": "Prefer global SCSS variable",
             "regex": "font-family: (?!var\(\-\-font\-family).*",
             "severity": "warning",
         },
-        {
-            "message": "Prefer global SCSS variable font-size",
+        "font-size": {
+            "message": "Prefer global SCSS variable",
             "regex": "font-size: (?!var\(\-\-font\-size).*",
             "severity": "warning",
         },
-        {
-            "message": "Prefer global SCSS variable font-weight",
+        "font-weight": {
+            "message": "Prefer global SCSS variable",
             "regex": "font-weight: (?!var\(\-\-font\-weight).*",
             "severity": "warning",
         },
-    ]
+    }
 }
 
 if not path.isfile(FILEPATH):
@@ -33,11 +33,11 @@ if FILETYPE not in rules:
 
 with open(FILEPATH, "r") as f:
     for index, line in enumerate(f, 1):
-        for rule in rules[FILETYPE]:
+        for rule_name, rule in rules[FILETYPE]:
             SEVERITY = rule["severity"]
             REGEX    = rule["regex"]
             MESSAGE  = rule["message"]
 
             regex = compile(REGEX)
             if regex.search(line):
-                print(f"::{SEVERITY} file={FILEPATH},line={index},title={FILEPATH}#{index}::{MESSAGE}")
+                print(f"::{SEVERITY} file={FILEPATH},line={index},title={FILEPATH}#{index}::{MESSAGE} ({rule_name})")
