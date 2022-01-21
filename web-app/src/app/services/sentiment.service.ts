@@ -18,24 +18,24 @@ export class SentimentService {
 
   async queryTicker(subreddit: string): Promise<boolean> {
     await getDoc(doc(this.firestore, 'tickers', subreddit))
-    .then((snapshot) => {
-      const data = snapshot.data();
-      let sentimentsFormatted: FirestoreSentiment[] = []; 
-        for (const item in data) {
-        if (Object.prototype.hasOwnProperty.call(data, item)) {
-          sentimentsFormatted.push({
-            count: data[item]['count'],
-            date: Date.parse(item),
-            score: data[item]['score'],
-          });
-        }
-        this.sentiments = sentimentsFormatted;
-      }
-      return true;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+        .then((snapshot) => {
+          const data = snapshot.data();
+          const sentimentsFormatted: FirestoreSentiment[] = [];
+          for (const item in data) {
+            if (Object.prototype.hasOwnProperty.call(data, item)) {
+              sentimentsFormatted.push({
+                count: data[item]['count'],
+                date: Date.parse(item),
+                score: data[item]['score'],
+              });
+            }
+            this.sentiments = sentimentsFormatted;
+          }
+          return true;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     return false;
   }
 }
