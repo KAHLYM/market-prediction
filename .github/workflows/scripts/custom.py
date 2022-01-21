@@ -15,6 +15,9 @@ rules = {
     ]
 }
 
+if not path.isfile(FILEPATH):
+    exit()
+
 if FILETYPE not in rules:
     exit()
 
