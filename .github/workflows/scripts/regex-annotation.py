@@ -8,10 +8,20 @@ FILETYPE = path.splitext(FILEPATH)[1]
 rules = {
     ".scss": [
         {
-            "message": "Prefer global SCSS variable font-size",
-            "regex": "font-size: [^$].*",
+            "message": "Prefer global SCSS variable font-family",
+            "regex": "font-family: [^var(--font-family)].*",
             "severity": "warning",
-        }
+        },
+        {
+            "message": "Prefer global SCSS variable font-size",
+            "regex": "font-size: [^var(--font-size].*",
+            "severity": "warning",
+        },
+        {
+            "message": "Prefer global SCSS variable font-weight",
+            "regex": "font-weight: [^var(--font-weight].*",
+            "severity": "warning",
+        },
     ]
 }
 

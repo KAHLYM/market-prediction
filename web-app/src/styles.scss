@@ -2,3 +2,23 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root {
+    --color-primary: #202124;
+    --color-secondary: #5f6368;
+
+    --font-family-normal: 'Roboto';
+    --font-family-mono: 'Roboto Mono', monospace;
+
+    --font-size-small: 0.8rem;
+    --font-size-normal: 1rem;
+    --font-size-large: 1.2rem;
+
+    --font-weight-thin: 100;
+    --font-weight-extra-light: 200;
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semi-bold: 600;
+    --font-weight-bold: 700;
+}
