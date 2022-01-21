@@ -9,17 +9,17 @@ rules = {
     ".scss": [
         {
             "message": "Prefer global SCSS variable font-family",
-            "regex": "font-family: [^var(--font-family)].*",
+            "regex": "font-family: (?!var\(\-\-font\-family).*",
             "severity": "warning",
         },
         {
             "message": "Prefer global SCSS variable font-size",
-            "regex": "font-size: [^var(--font-size].*",
+            "regex": "font-size: (?!var\(\-\-font\-size).*",
             "severity": "warning",
         },
         {
             "message": "Prefer global SCSS variable font-weight",
-            "regex": "font-weight: [^var(--font-weight].*",
+            "regex": "font-weight: (?!var\(\-\-font\-weight).*",
             "severity": "warning",
         },
     ]
