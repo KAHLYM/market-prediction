@@ -21,8 +21,8 @@ export class SentimentService {
         .then((snapshot) => {
           const data = snapshot.data();
           const sentimentsFormatted: FirestoreSentiment[] = [];
+          // eslint-disable-next-line guard-for-in
           for (const item in data) {
-            // eslint-disable-next-line guard-for-in
             if (Object.prototype.hasOwnProperty.call(data, item)) {
               sentimentsFormatted.push({
                 count: data[item]['count'],
