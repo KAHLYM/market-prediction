@@ -1,8 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Auth, getAuth, signInAnonymously} from '@angular/fire/auth';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {SearchService} from 'src/app/services/search.service';
-import { SentimentService } from 'src/app/services/sentiment.service';
+import {SentimentService} from 'src/app/services/sentiment.service';
 
 @Component({
   selector: 'app-search',
