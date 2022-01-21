@@ -1,5 +1,4 @@
 table {
-    font-size: 16px;
     line-height: 24px;
     border-collapse: collapse;
     display: flex;
@@ -13,8 +12,9 @@ tr {
 }
 
 th {
-    font-weight: 500;
-    color: #202124;
+    color: var(--color-primary);
+    font-size: var(--font-size-normal);
+    font-weight: var(--font-weight-regular);
 }
 
 th:first-child {
@@ -28,20 +28,18 @@ th:not(:first-child) {
 }
 
 td {
-    color: #5f6368;
-    font-size: 14px;
-    font-family: 'Roboto Mono', monospace;
+    color: var(--color-secondary);
+    font-size: var(--font-size-small);
+    font-family: var(--font-family-mono);
     text-transform: uppercase;
 }
 
 td:first-child {
-    font-weight: 500;
     text-align: left;
     width: calc(640px - 100px * 2);
 }
 
 td:not(:first-child) {
-    font-weight: 500;
     text-align: right;
     width: 100px;
 }
