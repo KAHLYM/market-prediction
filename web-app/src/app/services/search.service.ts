@@ -26,22 +26,24 @@ export class SearchService {
   }
 
   query(query: string): string[] {
+    let queryLowerCase: string = query.toLocaleLowerCase()
     const rankings: { [key: string]: number } = {};
     for (const key in this.search) {
       if (Object.prototype.hasOwnProperty.call(this.search, key)) {
+        let keyLowerCase: string = key.toLocaleLowerCase()
         let rank: number = 0;
 
-        for (let index = 0; index < query.length; index++) {
-          if (key.includes(query.substring(0, index))) {
+        for (let index = 0; index < queryLowerCase.length; index++) {
+          if (keyLowerCase.includes(queryLowerCase.substring(0, index))) {
             rank = index;
           }
         }
 
-        if (key.startsWith(key)) {
+        if (keyLowerCase.startsWith(queryLowerCase)) {
           rank++;
         }
 
-        if (key == query) {
+        if (keyLowerCase == queryLowerCase) {
           rank++;
         }
 
