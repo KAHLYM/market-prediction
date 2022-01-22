@@ -35,9 +35,9 @@ export class SearchComponent implements OnInit {
 
   onKey(event: KeyboardEvent): void {
     this.results.length = 0;
-    this.searchService.query((<HTMLInputElement>event.target).value).map(result => {
+    this.searchService.query((<HTMLInputElement>event.target).value).map((result) => {
       this.results.push([result, this.searchService.getType(result)]);
-    })
+    });
   }
 
   onClear(event: MouseEvent): void {
