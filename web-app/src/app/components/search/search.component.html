@@ -13,9 +13,9 @@
             <div class="SearchResultBreak"></div>
             <div class="SearchResult" *ngFor="let result of results | slice:0:5" (mousedown)="onResult($event, result)">
                 <div class="SearchResultIcon">
-                    <mat-icon aria-hidden="false" aria-label="ticker">show_chart</mat-icon>
+                    <mat-icon aria-hidden="false" aria-label="ticker">{{result[1] == "ticker" ? "show_chart" : "forum"}}</mat-icon>
                 </div>
-                <div>{{result}}</div>
+                <div>{{result[0]}}</div>
             </div>
         </div>
     </div>
