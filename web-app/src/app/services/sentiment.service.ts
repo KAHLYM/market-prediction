@@ -33,7 +33,7 @@ export class SentimentService {
                 score: data[item]['score'],
               });
             }
-            this.sentiments = sentimentsFormatted;
+            this.sentiments = sentimentsFormatted.sort(function(x, y){ return y.date - x.date; });
           }
           return true;
         })
