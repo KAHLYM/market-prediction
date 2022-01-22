@@ -19,7 +19,7 @@ export class SentimentService {
   async query(q: string, t: string): Promise<boolean> {
     // FIXME
     // Update firebase search dictionary value to be collection name
-    let collection: string = t == "ticker" ? "tickers" : "subreddits";
+    const collection: string = t == 'ticker' ? 'tickers' : 'subreddits';
     await getDoc(doc(this.firestore, collection, q))
         .then((snapshot) => {
           const data = snapshot.data();
@@ -33,7 +33,9 @@ export class SentimentService {
                 score: data[item]['score'],
               });
             }
-            this.sentiments = sentimentsFormatted.sort(function(x, y){ return y.date - x.date; });
+            this.sentiments = sentimentsFormatted.sort(function(x, y) {
+              return y.date - x.date;
+            });
           }
           return true;
         })
