@@ -62,4 +62,8 @@ export class SearchService {
         Object.entries(items).sort(([, a], [, b]) => a - b).reverse(),
     ));
   }
+
+  getType(query: string): string {
+    return this.search[query];
+  }
 }

@@ -16,8 +16,11 @@ export class SentimentService {
     return this.sentiments;
   }
 
-  async queryTicker(subreddit: string): Promise<boolean> {
-    await getDoc(doc(this.firestore, 'tickers', subreddit))
+  async query(q: string, t: string): Promise<boolean> {
+    // FIXME
+    // Update firebase search dictionary value to be collection name
+    let collection: string = t == "ticker" ? "tickers" : "subreddits";
+    await getDoc(doc(this.firestore, collection, q))
         .then((snapshot) => {
           const data = snapshot.data();
           const sentimentsFormatted: FirestoreSentiment[] = [];

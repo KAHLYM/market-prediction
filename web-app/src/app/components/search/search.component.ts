@@ -12,7 +12,7 @@ import {SentimentService} from 'src/app/services/sentiment.service';
 export class SearchComponent implements OnInit {
   @ViewChild('SearchInput') searchElement!: ElementRef;
 
-  results: string[] = [];
+  results: Array<[string, string]> = [];
   showResults: boolean = true;
 
   constructor(private searchService: SearchService, private sentimentService: SentimentService, private router: Router, auth: Auth) {
@@ -34,7 +34,10 @@ export class SearchComponent implements OnInit {
   }
 
   onKey(event: KeyboardEvent): void {
-    this.results = this.searchService.query((<HTMLInputElement>event.target).value);
+    this.results.length = 0;
+    this.searchService.query((<HTMLInputElement>event.target).value).map(result => {
+      this.results.push([result, this.searchService.getType(result)]);
+    })
   }
 
   onClear(event: MouseEvent): void {
@@ -43,9 +46,9 @@ export class SearchComponent implements OnInit {
     this.results.length = 0;
   }
 
-  onResult(event: MouseEvent, result: string): void {
+  onResult(event: MouseEvent, result: [string, string]): void {
     this.searchElement.nativeElement.value = result;
-    this.sentimentService.queryTicker(result).then(() => {
+    this.sentimentService.query(result[0], result[1]).then(() => {
       this.router.navigate(['tabulated']);
     });
   }
