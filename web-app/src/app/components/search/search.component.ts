@@ -15,7 +15,11 @@ export class SearchComponent implements OnInit {
   results: Array<[string, string]> = [];
   showResults: boolean = true;
 
-  constructor(private searchService: SearchService, private sentimentService: SentimentService, private router: Router, auth: Auth) {
+  constructor(
+    private searchService: SearchService,
+    private sentimentService: SentimentService,
+    private router: Router,
+    private auth: Auth) {
     // TODO: Move to be global
     signInAnonymously(getAuth())
         .then(() => {
