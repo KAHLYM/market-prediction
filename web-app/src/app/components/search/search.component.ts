@@ -51,7 +51,7 @@ export class SearchComponent implements OnInit {
   }
 
   onResult(event: MouseEvent, result: [string, string]): void {
-    this.searchElement.nativeElement.value = result;
+    this.searchElement.nativeElement.value = result[0];
     this.sentimentService.query(result[0], result[1]).then(() => {
       this.router.navigate(['tabulated']);
     });

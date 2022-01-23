@@ -13,6 +13,8 @@ export class TabulatedComponent implements OnInit {
   constructor(private sentimentService: SentimentService) { }
 
   ngOnInit(): void {
-    this.sentiments = this.sentimentService.getSentiments();
+    this.sentimentService.sentimentsUpdated.subscribe(next => {
+      this.sentiments = this.sentimentService.getSentiments();
+    })
   }
 }
