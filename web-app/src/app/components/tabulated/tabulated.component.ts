@@ -10,11 +10,11 @@ import {SentimentService} from 'src/app/services/sentiment.service';
 export class TabulatedComponent implements OnInit {
   sentiments: FirestoreSentiment[] = [];
 
-  constructor(private sentimentService: SentimentService) { }
-
-  ngOnInit(): void {
+  constructor(private sentimentService: SentimentService) {
     this.sentimentService.sentimentsUpdated.subscribe(next => {
       this.sentiments = this.sentimentService.getSentiments();
-    })
+    });
   }
+
+  ngOnInit(): void { }
 }

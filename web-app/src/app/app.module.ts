@@ -16,6 +16,7 @@ import {SearchComponent} from './components/search/search.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularMaterialModule} from './angular-material.module';
 import {TabulatedComponent} from './components/tabulated/tabulated.component';
+import { ResultComponent } from './components/result/result.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {TabulatedComponent} from './components/tabulated/tabulated.component';
     HeaderComponent,
     SearchComponent,
     TabulatedComponent,
+    ResultComponent,
   ],
   imports: [
     BrowserModule,
