@@ -5,6 +5,7 @@ import {doc, Firestore, getDoc} from '@angular/fire/firestore';
   providedIn: 'root',
 })
 export class SearchService {
+  q: string = '';
   search: { [key: string]: string } = {};
   threshold: number = 1;
 
@@ -54,6 +55,14 @@ export class SearchService {
     }
 
     return this.sortByValue(rankings);
+  }
+
+  getQuery(): string {
+    return this.q;
+  }
+
+  setQuery(query: string) {
+    this.q = query;
   }
 
   // Credit @Nosredna: https://stackoverflow.com/a/1069840

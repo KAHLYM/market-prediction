@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {doc, Firestore, getDoc} from '@angular/fire/firestore';
 import {FirestoreSentiment} from '../models/firestore-sentiment';
 
@@ -10,6 +10,7 @@ export class SentimentService {
     this.firestore = firestore;
   }
 
+  sentimentsUpdated: EventEmitter<boolean> = new EventEmitter();
   sentiments: FirestoreSentiment[] = [];
 
   getSentiments(): FirestoreSentiment[] {
@@ -37,6 +38,7 @@ export class SentimentService {
               return y.date - x.date;
             });
           }
+          this.sentimentsUpdated.emit(true);
           return true;
         })
         .catch((err) => {
