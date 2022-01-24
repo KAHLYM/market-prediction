@@ -1,14 +1,14 @@
 .SearchContainer,
-.SearchResultContainer
-{
+.SearchResultContainer {
     z-index: 10;
+    background-color: white;
+    border-radius: 22px;
 }
 
 .SearchContainer {
     font-size: 16px;
     width: auto;
     border: 1px solid #dfe1e5;
-    border-radius: 22px;
     min-height: 44px;
     display: flex;
     flex-direction: column;
