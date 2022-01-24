@@ -5,7 +5,7 @@ import {doc, Firestore, getDoc} from '@angular/fire/firestore';
   providedIn: 'root',
 })
 export class SearchService {
-  q: string = "";
+  q: string = '';
   search: { [key: string]: string } = {};
   threshold: number = 1;
 
