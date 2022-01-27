@@ -103,6 +103,7 @@ export class SearchComponent implements OnInit {
   }
 
   onInputFocus(event: MouseEvent) : void {
+    this.resultIndex = this.RESULT_INDEX_MIN - 1;
     this.showResults = true;
   }
 
