@@ -4,14 +4,22 @@
             <div class="SearchIcon">
                 <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
             </div>
-            <input #SearchInput (keyup)="onKey($event)" (click)="onFocus($event)" placeholder="Search for stock tickers">
-            <div class="SearchIcon SearchIconHasFunction" (click)="onClear($event)">
+            <input #SearchInput
+                (keyup)="onInputKey($event)"
+                (click)="onInputFocus($event)"
+                placeholder="Search for stock tickers">
+            <div class="SearchIcon SearchIconHasFunction" (click)="onInputClear($event)">
                 <mat-icon aria-hidden="false" aria-label="Clear">clear</mat-icon>
             </div>
         </div>
         <div class="SearchResultContainer" *ngIf="results.length > 0 && showResults">
             <div class="SearchResultBreak"></div>
-            <div class="SearchResult" *ngFor="let result of results | slice:0:5" (mousedown)="onResult($event, result)">
+            <div class="SearchResult" *ngFor="let result of results | slice:0:5; index as i"
+                (mousedown)="onResultMouseDown($event, result)"
+                (mouseenter)="onResultMouseEnter($event, i)"
+                (mouseleave)="onResultMouseLeave($event)"
+                mouseon="false"
+                selected="false">
                 <div class="SearchResultIcon">
                     <mat-icon aria-hidden="false" aria-label="ticker">{{result[1] == "ticker" ? "show_chart" : "forum"}}</mat-icon>
                 </div>

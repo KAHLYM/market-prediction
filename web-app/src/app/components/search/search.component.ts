@@ -34,34 +34,110 @@ export class SearchComponent implements OnInit {
         });
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+
+  // Helpers
+
+  updateInputValue(value: string) : void {
+    this.searchElement.nativeElement.value = value;
+    (this.searchElement.nativeElement as HTMLInputElement).selectionStart = value.length;
   }
 
-  onKey(event: KeyboardEvent): void {
-    this.results.length = 0;
-    this.searchService.query((<HTMLInputElement>event.target).value).map((result) => {
-      this.results.push([result, this.searchService.getType(result)]);
+  readonly RESULT_INDEX_MIN : number = 0;
+  readonly RESULT_INDEX_MAX : number = 4;
+  resultIndex: number = -1; // zero-indexed
+  updateResultElements() : void {
+    const elements = document.getElementsByClassName('SearchResultContainer')[0].querySelectorAll('.SearchResult');
+    elements.forEach((element, index) => {
+      if (element.getAttribute('mouseon') == 'false') {
+        (element as HTMLElement).setAttribute('selected', index == this.resultIndex ? 'true' : 'false');
+      }
     });
   }
 
-  onClear(event: MouseEvent): void {
+  // Global Events
+
+  onFocusOut(event: FocusEvent): void {
+    this.showResults = false;
+  }
+
+  // Input Events
+
+  onInputKey(event: KeyboardEvent) : void {
+    switch (event.key) {
+      case 'Enter':
+        if (this.resultIndex >= this.RESULT_INDEX_MIN && this.resultIndex <= this.RESULT_INDEX_MAX) {
+          const query = document.getElementsByClassName('SearchResultContainer')[0]
+              .querySelectorAll('.SearchResult')[this.resultIndex]
+              .querySelectorAll('div')[1].innerHTML;
+          this.searchService.setQuery(query);
+          this.updateInputValue(query);
+          this.router.navigate(['result']);
+          this.sentimentService.query(query, 'ticker'); // TODO Fix query second parameter
+        }
+        break;
+      case 'ArrowUp':
+        if (this.results.length) {
+          if (this.resultIndex == this.RESULT_INDEX_MIN ||
+            this.resultIndex == this.RESULT_INDEX_MIN - 1) {
+            this.resultIndex = this.RESULT_INDEX_MAX + 1;
+          } else {
+            this.resultIndex--;
+          }
+          this.updateResultElements();
+        }
+        break;
+      case 'ArrowDown':
+        if (this.results.length) {
+          if (this.resultIndex == this.RESULT_INDEX_MAX ||
+            this.resultIndex == this.RESULT_INDEX_MAX + 1) {
+            this.resultIndex = this.RESULT_INDEX_MIN - 1;
+          } else {
+            this.resultIndex++;
+          }
+          this.updateResultElements();
+        }
+        break;
+      default:
+        this.results.length = 0;
+        this.searchService.query((<HTMLInputElement>event.target).value).map((result) => {
+          this.results.push([result, this.searchService.getType(result)]);
+        });
+        break;
+    }
+  }
+
+  onInputFocus(event: MouseEvent) : void {
+    this.resultIndex = this.RESULT_INDEX_MIN - 1;
+    this.showResults = true;
+  }
+
+  onInputClear(event: MouseEvent): void {
     this.searchElement.nativeElement.value = '';
     this.searchElement.nativeElement.focus();
     this.results.length = 0;
   }
 
-  onResult(event: MouseEvent, result: [string, string]): void {
+  // Result Events
+
+  onResultMouseDown(event: MouseEvent, result: [string, string]): void {
     this.searchService.setQuery(result[0]);
-    this.searchElement.nativeElement.value = result[0];
+    this.updateInputValue(result[0]);
     this.router.navigate(['result']);
     this.sentimentService.query(result[0], result[1]);
   }
 
-  onFocus(event: MouseEvent) : void {
-    this.showResults = true;
+  onResultMouseEnter(event: MouseEvent, index: number): void {
+    this.resultIndex = index;
+    (event.target as HTMLElement).setAttribute('selected', 'true');
+    (event.target as HTMLElement).setAttribute('mouseon', 'true');
+    this.updateResultElements();
   }
 
-  onFocusOut(event: FocusEvent): void {
-    this.showResults = false;
+  onResultMouseLeave(event: MouseEvent) : void {
+    (event.target as HTMLElement).setAttribute('selected', 'false');
+    (event.target as HTMLElement).setAttribute('mouseon', 'false');
+    this.updateResultElements();
   }
 }
