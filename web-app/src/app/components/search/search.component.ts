@@ -69,8 +69,8 @@ export class SearchComponent implements OnInit {
       case 'Enter':
         if (this.resultIndex >= this.RESULT_INDEX_MIN && this.resultIndex <= this.RESULT_INDEX_MAX) {
           const query = document.getElementsByClassName('SearchResultContainer')[0]
-            .querySelectorAll('.SearchResult')[this.resultIndex]
-            .querySelectorAll('div')[1].innerHTML;
+              .querySelectorAll('.SearchResult')[this.resultIndex]
+              .querySelectorAll('div')[1].innerHTML;
           this.searchService.setQuery(query);
           this.updateInputValue(query);
           this.router.navigate(['result']);
