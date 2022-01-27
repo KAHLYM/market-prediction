@@ -35,7 +35,7 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void { }
-  
+
 
   // Helpers
 
@@ -48,16 +48,16 @@ export class SearchComponent implements OnInit {
   readonly RESULT_INDEX_MAX : number = 4;
   resultIndex: number = -1; // zero-indexed
   updateResultElements() : void {
-    let elements = document.getElementsByClassName("SearchResultContainer")[0].querySelectorAll(".SearchResult");
+    const elements = document.getElementsByClassName('SearchResultContainer')[0].querySelectorAll('.SearchResult');
     elements.forEach((element, index) => {
-      if (element.getAttribute("mouseon") == "false") {
-        (element as HTMLElement).setAttribute("selected", index == this.resultIndex ? "true" : "false");
+      if (element.getAttribute('mouseon') == 'false') {
+        (element as HTMLElement).setAttribute('selected', index == this.resultIndex ? 'true' : 'false');
       }
     });
   }
-  
+
   // Global Events
-   
+
   onFocusOut(event: FocusEvent): void {
     this.showResults = false;
   }
@@ -65,17 +65,17 @@ export class SearchComponent implements OnInit {
   // Input Events
 
   onInputKey(event: KeyboardEvent) : void {
-      switch(event.key) {
-      case "Enter":
+    switch (event.key) {
+      case 'Enter':
         if (this.resultIndex >= this.RESULT_INDEX_MIN && this.resultIndex <= this.RESULT_INDEX_MAX) {
-          let query = document.getElementsByClassName("SearchResultContainer")[0].querySelectorAll(".SearchResult")[this.resultIndex].querySelectorAll("div")[1].innerHTML;
+          const query = document.getElementsByClassName('SearchResultContainer')[0].querySelectorAll('.SearchResult')[this.resultIndex].querySelectorAll('div')[1].innerHTML;
           this.searchService.setQuery(query);
           this.updateInputValue(query);
           this.router.navigate(['result']);
-          this.sentimentService.query(query, "ticker"); // TODO Fix query second parameter
+          this.sentimentService.query(query, 'ticker'); // TODO Fix query second parameter
         }
         break;
-      case "ArrowUp":
+      case 'ArrowUp':
         if (this.results.length) {
           if (this.resultIndex == this.RESULT_INDEX_MIN ||
             this.resultIndex == this.RESULT_INDEX_MIN - 1) {
@@ -86,9 +86,9 @@ export class SearchComponent implements OnInit {
           this.updateResultElements();
         }
         break;
-      case "ArrowDown":
+      case 'ArrowDown':
         if (this.results.length) {
-          if (this.resultIndex == this.RESULT_INDEX_MAX || 
+          if (this.resultIndex == this.RESULT_INDEX_MAX ||
             this.resultIndex == this.RESULT_INDEX_MAX + 1) {
             this.resultIndex = this.RESULT_INDEX_MIN - 1;
           } else {
@@ -118,7 +118,7 @@ export class SearchComponent implements OnInit {
   }
 
   // Result Events
-  
+
   onResultMouseDown(event: MouseEvent, result: [string, string]): void {
     this.searchService.setQuery(result[0]);
     this.updateInputValue(result[0]);
@@ -128,14 +128,14 @@ export class SearchComponent implements OnInit {
 
   onResultMouseEnter(event: MouseEvent, index: number): void {
     this.resultIndex = index;
-    (event.target as HTMLElement).setAttribute("selected", "true");
-    (event.target as HTMLElement).setAttribute("mouseon", "true");
+    (event.target as HTMLElement).setAttribute('selected', 'true');
+    (event.target as HTMLElement).setAttribute('mouseon', 'true');
     this.updateResultElements();
   }
 
-  onResultMouseLeave(event: MouseEvent) : void{
-    (event.target as HTMLElement).setAttribute("selected", "false");
-    (event.target as HTMLElement).setAttribute("mouseon", "false");
+  onResultMouseLeave(event: MouseEvent) : void {
+    (event.target as HTMLElement).setAttribute('selected', 'false');
+    (event.target as HTMLElement).setAttribute('mouseon', 'false');
     this.updateResultElements();
   }
 }
