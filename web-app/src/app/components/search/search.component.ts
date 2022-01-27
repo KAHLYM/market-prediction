@@ -76,22 +76,26 @@ export class SearchComponent implements OnInit {
         }
         break;
       case "ArrowUp":
-        if (this.resultIndex == this.RESULT_INDEX_MIN ||
+        if (this.results.length) {
+          if (this.resultIndex == this.RESULT_INDEX_MIN ||
             this.resultIndex == this.RESULT_INDEX_MIN - 1) {
-          this.resultIndex = this.RESULT_INDEX_MAX + 1;
-        } else {
-          this.resultIndex--;
+            this.resultIndex = this.RESULT_INDEX_MAX + 1;
+          } else {
+            this.resultIndex--;
+          }
+          this.updateResultElements();
         }
-        this.updateResultElements();
         break;
       case "ArrowDown":
-        if (this.resultIndex == this.RESULT_INDEX_MAX || 
+        if (this.results.length) {
+          if (this.resultIndex == this.RESULT_INDEX_MAX || 
             this.resultIndex == this.RESULT_INDEX_MAX + 1) {
-          this.resultIndex = this.RESULT_INDEX_MIN - 1;
-        } else {
-          this.resultIndex++;
+            this.resultIndex = this.RESULT_INDEX_MIN - 1;
+          } else {
+            this.resultIndex++;
+          }
+          this.updateResultElements();
         }
-        this.updateResultElements();
         break;
       default:
         this.results.length = 0;
