@@ -16,7 +16,7 @@ export class ResultComponent implements OnInit {
     private searchService: SearchService) {
     this.sentimentService.sentimentsUpdated.subscribe((next) => {
       this.query = this.searchService.getQuery();
-      this.queryType = this.searchService.getType(this.query);
+      this.queryType = this.searchService.getFirestoreSearch(this.query).type;
     });
   }
 
