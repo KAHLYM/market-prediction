@@ -1,8 +1,8 @@
 <div class="ResultContainer element h1_w12 lh1_w8 th1_w6 ph1_w4 mh1_w3 g_autoheight">
     <div class="ResultContainerInner">
         <div class="ResultHeader">
-            <p>{{queryType | uppercase}}</p>
-            <p>{{queryType == "subreddit" ? "r/" : ""}}{{query}}</p>
+            <p>{{query | uppercase}} &#8226; {{queryData.ticker_market | uppercase}}</p>
+            <p>{{queryData.ticker_name}}</p>
         </div>
         <div>
             <app-tabulated></app-tabulated>

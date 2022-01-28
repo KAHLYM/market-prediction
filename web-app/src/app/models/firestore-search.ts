@@ -1,5 +1,5 @@
 export interface FirestoreSearch {
-    ticker_marker: string;
-    ticker_name: string;
+    ticker_market?: string;
+    ticker_name?: string;
     type: string;
 }
