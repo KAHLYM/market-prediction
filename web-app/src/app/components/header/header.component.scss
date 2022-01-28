@@ -5,7 +5,6 @@
 .HeaderContainer span {
     font-size: var(--font-size-very-large);
     font-family: var(--font-family-fat);
-    padding-right: 2.5rem;
     line-height: 2.5rem;
 }
 
@@ -15,4 +14,5 @@
 
 .HeaderContainer app-search {
     flex: 1;
+    padding: 0rem 2.5rem;
 }
