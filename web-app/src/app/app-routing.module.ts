@@ -4,7 +4,6 @@ import {ResultComponent} from './components/result/result.component';
 import {SearchComponent} from './components/search/search.component';
 
 const routes: Routes = [
-  {path: '', component: SearchComponent},
   {path: 'result', component: ResultComponent},
 ];
 
