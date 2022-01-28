@@ -10,7 +10,7 @@ import {SentimentService} from 'src/app/services/sentiment.service';
 })
 export class ResultComponent implements OnInit {
   query: string = '';
-  queryData: FirestoreSearch = { type: "ticker"};
+  queryData: FirestoreSearch = { type: ""};
 
   constructor(
     private sentimentService: SentimentService,
