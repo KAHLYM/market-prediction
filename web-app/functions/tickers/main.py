@@ -67,8 +67,10 @@ class Index:
                     u"type": u"ticker",
                     u"ticker_name": security_name,
                     u"ticker_market": u"s&p 500",
-                } for symbol, security_name in self.data.items()
-            }, merge=True
+                }
+                for symbol, security_name in self.data.items()
+            },
+            merge=True,
         )
 
 
