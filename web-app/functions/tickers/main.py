@@ -62,7 +62,15 @@ class Index:
 
     def upload_to_firestore(self) -> None:
         firestore.Client().collection(u"search").document(u"search").set(
-            {key: u"ticker" for key in self.data}, merge=True
+            {
+                symbol: {
+                    u"type": u"ticker",
+                    u"ticker_name": security_name,
+                    u"ticker_market": u"s&p 500",
+                }
+                for symbol, security_name in self.data.items()
+            },
+            merge=True,
         )
 
 

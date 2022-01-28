@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {doc, Firestore, getDoc} from '@angular/fire/firestore';
+import {FirestoreSearch} from '../models/firestore-search';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
   q: string = '';
-  search: { [key: string]: string } = {};
+  search: { [key: string]: FirestoreSearch } = {};
   threshold: number = 1;
 
   constructor(public firestore: Firestore) {
@@ -72,7 +73,7 @@ export class SearchService {
     ));
   }
 
-  getType(query: string): string {
+  getFirestoreSearch(query: string): FirestoreSearch {
     return this.search[query];
   }
 }

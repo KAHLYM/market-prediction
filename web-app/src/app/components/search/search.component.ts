@@ -102,7 +102,7 @@ export class SearchComponent implements OnInit {
       default:
         this.results.length = 0;
         this.searchService.query((<HTMLInputElement>event.target).value).map((result) => {
-          this.results.push([result, this.searchService.getType(result)]);
+          this.results.push([result, this.searchService.getFirestoreSearch(result).type]);
         });
         break;
     }

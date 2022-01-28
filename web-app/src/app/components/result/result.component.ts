@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {FirestoreSearch} from 'src/app/models/firestore-search';
 import {SearchService} from 'src/app/services/search.service';
 import {SentimentService} from 'src/app/services/sentiment.service';
 
@@ -9,14 +10,14 @@ import {SentimentService} from 'src/app/services/sentiment.service';
 })
 export class ResultComponent implements OnInit {
   query: string = '';
-  queryType: string = '';
+  queryData: FirestoreSearch = {type: ''};
 
   constructor(
     private sentimentService: SentimentService,
     private searchService: SearchService) {
     this.sentimentService.sentimentsUpdated.subscribe((next) => {
       this.query = this.searchService.getQuery();
-      this.queryType = this.searchService.getType(this.query);
+      this.queryData = this.searchService.getFirestoreSearch(this.query);
     });
   }
 
