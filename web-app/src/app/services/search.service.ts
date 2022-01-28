@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {doc, Firestore, getDoc} from '@angular/fire/firestore';
-import { FirestoreSearch } from '../models/firestore-search';
+import {FirestoreSearch} from '../models/firestore-search';
 
 @Injectable({
   providedIn: 'root',
