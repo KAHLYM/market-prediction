@@ -5,7 +5,7 @@ import os
 import sys
 from collections import defaultdict
 from datetime import datetime, timedelta
-from typing import Tuple
+from typing import Any, Tuple
 
 import nltk
 import numpy as np
@@ -73,7 +73,7 @@ def get_submissions(subreddit: str) -> list:
 
 def extract_sentiment(
     submissions: list, tickers: json
-) -> Tuple[defaultdict(list), list]:
+) -> Tuple[Any, list]:
     sentiments = defaultdict(list)
     sentiments_all: list = []
 
