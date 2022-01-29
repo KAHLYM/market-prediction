@@ -1,28 +1,22 @@
 #!/usr/bin/env python
 
 import json
-import logging
 import os
 import sys
 from collections import defaultdict
 from datetime import datetime, timedelta
-from pathlib import Path
+from typing import Tuple
 
 import nltk
 import numpy as np
 import praw
 from classifiers import sentiment_mod as sm
-from google.cloud import firestore, secretmanager, storage
+from google.cloud import secretmanager
+from helpers.firestore import (get_file_from_storage,
+                               upload_document_to_firestore_database)
+from helpers.platform import is_gcp_instance
 
 SUBREDDIT: str = "stocks"
-
-
-def is_gcp_instance() -> bool:
-    for env in os.environ:
-        if "X_GOOGLE" in env:
-            return True
-
-    return False
 
 
 def is_submission_valid(submission) -> bool:
@@ -35,21 +29,7 @@ def is_submission_valid(submission) -> bool:
     return valid
 
 
-def upload_document_to_database(
-    collection_path: str, document_id: str, data: dict, merge: bool = True
-) -> None:
-    try:
-        # Write document
-        firestore.Client().collection(collection_path).document(document_id).set(
-            data, merge=merge
-        )
-    except Exception as e:
-        # Swallow all exceptions and log
-        logging.warning(f"An exception occured: { e }")
-
-
-def get_submissions(subreddit: str) -> list:
-
+def setup_praw() -> praw.Reddit:
     # Get PRAW client_secret from Google Cloud Secret Manager
     smsc = secretmanager.SecretManagerServiceClient()
     response = smsc.access_secret_version(
@@ -58,12 +38,16 @@ def get_submissions(subreddit: str) -> list:
     client_secret = response.payload.data.decode("UTF-8")
 
     # Setup PRAW
-    reddit = praw.Reddit(
+    return  praw.Reddit(
         client_id="yTDXCkdIpgE05A",
         client_secret=client_secret,
         user_agent=f"{sys.platform}:marketprediction:v0.2 (by u/KAHLYM)",
     )
 
+
+def get_submissions(subreddit: str) -> list:
+    reddit: praw.Reddit = setup_praw()
+    
     submissions = []
 
     utc_expirary = datetime.utcnow() - timedelta(hours=24)
@@ -85,24 +69,18 @@ def get_submissions(subreddit: str) -> list:
     return submissions
 
 
-def analyse(submissions: list) -> None:
-    storage_client = storage.Client()
-    bucket = storage_client.bucket("market-prediction-5209e.appspot.com")
-    blob = bucket.blob("sp500.json")
-    data = blob.download_as_string().decode("utf-8")
-    sp500 = json.loads(data)
-
+def extract_sentiment(submissions: list, tickers: json) -> Tuple[defaultdict(list), list]:
     sentiments = defaultdict(list)
     sentiments_all: list = []
 
     for submission in submissions:
-        # TODO Upload sentiment_mod to Google Cloud Platform
+        # TODO #74 Upload sentiment_mod to Google Cloud Platform
         classification, confidence = sm.sentiment(submission)
 
-        # TODO Implement function to get ticker in submission
+        # TODO #189 Implement function to get ticker in submission
         # i.e something more appropriate than split()
         for ticker in [
-            ticker for ticker in sp500 if f"${ticker}" in submission.split()
+            ticker for ticker in tickers if f"${ticker}" in submission.split()
         ]:
             sentiments[ticker].append(
                 (1 if classification == "pos" else -1) * confidence
@@ -110,46 +88,47 @@ def analyse(submissions: list) -> None:
 
         sentiments_all.append((1 if classification == "pos" else -1) * confidence)
 
-    # Calculate averages
-    for ticker, sentiment in sentiments.items():
-        sentiment32 = np.array(sentiment, dtype=np.float64)
-        sentiment_mean = np.mean(sentiment32, axis=0)
+    return sentiments, sentiments_all
 
-        upload_document_to_database(
-            "tickers",
-            ticker,
-            {
-                datetime.today().strftime("%Y-%m-%d"): {
-                    "score": round(sentiment_mean.item(), 2),
-                    "count": len(sentiment),
-                }
-            },
-            merge=True,
-        )
 
-    # subreddit
-    sentiment32 = np.array(sentiments_all, dtype=np.float64)
-    sentiment_mean = np.mean(sentiments_all, axis=0)
 
-    upload_document_to_database(
-        "subreddits",
-        SUBREDDIT,
+def calculate_data(sentiment: list) -> Tuple[int, int]:
+    sentiment32 = np.array(sentiment, dtype=np.float64)
+    sentiment_mean = np.mean(sentiment32, axis=0)
+
+    return round(sentiment_mean.item(), 2), len(sentiment)
+
+
+def calculate_data_and_upload(sentiment: list, collection_path: str, document_id: str) -> None:
+    score, count = calculate_data(sentiment)
+
+    upload_document_to_firestore_database(
+        collection_path,
+        document_id,
         {
             datetime.today().strftime("%Y-%m-%d"): {
-                "score": round(sentiment_mean.item(), 2),
-                "count": len(sentiments_all),
+                "score": score,
+                "count": count,
             }
         },
         merge=True,
     )
 
 
+# Google Cloud Platform entry point
 def get_reddit_submissions(event, context):
 
+    # The classifiers require corpora that were used to build said classifiers
+    # nltk does not lazy load corpora so we need to install these on the instance
     if is_gcp_instance():
         root = os.path.dirname(os.path.abspath(__file__))
         download_dir = os.path.join(root, "nltk_data")
         os.chdir(download_dir)
         nltk.data.path.append(download_dir)
 
-    analyse(get_submissions(SUBREDDIT))
+    sentiments, sentiments_all = extract_sentiment(get_submissions(SUBREDDIT), get_file_from_storage("sp500.json"))
+
+    for ticker, sentiment in sentiments.items():
+        calculate_data_and_upload(sentiment, "tickers", ticker)
+
+    calculate_data_and_upload(sentiments_all, "subreddits", SUBREDDIT)
