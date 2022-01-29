@@ -1,7 +1,7 @@
 # Python
 __pycache__
 
-*.pickle
 classifiers/sentdex/pickled_algos
+web-app/functions/get_reddit_submissions/nltk_data
 
 secret.py
