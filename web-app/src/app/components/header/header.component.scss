@@ -1,4 +1,18 @@
 .HeaderContainer {
     display: flex;
-    justify-content: center;
+}
+
+.HeaderContainer span {
+    font-size: var(--font-size-very-large);
+    font-family: var(--font-family-fat);
+    line-height: 2.5rem;
+}
+
+.HeaderContainer span:hover {
+    cursor: pointer;
+}
+
+.HeaderContainer app-search {
+    flex: 1;
+    padding: 0rem 2.5rem;
 }
