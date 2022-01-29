@@ -71,9 +71,7 @@ def get_submissions(subreddit: str) -> list:
     return submissions
 
 
-def extract_sentiment(
-    submissions: list, tickers: json
-) -> Tuple[Any, list]:
+def extract_sentiment(submissions: list, tickers: json) -> Tuple[Any, list]:
     sentiments = defaultdict(list)
     sentiments_all: list = []
 
