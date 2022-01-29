@@ -20,6 +20,7 @@ jobs:
     - name: Install coverage
       run: |
         python -m pip install coverage
+        python -m pip install -r web-app\functions\get_reddit_submissions\requirements.txt
     - name: Run coverage
       working-directory: ./web-app/functions/get_reddit_submissions
       run: |
