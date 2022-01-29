@@ -22,5 +22,5 @@ def get_file_from_storage(filename: str) -> json:
     bucket = storage_client.bucket("market-prediction-5209e.appspot.com")
     blob = bucket.blob(filename)
     data = blob.download_as_string().decode("utf-8")
-    
+
     return json.loads(data)

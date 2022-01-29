@@ -12,8 +12,10 @@ import numpy as np
 import praw
 from classifiers import sentiment_mod as sm
 from google.cloud import secretmanager
-from helpers.firestore import (get_file_from_storage,
-                               upload_document_to_firestore_database)
+from helpers.firestore import (
+    get_file_from_storage,
+    upload_document_to_firestore_database,
+)
 from helpers.platform import is_gcp_instance
 
 SUBREDDIT: str = "stocks"
@@ -38,7 +40,7 @@ def setup_praw() -> praw.Reddit:
     client_secret = response.payload.data.decode("UTF-8")
 
     # Setup PRAW
-    return  praw.Reddit(
+    return praw.Reddit(
         client_id="yTDXCkdIpgE05A",
         client_secret=client_secret,
         user_agent=f"{sys.platform}:marketprediction:v0.2 (by u/KAHLYM)",
@@ -47,7 +49,7 @@ def setup_praw() -> praw.Reddit:
 
 def get_submissions(subreddit: str) -> list:
     reddit: praw.Reddit = setup_praw()
-    
+
     submissions = []
 
     utc_expirary = datetime.utcnow() - timedelta(hours=24)
@@ -69,7 +71,9 @@ def get_submissions(subreddit: str) -> list:
     return submissions
 
 
-def extract_sentiment(submissions: list, tickers: json) -> Tuple[defaultdict(list), list]:
+def extract_sentiment(
+    submissions: list, tickers: json
+) -> Tuple[defaultdict(list), list]:
     sentiments = defaultdict(list)
     sentiments_all: list = []
 
@@ -91,7 +95,6 @@ def extract_sentiment(submissions: list, tickers: json) -> Tuple[defaultdict(lis
     return sentiments, sentiments_all
 
 
-
 def calculate_data(sentiment: list) -> Tuple[int, int]:
     sentiment32 = np.array(sentiment, dtype=np.float64)
     sentiment_mean = np.mean(sentiment32, axis=0)
@@ -99,7 +102,9 @@ def calculate_data(sentiment: list) -> Tuple[int, int]:
     return round(sentiment_mean.item(), 2), len(sentiment)
 
 
-def calculate_data_and_upload(sentiment: list, collection_path: str, document_id: str) -> None:
+def calculate_data_and_upload(
+    sentiment: list, collection_path: str, document_id: str
+) -> None:
     score, count = calculate_data(sentiment)
 
     upload_document_to_firestore_database(
@@ -126,7 +131,9 @@ def get_reddit_submissions(event, context):
         os.chdir(download_dir)
         nltk.data.path.append(download_dir)
 
-    sentiments, sentiments_all = extract_sentiment(get_submissions(SUBREDDIT), get_file_from_storage("sp500.json"))
+    sentiments, sentiments_all = extract_sentiment(
+        get_submissions(SUBREDDIT), get_file_from_storage("sp500.json")
+    )
 
     for ticker, sentiment in sentiments.items():
         calculate_data_and_upload(sentiment, "tickers", ticker)
