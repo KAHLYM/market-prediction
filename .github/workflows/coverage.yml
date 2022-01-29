@@ -29,7 +29,7 @@ jobs:
       run: |
         python -m coverage run -m unittest discover && python -m coverage report --omit "test_*" > coverage.txt
         cov_score=$(awk '$1 == "TOTAL" {print $NF+0}' coverage.txt)
-        echo "{ \"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"$cov_score\"%, \"color\": \"black\" }" > coverage.json
+        echo "{ \"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"${cov_score}%\", \"color\": \"black\" }" > coverage.json
     - name: Commit changes
       run: |
         git config --global user.name 'Market predictions Coverage Action'
