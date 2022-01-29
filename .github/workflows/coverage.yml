@@ -13,6 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        ref: ${{ github.event.pull_request.head.ref }}
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
       with:
@@ -33,4 +36,4 @@ jobs:
         git config --global user.email 'wrightci01s@gmail.com'
         git add */coverage.json
         git diff-index --quiet HEAD || git commit -m "Auto updating coverage.json"
-        git push
+        git push 
