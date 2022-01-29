@@ -61,12 +61,12 @@ class Index:
         blob.upload_from_string(json.dumps(self.data))
 
     def upload_to_firestore(self) -> None:
-        firestore.Client().collection(u"search").document(u"search").set(
+        firestore.Client().collection("search").document("search").set(
             {
                 symbol: {
-                    u"type": u"ticker",
-                    u"ticker_name": security_name,
-                    u"ticker_market": u"s&p 500",
+                    "type": "ticker",
+                    "ticker_name": security_name,
+                    "ticker_market": "s&p 500",
                 }
                 for symbol, security_name in self.data.items()
             },
