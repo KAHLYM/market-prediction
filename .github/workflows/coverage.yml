@@ -31,6 +31,6 @@ jobs:
       run: |
         git config --global user.name 'Market predictions Coverage Action'
         git config --global user.email 'wrightci01s@gmail.com'
-        git add coverage.json
+        git add */coverage.json
         git diff-index --quiet HEAD || git commit -m "Auto updating coverage.json"
         git push
