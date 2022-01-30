@@ -2,6 +2,7 @@
 
 import json
 import os
+import string
 import sys
 from collections import defaultdict
 from datetime import datetime, timedelta
@@ -92,7 +93,7 @@ def extract_sentiment(submissions: list, tickers: json) -> Tuple[Any, list]:
 
 
 def extract_tickers(submission: str, tickers: json) -> list:
-    return [ ticker for ticker in tickers if f"${ticker}" in submission.split() ]
+    return [ ticker for ticker in tickers if ticker.lower() in submission.lower().translate(string.punctuation) ]
 
 
 def calculate_data(sentiment: list) -> Tuple[int, int]:

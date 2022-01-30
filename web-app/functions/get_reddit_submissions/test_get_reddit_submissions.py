@@ -122,11 +122,23 @@ class TestGetRedditSubmissions(unittest.TestCase):
 
         extracted_tickers: list = extract_tickers(submission, tickers)
 
-        assert len(extracted_tickers) == 0
+        assert len(extracted_tickers) == 1
 
 
     def test_extract_tickers_single_ticker(self):
         submission: str = "$TestKeyOne appears in this submission"
+        tickers: json = {
+            "TestKeyOne": "TestValueOne",
+        }
+
+        extracted_tickers: list = extract_tickers(submission, tickers)
+
+        assert len(extracted_tickers) == 1
+        assert "TestKeyOne" in extracted_tickers
+
+
+    def test_extract_tickers_deuplicate_ticker(self):
+        submission: str = "$TestKeyOne appears in this submission and does $TestKeyOne"
         tickers: json = {
             "TestKeyOne": "TestValueOne",
         }
@@ -150,6 +162,42 @@ class TestGetRedditSubmissions(unittest.TestCase):
         assert "TestKeyOne" in extracted_tickers
         assert "TestKeyTwo" in extracted_tickers
     
+
+    def test_extract_tickers_punctuation(self):
+        submission: str = "$TestKeyOne, appears in this submission"
+        tickers: json = {
+            "TestKeyOne": "TestValueOne",
+        }
+
+        extracted_tickers: list = extract_tickers(submission, tickers)
+
+        assert len(extracted_tickers) == 1
+        assert "TestKeyOne" in extracted_tickers
+
+    
+    def test_extract_tickers_lowercase(self):
+        submission: str = "$testkeyone appears in this submission"
+        tickers: json = {
+            "TestKeyOne": "TestValueOne",
+        }
+
+        extracted_tickers: list = extract_tickers(submission, tickers)
+
+        assert len(extracted_tickers) == 1
+        assert "TestKeyOne" in extracted_tickers
+
+    
+    def test_extract_tickers_uppercase(self):
+        submission: str = "$TESTKEYONE appears in this submission"
+        tickers: json = {
+            "TestKeyOne": "TestValueOne",
+        }
+
+        extracted_tickers: list = extract_tickers(submission, tickers)
+
+        assert len(extracted_tickers) == 1
+        assert "TestKeyOne" in extracted_tickers
+
 
     """ calculate_data """
 
