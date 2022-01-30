@@ -91,7 +91,16 @@ def extract_sentiment(submissions: list, tickers: json) -> Tuple[Any, list]:
 
 
 def extract_tickers(submission: str, tickers: json) -> list:
-    return [ ticker for ticker in tickers if ticker.lower() in submission.lower().translate(string.punctuation) ]
+    extracted_tickers: list = []
+
+    for ticker in tickers:
+        submissions_formatted: str = submission.lower().translate(string.punctuation)
+        if (ticker.lower() in submissions_formatted or
+            # Assume ticker_name present
+            tickers[ticker]["ticker_name"].lower() in submissions_formatted):
+            extracted_tickers.append(ticker)
+
+    return extracted_tickers
 
 
 def calculate_data(sentiment: list) -> Tuple[int, int]:
