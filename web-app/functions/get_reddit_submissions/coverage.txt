@@ -1,0 +1,8 @@
+Name                           Stmts   Miss  Cover
+--------------------------------------------------
+classifiers/sentiment_mod.py      60     24    60%
+helpers/firestore.py              14      9    36%
+helpers/platform.py                6      4    33%
+main.py                           61     36    41%
+--------------------------------------------------
+TOTAL                            141     73    48%
