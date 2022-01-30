@@ -95,9 +95,12 @@ def extract_tickers(submission: str, tickers: json) -> list:
 
     for ticker in tickers:
         submissions_formatted: str = submission.lower().translate(string.punctuation)
-        if (ticker.lower() in submissions_formatted or
+        if (
+            ticker.lower() in submissions_formatted
+            or
             # Assume ticker_name present
-            tickers[ticker]["ticker_name"].lower() in submissions_formatted):
+            tickers[ticker]["ticker_name"].lower() in submissions_formatted
+        ):
             extracted_tickers.append(ticker)
 
     return extracted_tickers
