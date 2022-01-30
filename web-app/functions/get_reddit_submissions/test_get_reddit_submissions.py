@@ -1,12 +1,28 @@
 import json
+import os
 import unittest
 
 from main import calculate_data, extract_sentiment, is_submission_valid
+from helpers.platform import is_gcp_instance
 from praw import Reddit
 from praw.models.reddit.submission import Submission
 
 
 class TestGetRedditSubmissions(unittest.TestCase):
+    """ is_gcp_instance """
+
+    def test_is_gcp_instance_true(self):
+        os.environ["X_GOOGLE"] = "TestValue"
+
+        assert is_gcp_instance() == True
+
+
+    def test_is_gcp_instance_false(self):
+        if "X_GOOGLE" in os.environ:
+            del os.environ["X_GOOGLE"]
+
+        assert is_gcp_instance() == False
+
 
     """ is_submission_valid """
 
