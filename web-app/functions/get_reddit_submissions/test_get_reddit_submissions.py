@@ -42,7 +42,7 @@ class TestGetRedditSubmissions(unittest.TestCase):
 
     def test_extract_sentiment_identifies_ticker(self):
         submissions: list = ["$TestKeyOne appears in this submission"]
-        tickers: json = {"TestKeyOne": {"ticker_name": "TestNameOne"}}
+        tickers: json = {"TestKeyOne": "TestNameOne"}
 
         sentiments, sentiments_all = extract_sentiment(submissions, tickers)
 
@@ -54,8 +54,8 @@ class TestGetRedditSubmissions(unittest.TestCase):
             "$TestKeyOne appears in this submission and does $TestKeyTwo"
         ]
         tickers: json = {
-            "TestKeyOne": {"ticker_name": "TestNameOne"},
-            "TestKeyTwo": {"ticker_name": "TestNameTwo"},
+            "TestKeyOne": "TestNameOne",
+            "TestKeyTwo": "TestNameTwo",
         }
 
         sentiments, sentiments_all = extract_sentiment(submissions, tickers)
@@ -69,8 +69,8 @@ class TestGetRedditSubmissions(unittest.TestCase):
             "$TestKeyTwo appears in this submission",
         ]
         tickers: json = {
-            "TestKeyOne": {"ticker_name": "TestNameOne"},
-            "TestKeyTwo": {"ticker_name": "TestNameTwo"},
+            "TestKeyOne": "TestNameOne",
+            "TestKeyTwo": "TestNameTwo",
         }
 
         sentiments, sentiments_all = extract_sentiment(submissions, tickers)
@@ -83,7 +83,7 @@ class TestGetRedditSubmissions(unittest.TestCase):
             "$TestKeyOne appears in this submission",
             "$TestKeyOne appears in this submission",
         ]
-        tickers: json = {"TestKeyOne": {"ticker_name": "TestNameOne"}}
+        tickers: json = {"TestKeyOne": "TestNameOne"}
 
         sentiments, sentiments_all = extract_sentiment(submissions, tickers)
 
@@ -112,7 +112,7 @@ class TestGetRedditSubmissions(unittest.TestCase):
 
     def test_extract_tickers_no_tickers(self):
         submission: str = "TestKeyZero appears in this submission"
-        tickers: json = {"TestKeyOne": {"ticker_name": "TestNameOne"}}
+        tickers: json = {"TestKeyOne": "TestNameOne"}
 
         extracted_tickers: list = extract_tickers(submission, tickers)
 
@@ -120,7 +120,7 @@ class TestGetRedditSubmissions(unittest.TestCase):
 
     def test_extract_tickers_single_ticker(self):
         submission: str = "$TestKeyOne appears in this submission"
-        tickers: json = {"TestKeyOne": {"ticker_name": "TestNameOne"}}
+        tickers: json = {"TestKeyOne": "TestNameOne"}
 
         extracted_tickers: list = extract_tickers(submission, tickers)
 
@@ -129,7 +129,7 @@ class TestGetRedditSubmissions(unittest.TestCase):
 
     def test_extract_tickers_duplicate_ticker(self):
         submission: str = "$TestKeyOne appears in this submission and does $TestKeyOne"
-        tickers: json = {"TestKeyOne": {"ticker_name": "TestNameOne"}}
+        tickers: json = {"TestKeyOne": "TestNameOne"}
 
         extracted_tickers: list = extract_tickers(submission, tickers)
 
@@ -139,8 +139,8 @@ class TestGetRedditSubmissions(unittest.TestCase):
     def test_extract_tickers_multiple_tickers(self):
         submission: str = "$TestKeyOne appears in this submission and does $TestKeyTwo"
         tickers: json = {
-            "TestKeyOne": {"ticker_name": "TestNameOne"},
-            "TestKeyTwo": {"ticker_name": "TestNameTwo"},
+            "TestKeyOne": "TestNameOne",
+            "TestKeyTwo": "TestNameTwo",
         }
 
         extracted_tickers: list = extract_tickers(submission, tickers)
@@ -151,16 +151,24 @@ class TestGetRedditSubmissions(unittest.TestCase):
 
     def test_extract_tickers_punctuation(self):
         submission: str = "$TestKeyOne, appears in this submission"
-        tickers: json = {"TestKeyOne": {"ticker_name": "TestNameOne"}}
+        tickers: json = {"TestKeyOne": "TestNameOne"}
 
         extracted_tickers: list = extract_tickers(submission, tickers)
 
         assert len(extracted_tickers) == 1
         assert "TestKeyOne" in extracted_tickers
 
+    def test_extract_tickers_within(self):
+        submission: str = "TestTextTestKeyOneTestText, appears in this submission"
+        tickers: json = {"TestKeyOne": "TestNameOne"}
+
+        extracted_tickers: list = extract_tickers(submission, tickers)
+
+        assert len(extracted_tickers) == 0
+
     def test_extract_tickers_lowercase(self):
         submission: str = "$testkeyone appears in this submission"
-        tickers: json = {"TestKeyOne": {"ticker_name": "TestNameOne"}}
+        tickers: json = {"TestKeyOne": "TestNameOne"}
 
         extracted_tickers: list = extract_tickers(submission, tickers)
 
@@ -169,7 +177,7 @@ class TestGetRedditSubmissions(unittest.TestCase):
 
     def test_extract_tickers_uppercase(self):
         submission: str = "$TESTKEYONE appears in this submission"
-        tickers: json = {"TestKeyOne": {"ticker_name": "TestNameOne"}}
+        tickers: json = {"TestKeyOne": "TestNameOne"}
 
         extracted_tickers: list = extract_tickers(submission, tickers)
 
@@ -178,7 +186,7 @@ class TestGetRedditSubmissions(unittest.TestCase):
 
     def test_extract_tickers_single_ticker_name(self):
         submission: str = "TestNameOne appears in this submission"
-        tickers: json = {"TestKeyOne": {"ticker_name": "TestNameOne"}}
+        tickers: json = {"TestKeyOne": "TestNameOne"}
 
         extracted_tickers: list = extract_tickers(submission, tickers)
 
@@ -187,7 +195,7 @@ class TestGetRedditSubmissions(unittest.TestCase):
 
     def test_extract_tickers_duplicate_ticker_name(self):
         submission: str = "TestNameOne appears in this submission and does TestNameOne"
-        tickers: json = {"TestKeyOne": {"ticker_name": "TestNameOne"}}
+        tickers: json = {"TestKeyOne": "TestNameOne"}
 
         extracted_tickers: list = extract_tickers(submission, tickers)
 
@@ -197,8 +205,8 @@ class TestGetRedditSubmissions(unittest.TestCase):
     def test_extract_tickers_multiple_ticker_names(self):
         submission: str = "TestNameOne appears in this submission and does TestNameTwo"
         tickers: json = {
-            "TestKeyOne": {"ticker_name": "TestNameOne"},
-            "TestKeyTwo": {"ticker_name": "TestNameTwo"},
+            "TestKeyOne": "TestNameOne",
+            "TestKeyTwo": "TestNameTwo",
         }
 
         extracted_tickers: list = extract_tickers(submission, tickers)
@@ -209,7 +217,7 @@ class TestGetRedditSubmissions(unittest.TestCase):
 
     def test_extract_tickers_ticker_name_lowercase(self):
         submission: str = "testnameone appears in this submission"
-        tickers: json = {"TestKeyOne": {"ticker_name": "TestNameOne"}}
+        tickers: json = {"TestKeyOne": "TestNameOne"}
 
         extracted_tickers: list = extract_tickers(submission, tickers)
 
@@ -218,7 +226,7 @@ class TestGetRedditSubmissions(unittest.TestCase):
 
     def test_extract_tickers_ticker_name_uppercase(self):
         submission: str = "TESTNAMEONE appears in this submission"
-        tickers: json = {"TestKeyOne": {"ticker_name": "TestNameOne"}}
+        tickers: json = {"TestKeyOne": "TestNameOne"}
 
         extracted_tickers: list = extract_tickers(submission, tickers)
 
