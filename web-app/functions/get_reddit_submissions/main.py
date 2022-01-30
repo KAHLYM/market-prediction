@@ -2,6 +2,7 @@
 
 import json
 import os
+import string
 import sys
 from collections import defaultdict
 from datetime import datetime, timedelta
@@ -79,11 +80,7 @@ def extract_sentiment(submissions: list, tickers: json) -> Tuple[Any, list]:
         # TODO #74 Upload sentiment_mod to Google Cloud Platform
         classification, confidence = sm.sentiment(submission)
 
-        # TODO #189 Implement function to get ticker in submission
-        # i.e something more appropriate than split()
-        for ticker in [
-            ticker for ticker in tickers if f"${ticker}" in submission.split()
-        ]:
+        for ticker in extract_tickers(submission, tickers):
             sentiments[ticker].append(
                 (1 if classification == "pos" else -1) * confidence
             )
@@ -91,6 +88,22 @@ def extract_sentiment(submissions: list, tickers: json) -> Tuple[Any, list]:
         sentiments_all.append((1 if classification == "pos" else -1) * confidence)
 
     return sentiments, sentiments_all
+
+
+def extract_tickers(submission: str, tickers: json) -> list:
+    extracted_tickers: list = []
+
+    for ticker in tickers:
+        submissions_formatted: str = submission.lower().translate(string.punctuation)
+        if (
+            ticker.lower() in submissions_formatted
+            or
+            # Assume ticker_name present
+            tickers[ticker]["ticker_name"].lower() in submissions_formatted
+        ):
+            extracted_tickers.append(ticker)
+
+    return extracted_tickers
 
 
 def calculate_data(sentiment: list) -> Tuple[int, int]:
