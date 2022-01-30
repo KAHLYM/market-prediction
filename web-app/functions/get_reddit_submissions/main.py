@@ -80,8 +80,6 @@ def extract_sentiment(submissions: list, tickers: json) -> Tuple[Any, list]:
         # TODO #74 Upload sentiment_mod to Google Cloud Platform
         classification, confidence = sm.sentiment(submission)
 
-        # TODO #189 Implement function to get ticker in submission
-        # i.e something more appropriate than split()
         for ticker in extract_tickers(submission, tickers):
             sentiments[ticker].append(
                 (1 if classification == "pos" else -1) * confidence
