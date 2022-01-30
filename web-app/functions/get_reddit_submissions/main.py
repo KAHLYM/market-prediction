@@ -94,7 +94,11 @@ def extract_tickers(submission: str, tickers: json) -> list:
     extracted_tickers: list = []
 
     for ticker in tickers:
-        submission_formatted: list[str] = submission.lower().translate(str.maketrans('', '', string.punctuation)).split()
+        submission_formatted: list[str] = (
+            submission.lower()
+            .translate(str.maketrans("", "", string.punctuation))
+            .split()
+        )
         if (
             ticker.lower() in submission_formatted
             or
