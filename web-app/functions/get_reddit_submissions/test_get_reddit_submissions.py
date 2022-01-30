@@ -161,4 +161,4 @@ class TestGetRedditSubmissions(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main(self) 
+    unittest.main() 
