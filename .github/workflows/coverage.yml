@@ -29,11 +29,12 @@ jobs:
       run: |
         python -m coverage run -m unittest discover && python -m coverage report --omit "test_*" > coverage.txt
         cov_score=$(awk '$1 == "TOTAL" {print $NF+0}' coverage.txt)
-        echo "{ \"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"${cov_score}%\", \"color\": \"black\" }" > coverage.json
+        echo "{ \"schemaVersion\": 1, \"label\": \"coverage (functions)\", \"message\": \"${cov_score}%\", \"color\": \"black\" }" > coverage.json
     - name: Commit changes
       run: |
         git config --global user.name 'Market predictions Coverage Action'
         git config --global user.email 'wrightci01s@gmail.com'
         git add */coverage.json
-        git diff-index --quiet HEAD || git commit -m "Auto updating coverage.json"
+        git add */coverage.txt
+        git diff-index --quiet HEAD || git commit -m "Auto updating coverage (functions)"
         git push 

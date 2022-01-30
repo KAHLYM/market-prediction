@@ -1,7 +1,7 @@
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/KAHLYM/market-prediction/Angular%20Tests/main?label=Angular%20Tests&logo=Angular&style=for-the-badge)
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/KAHLYM/market-prediction/Lint/main?label=Linter&style=for-the-badge)
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/KAHLYM/market-prediction/Lint/main?label=Linter&style=for-the-badge)
-![GitHub Workflow Status (branch)](https://img.shields.io/endpoint?url=https%3A%2F&2Fraw.githubusercontent.com/KAHLYM/market-prediction/main/coverage.json&style=for-the-badge)
+![GitHub Workflow Status (branch)](https://img.shields.io/endpoint?url=https%3A%2F&2Fraw.githubusercontent.com/KAHLYM/market-prediction/main/web-app/functions/get_reddit_submissions/coverage.json&style=for-the-badge)
 
 # Market Prediction
 
