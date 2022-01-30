@@ -81,9 +81,7 @@ def extract_sentiment(submissions: list, tickers: json) -> Tuple[Any, list]:
 
         # TODO #189 Implement function to get ticker in submission
         # i.e something more appropriate than split()
-        for ticker in [
-            ticker for ticker in tickers if f"${ticker}" in submission.split()
-        ]:
+        for ticker in extract_tickers(submission, tickers):
             sentiments[ticker].append(
                 (1 if classification == "pos" else -1) * confidence
             )
@@ -91,6 +89,10 @@ def extract_sentiment(submissions: list, tickers: json) -> Tuple[Any, list]:
         sentiments_all.append((1 if classification == "pos" else -1) * confidence)
 
     return sentiments, sentiments_all
+
+
+def extract_tickers(submission: str, tickers: json) -> list:
+    return [ ticker for ticker in tickers if f"${ticker}" in submission.split() ]
 
 
 def calculate_data(sentiment: list) -> Tuple[int, int]:
