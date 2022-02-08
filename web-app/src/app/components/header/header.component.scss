@@ -1,18 +1,23 @@
-.HeaderContainer {
+.HeaderContainerOuter {
+    display: flex;
+    justify-content: center;
+}
+
+.HeaderContainerInner {
     display: flex;
 }
 
-.HeaderContainer span {
+.HeaderContainerOuter span {
     font-size: var(--font-size-very-large);
     font-family: var(--font-family-fat);
     line-height: 2.5rem;
 }
 
-.HeaderContainer span:hover {
+.HeaderContainerOuter span:hover {
     cursor: pointer;
 }
 
-.HeaderContainer app-search {
+.HeaderContainerOuter app-search {
     flex: 1;
-    padding: 0rem 2.5rem;
+    padding: 0rem 0rem 0rem 2.5rem;
 }
