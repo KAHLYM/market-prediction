@@ -134,6 +134,34 @@ def calculate_data_and_upload(
         merge=True,
     )
 
+def calculate_latest_and_upload(sentiments: Any, sentiments_all: list) -> None:
+    sentiments_latest: dict(str, Any) = {}
+    for ticker, sentiment in sentiments.items():
+        score, count = calculate_data(sentiment)
+        sentiments_latest[ticker] = {
+            "score": score,
+            "count": count
+        }
+
+    upload_document_to_firestore_database(
+        "latest",
+        "tickers",
+        sentiments_latest,
+        merge=False,
+    )
+
+    sentiments_all_score, sentiments_all_count = calculate_data(sentiments_all)
+    upload_document_to_firestore_database(
+        "latest",
+        "subreddits",
+        {
+            SUBREDDIT: {
+                "score": sentiments_all_score,
+                "count": sentiments_all_count,
+            }
+        },
+        merge=False,
+    )
 
 # Google Cloud Platform entry point
 def get_reddit_submissions(event, context):
@@ -154,3 +182,6 @@ def get_reddit_submissions(event, context):
         calculate_data_and_upload(sentiment, "tickers", ticker)
 
     calculate_data_and_upload(sentiments_all, "subreddits", SUBREDDIT)
+
+    calculate_latest_and_upload(sentiments, sentiments_all)
+    
