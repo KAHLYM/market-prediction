@@ -35,7 +35,12 @@ export class SentimentService {
               });
             }
             this.sentiments = sentimentsFormatted.sort(function(x, y) {
-              return y.date - x.date;
+              if (y.date && x.date) {
+                return y.date - x.date;
+              } else {
+                // we should not hit this case
+                return 0;
+              }
             });
           }
           this.sentimentsUpdated.emit(true);
