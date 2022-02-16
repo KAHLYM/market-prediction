@@ -8,7 +8,7 @@ import {FirestoreSearch} from '../models/firestore-search';
 export class SearchService {
   q: string = '';
   search: { [key: string]: FirestoreSearch } = {};
-  threshold: number = 1;
+  threshold: number = 0;
 
   constructor(public firestore: Firestore) {
     this.firestore = firestore;
