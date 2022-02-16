@@ -1,0 +1,39 @@
+.LatestContainerOuter {
+    display: flex;
+    justify-content: center;
+}
+
+.LatestContainerInner {
+    overflow: hidden;
+    display: inline-flex;
+}
+
+.Tile {
+    font-size: var(--font-size-normal);
+    border: 1px solid var(--color-structure);
+    border-radius: .5rem;
+    display: inline-block;
+    margin-right: .5rem;
+    height: 6.5rem;
+}
+
+.Tile:hover {
+    cursor: pointer;
+    box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+}
+
+.Tile > div {
+    display: flex;
+    flex-direction: row;
+}
+
+.Tile > div > div {
+    flex: 50%;
+}
+
+.Tile > div:first-child > div:first-child {
+    padding: .5rem 0rem 0rem 1rem;
+    color: var(--color-primary);
+    font-size: var(--font-size-large);
+    font-weight: var(--font-weight-medium);
+}
