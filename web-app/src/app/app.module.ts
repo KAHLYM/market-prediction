@@ -4,6 +4,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
 import {SentimentService} from './services/sentiment.service';
+import {LatestService} from './services/latest.service';
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {environment} from '../environments/environment';
 import {provideAuth, getAuth} from '@angular/fire/auth';
@@ -17,6 +18,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularMaterialModule} from './angular-material.module';
 import {TabulatedComponent} from './components/tabulated/tabulated.component';
 import {ResultComponent} from './components/result/result.component';
+import { LatestComponent } from './components/latest/latest.component';
+import { DisplayValueComponent } from './components/display-value/display-value.component';
+import { AbsolutePipe } from './pipes/absolute.pipe';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,9 @@ import {ResultComponent} from './components/result/result.component';
     SearchComponent,
     TabulatedComponent,
     ResultComponent,
+    LatestComponent,
+    DisplayValueComponent,
+    AbsolutePipe,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +44,7 @@ import {ResultComponent} from './components/result/result.component';
     AngularMaterialModule,
     BrowserAnimationsModule,
   ],
-  providers: [SearchService, SentimentService],
+  providers: [LatestService, SearchService, SentimentService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
