@@ -28,7 +28,7 @@ export class LatestComponent implements OnInit {
 
     let animationDuration: number = 2000;
     setInterval(() => {
-      const container = document.getElementsByClassName('LatestContainerInner')[0];
+      const container = document.getElementsByClassName('LatestOverflow')[0];
       let animation = container.animate([
         { transform: 'translateX(-14rem)' } // Tile width
       ], {

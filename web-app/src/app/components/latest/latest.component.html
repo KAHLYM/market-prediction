@@ -1,14 +1,17 @@
 <div class="LatestContainerOuter element h1_w12 lh1_w8 th1_w6 ph1_w4 mh1_w3 g_autoheight">
     <div class="LatestContainerInner element h1_w6 lh1_w6 th1_w6 ph1_w4 mh1_w3 g_nomargin g_autoheight">
-    <div class="Tile" *ngFor="let item of latest">
-        <div>
-            <div>{{item.key}}</div>
-        </div>
-        <div>
-            <app-display-value key="count" value="{{item.value.count}}" sign="raw" [right]="true"></app-display-value>
-            <app-display-value key="sentiment" value="{{item.value.score}}"
-                sign="{{item.value.score == 0 ? 'neu' : item.value.score > 0 ? 'pos' : 'neg'}}" [left]="true">
-            </app-display-value>
+        <div class="LatestOverflow">
+            <div class="Tile" *ngFor="let item of latest">
+                <div>
+                    <div>{{item.key}}</div>
+                </div>
+                <div>
+                    <app-display-value key="count" value="{{item.value.count}}" sign="raw" [right]="true"></app-display-value>
+                    <app-display-value key="sentiment" value="{{item.value.score}}"
+                        sign="{{item.value.score == 0 ? 'neu' : item.value.score > 0 ? 'pos' : 'neg'}}" [left]="true">
+                    </app-display-value>
+                </div>
+            </div>
         </div>
     </div>
 </div>
