@@ -9,17 +9,40 @@ import { LatestService } from 'src/app/services/latest.service';
 })
 export class LatestComponent implements OnInit {
 
-  latest: {[key: string] : FirestoreSentiment} = {};
+  latest: {key :string, value: FirestoreSentiment}[] = [];
 
   constructor(private latestService: LatestService) {
-    this.latestService.latestUpdated.subscribe((next) => {
-      this.latest = this.latestService.getLatest();
-      console.log("latest:", this.latest);
+    this.latestService.latestUpdated.subscribe(() => {
+      Object.entries(this.latestService.getLatest()).forEach(([key, value]) => {
+        this.latest.push(
+          {
+            key,
+            value
+          })
+      });
     });
   }
 
   ngOnInit(): void {
     this.latestService.query("tickers");
+
+    let animationDuration: number = 2000;
+    setInterval(() => {
+      const container = document.getElementsByClassName('LatestContainerInner')[0];
+      let animation = container.animate([
+        { transform: 'translateX(-14rem)' } // Tile width
+      ], {
+        duration: animationDuration,
+        iterations: 1
+      });
+      animation.onfinish = () => {
+        let front = this.latest.shift()
+        if (front)
+        {
+          this.latest.push(front);
+        }
+      }
+    }, animationDuration);
   }
 
 }
