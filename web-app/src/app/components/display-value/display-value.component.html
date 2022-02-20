@@ -1,5 +1,5 @@
 <div class="DisplayValue" [ngStyle]="{'background': backgroundColor, 'margin-left': left ? '.25rem' : '.5rem', 'margin-right': right ? '.25rem' : '.5rem' }">
     <div>{{key | uppercase}}</div>
-    <div [ngStyle]="{'color': color}">{{value | absolute}}</div>
+    <div *ngIf="!trailingZero" [ngStyle]="{'color': color}">{{value | absolute }}</div>
+    <div *ngIf="trailingZero"  [ngStyle]="{'color': color}">{{value | absolute | trailingZero }}</div>
 </div>
-

@@ -12,6 +12,7 @@ export class DisplayValueComponent implements OnInit {
   @Input() sign: string = "neu";
   @Input() left?: boolean = false;
   @Input() right?: boolean = false;
+  @Input() trailingZero?: boolean = false;
 
   backgroundColor: string = 'e8eaed';
   color: string= '#202124';

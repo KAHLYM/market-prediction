@@ -21,6 +21,7 @@ import {ResultComponent} from './components/result/result.component';
 import { LatestComponent } from './components/latest/latest.component';
 import { DisplayValueComponent } from './components/display-value/display-value.component';
 import { AbsolutePipe } from './pipes/absolute.pipe';
+import { TrailingZeroPipe } from './pipes/trailing-zero.pipe';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AbsolutePipe } from './pipes/absolute.pipe';
     LatestComponent,
     DisplayValueComponent,
     AbsolutePipe,
+    TrailingZeroPipe,
   ],
   imports: [
     BrowserModule,

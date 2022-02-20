@@ -8,7 +8,7 @@
                 <div>
                     <app-display-value key="count" value="{{item.value.count}}" sign="raw" [right]="true"></app-display-value>
                     <app-display-value key="sentiment" value="{{item.value.score}}"
-                        sign="{{item.value.score == 0 ? 'neu' : item.value.score > 0 ? 'pos' : 'neg'}}" [left]="true">
+                        sign="{{item.value.score == 0 ? 'neu' : item.value.score > 0 ? 'pos' : 'neg'}}" [left]="true" [trailingZero]="true">
                     </app-display-value>
                 </div>
             </div>
